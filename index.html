@@ -1,0 +1,658 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu-site-verification" content="k49IAqAJW3" />
+  
+    <title>有药就给你</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+
+    
+    <meta property="og:type" content="website">
+<meta property="og:title" content="有药就给你">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="有药就给你">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="有药就给你">
+
+    
+    <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="有药就给你" title="有药就给你"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="有药就给你">有药就给你</a></h1>
+				<h2 class="blog-motto">我是一个慷慨的人，有药都会给你的</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+						<form class="search" action="http://zhannei.baidu.com/cse/search" target="_blank">
+							<label>Search</label>
+						<input name="s" type="hidden" value= null ><input type="text" name="q" size="30" placeholder="搜索"><br>
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main">
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/01/16/node处理excel/" title="node js处理excel能添加样式的插件" itemprop="url">node js处理excel能添加样式的插件</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="null" target="_blank" itemprop="author">null</a>
+		
+  <p class="article-time">
+    <time datetime="2017-01-16T08:07:02.000Z" itemprop="datePublished"> 发表于 2017-01-16</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>工作需要node生成excel，并且能设置表头，用<br>gg大神找了两个能实现些功的插件，记录一下。</p>
+<pre><code>https://github.com/extrabacon/pyspreadsheet
+https://github.com/chuanyi/msexcel-builder
+</code></pre><p>不得不感叹node社区真的是很繁荣啊。    </p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/node/">node</a>►<a class="article-category-link" href="/categories/node/excel/">excel</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/收集/">收集</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/03/31/hibernate自动长主键简单测试结论/" title="关于hibernate自增长键的解释" itemprop="url">关于hibernate自增长键的解释</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="null" target="_blank" itemprop="author">null</a>
+		
+  <p class="article-time">
+    <time datetime="2016-03-30T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-31</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>工作之初，遇到一个问题是，在集群中，多个hibnate对一个数据库操作的主键重复问题<br>大家都认为采有自增长会产生重复主键。事实情况是怎么样的呢？<br>让我们真实情部下了解一下。<br>测试环境：spring+hibernate5,数据库主键字段设置为自增长。<br>打开hibernate的sql输出，开始mysql的binlog日志。<br>比如我的测试环境中，</p>
+<pre><code>@Id
+@GenericGenerator(name = &quot;generatorId&quot;, strategy = &quot;native&quot;)
+// @GeneratedValue(generator = &quot;generatorId&quot;) //和生成策略名一样 或者
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+// 根据底层数据库自动选择方式，需要底层数据库的设置 如MySQL，会使用自增字段，需要将主键设置成auto_increment。
+@Column(name = &quot;id&quot;)
+@Type(type = &quot;int&quot;)
+private int id;
+
+@Column(name = &quot;name&quot;, length = 200)
+private String name;
+
+@Column(name = &quot;password&quot;, length = 200 )
+private String passowrd;
+
+@Column(name = &quot;birthday&quot;, columnDefinition = &quot;timestamp&quot;)
+private Date birthday;
+
+省略getter/setter等
+</code></pre><p>在这样的配置下，会观察到输出为：<br>    DEBUG SQL:92 - insert into user (birthday, name, password) values (?, ?, ?)</p>
+<p>hibernate根本就没有设置id，id是数据库自动生成的，数据库会保证id唯一。<br>我们再观查 binlog日志，<br>    SET TIMESTAMP=1459431449/<em>!</em>/;<br>    SET @@session.time_zone=’SYSTEM’/<em>!</em>/;<br>    insert into user (birthday, name, password) values (‘2016-03-31 21:37:29’, ‘feng’, null)    </p>
+<p>所以id也正如解释的那样，和hibernate一点关系也没有，集群操作中，这个id都是由数据库来保证唯一的，<br>hibernate不是很多人认为的那样，先一个获取了一个count（）的值来维持 自增长。        </p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/hibernate/">hibernate</a>►<a class="article-category-link" href="/categories/hibernate/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/hibernate/">hibernate</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/03/30/hexo源文件备份/" title="hexo源文件备份" itemprop="url">hexo源文件备份</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="null" target="_blank" itemprop="author">null</a>
+		
+  <p class="article-time">
+    <time datetime="2016-03-29T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-30</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>hexo发布的文件都是以.md文件格式放在source目录，<br>每次生成时，需要读取文件分析 分类，目录等信息<br>所以需要备份，才可以在不同的电脑上操作。<br>最简单的就是直接备份到git.把文件目录复制到 public 目录一起发布即可备份了。<br> 一条命令搞定。</p>
+<pre><code>cp -rf source public &amp;&amp; hexo g &amp;&amp;  hexo d
+</code></pre><p> 同理，想备样式也可以搞定到这这个目录。    </p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/blog/">blog</a>►<a class="article-category-link" href="/categories/blog/软件/">软件</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/hexo/">hexo</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/03/29/hexo-注意事项/" title="使用hexo注意事项" itemprop="url">使用hexo注意事项</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="null" target="_blank" itemprop="author">null</a>
+		
+  <p class="article-time">
+    <time datetime="2016-03-28T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>什么搭建，发布的就不说了，网上教程一大堆，我就说说我使用中遇到的一些问题。</p>
+<h2 id="1，yml语言格式要求"><a href="#1，yml语言格式要求" class="headerlink" title="1，yml语言格式要求"></a>1，yml语言格式要求</h2><p>比如：</p>
+<blockquote>
+<p>title: 使用hexo注意事项</p>
+</blockquote>
+<p>需要注意的是title:后面有一空格，不然无法识别，会报错误。<br>配置文件也有同样的要求。</p>
+<h2 id="2，关于categories-tags-about"><a href="#2，关于categories-tags-about" class="headerlink" title="2，关于categories,tags,about"></a>2，关于categories,tags,about</h2><p>这两个默认是联结到网站 /categories,/tags ,/about,这不是问题，问题是这几个目录下都没有index页面<br>所以会报404，解决的办法是：</p>
+<pre><code>hexo new page categories
+hexo new page tags
+hexo new page about
+</code></pre><p>这时会在source下面对应目录生成index.md,接着需要修改对应的index.md文件，增加一个type: categories</p>
+<pre><code>---
+title: categories
+date: 2016-03-28 19:17:52
+type: categories
+---
+</code></pre><p>最后结果就是这样，type对应改为about,tags,然后成发布即可，about页面需要去手动添些自己想要的内容。毕竟它还是不知道你想要写些啥。</p>
+<h2 id="3，本地语言设置"><a href="#3，本地语言设置" class="headerlink" title="3，本地语言设置"></a>3，本地语言设置</h2><p>一般认为是zh_CN，但是各主题提代的语方代码不一定是这个，需要到对应的主题包languages里查看对应的中文语言是啥，比如hexo-theme-next里的简体中文对应的代码是zh_Hans.yml,这里设置hexo的语言为zh-Hans。</p>
+<pre><code>language: zh-Hans
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/blog/">blog</a>►<a class="article-category-link" href="/categories/blog/软件/">软件</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/hexo/">hexo</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/03/28/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="null" target="_blank" itemprop="author">null</a>
+		
+  <p class="article-time">
+    <time datetime="2016-03-27T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/blog/" title="blog">blog<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/node/excel/" title="excel">excel<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/node/" title="node">node<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/hibernate/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/blog/软件/" title="软件">软件<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 世界上只有一种英雄主义,就是看清生活的真相之后依然热爱生活。 <br/>
+			</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="http://yoursite.com" title="有药就给你">有药就给你</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+ </html>
+
