@@ -5,32 +5,23 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>node js处理excel能添加样式的插件 | 有药就给你</title>
+    <title>spring加载多个属性文件（以及环境变量） | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="工作需要node生成excel，并且能设置表头，用gg大神找了两个能实现些功的插件，记录一下。
-https://github.com/extrabacon/pyspreadsheet
-https://github.com/chuanyi/msexcel-builder
-不得不感叹node社区真的是很繁荣啊。">
+    <meta name="description" content="看例就明白1234567&amp;lt;!-- 根据环境变量选择数据库文件 --&amp;gt;	&amp;lt;context:property-placeholder location=&amp;quot;classpath:db_$&amp;#123;mode&amp;#125;.properties&amp;quot;		ignore-unresolvable=&amp;quot;true&amp;quot; /&amp;gt;			&amp;lt;!-- 根据环境变量选择j">
 <meta property="og:type" content="article">
-<meta property="og:title" content="node js处理excel能添加样式的插件">
-<meta property="og:url" content="http://yoursite.com/2017/01/16/node处理excel/index.html">
+<meta property="og:title" content="spring加载多个属性文件（以及环境变量）">
+<meta property="og:url" content="http://yoursite.com/2017/01/25/spring加载多个属性文件（以及环境变量）/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="工作需要node生成excel，并且能设置表头，用gg大神找了两个能实现些功的插件，记录一下。
-https://github.com/extrabacon/pyspreadsheet
-https://github.com/chuanyi/msexcel-builder
-不得不感叹node社区真的是很繁荣啊。">
-<meta property="og:updated_time" content="2017-01-16T08:07:02.000Z">
+<meta property="og:description" content="看例就明白1234567&amp;lt;!-- 根据环境变量选择数据库文件 --&amp;gt;	&amp;lt;context:property-placeholder location=&amp;quot;classpath:db_$&amp;#123;mode&amp;#125;.properties&amp;quot;		ignore-unresolvable=&amp;quot;true&amp;quot; /&amp;gt;			&amp;lt;!-- 根据环境变量选择j">
+<meta property="og:updated_time" content="2017-01-25T03:21:29.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="node js处理excel能添加样式的插件">
-<meta name="twitter:description" content="工作需要node生成excel，并且能设置表头，用gg大神找了两个能实现些功的插件，记录一下。
-https://github.com/extrabacon/pyspreadsheet
-https://github.com/chuanyi/msexcel-builder
-不得不感叹node社区真的是很繁荣啊。">
+<meta name="twitter:title" content="spring加载多个属性文件（以及环境变量）">
+<meta name="twitter:description" content="看例就明白1234567&amp;lt;!-- 根据环境变量选择数据库文件 --&amp;gt;	&amp;lt;context:property-placeholder location=&amp;quot;classpath:db_$&amp;#123;mode&amp;#125;.properties&amp;quot;		ignore-unresolvable=&amp;quot;true&amp;quot; /&amp;gt;			&amp;lt;!-- 根据环境变量选择j">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -89,14 +80,14 @@ https://github.com/chuanyi/msexcel-builder
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/01/16/node处理excel/" title="node js处理excel能添加样式的插件" itemprop="url">node js处理excel能添加样式的插件</a>
+      <a href="/2017/01/25/spring加载多个属性文件（以及环境变量）/" title="spring加载多个属性文件（以及环境变量）" itemprop="url">spring加载多个属性文件（以及环境变量）</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2017-01-16T08:07:02.000Z" itemprop="datePublished"> 发表于 2017-01-16</time>
+    <time datetime="2017-01-25T03:12:32.000Z" itemprop="datePublished"> 发表于 2017-01-25</time>
     
   </p>
 </header>
@@ -109,24 +100,17 @@ https://github.com/chuanyi/msexcel-builder
 		
 		</div>
 		
-		<p>工作需要node生成excel，并且能设置表头，用<br>gg大神找了两个能实现些功的插件，记录一下。</p>
-<pre><code>https://github.com/extrabacon/pyspreadsheet
-https://github.com/chuanyi/msexcel-builder
-</code></pre><p>不得不感叹node社区真的是很繁荣啊。    </p>
+		<p>看例就明白<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 根据环境变量选择数据库文件 --&gt;</div><div class="line">	&lt;context:property-placeholder location=&quot;classpath:db_$&#123;mode&#125;.properties&quot;</div><div class="line">		ignore-unresolvable=&quot;true&quot; /&gt;</div><div class="line">		</div><div class="line">	&lt;!-- 根据环境变量选择javaToNode的配置文件--&gt;</div><div class="line">	&lt;context:property-placeholder location=&quot;classpath:/javaToNode/javaToNode_$&#123;mode&#125;.properties&quot;</div><div class="line">		ignore-unresolvable=&quot;true&quot; /&gt;</div></pre></td></tr></table></figure></p>
+<p>ignore-unresolvable  为<code>true</code>,<br>mode 就是环境变量，linux可以是在 /etc/profile等文件设置 win可以在系里设置<br>也可以在运行程序时指定这些环境变量</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/node/">node</a>►<a class="article-category-link" href="/categories/node/excel/">excel</a>
-</div>
-
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/收集/">收集</a>
+  <span></span> <a href="/tags/spring/">spring</a>
   </div>
 
 </div>
@@ -135,7 +119,7 @@ https://github.com/chuanyi/msexcel-builder
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/01/16/node处理excel/" data-title="node js处理excel能添加样式的插件 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/01/25/spring加载多个属性文件（以及环境变量）/" data-title="spring加载多个属性文件（以及环境变量） | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -148,19 +132,11 @@ https://github.com/chuanyi/msexcel-builder
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/01/25/spring加载多个属性文件（以及环境变量）/" title="spring加载多个属性文件（以及环境变量）">
-  <strong>上一篇：</strong><br/>
-  <span>
-  spring加载多个属性文件（以及环境变量）</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/03/31/hibernate自动长主键简单测试结论/"  title="关于hibernate自增长键的解释">
+<a href="/2017/01/16/node处理excel/"  title="node js处理excel能添加样式的插件">
  <strong>下一篇：</strong><br/> 
- <span>关于hibernate自增长键的解释
+ <span>node js处理excel能添加样式的插件
 </span>
 </a>
 </div>
