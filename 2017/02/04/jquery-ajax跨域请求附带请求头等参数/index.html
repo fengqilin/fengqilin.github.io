@@ -5,32 +5,23 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>node js处理excel能添加样式的插件 | 有药就给你</title>
+    <title>jquery.ajax跨域请求附带请求头等参数 | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="工作需要node生成excel，并且能设置表头，用gg大神找了两个能实现些功的插件，记录一下。
-https://github.com/extrabacon/pyspreadsheet
-https://github.com/chuanyi/msexcel-builder
-不得不感叹node社区真的是很繁荣啊。">
+    <meta name="description" content="项目中，封装一个js供各子应用调用，各子应用访问是通过二级域名，此时出现跨域，并且需要把cookie等一些值提交到服务器作会话等验证123456789101112$.ajax(&amp;#123;                url:  ucs.config.restServer + ucs.rest[url],                data: data,                xhr">
 <meta property="og:type" content="article">
-<meta property="og:title" content="node js处理excel能添加样式的插件">
-<meta property="og:url" content="http://yoursite.com/2017/01/16/node处理excel/index.html">
+<meta property="og:title" content="jquery.ajax跨域请求附带请求头等参数">
+<meta property="og:url" content="http://yoursite.com/2017/02/04/jquery-ajax跨域请求附带请求头等参数/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="工作需要node生成excel，并且能设置表头，用gg大神找了两个能实现些功的插件，记录一下。
-https://github.com/extrabacon/pyspreadsheet
-https://github.com/chuanyi/msexcel-builder
-不得不感叹node社区真的是很繁荣啊。">
-<meta property="og:updated_time" content="2017-01-16T08:07:02.000Z">
+<meta property="og:description" content="项目中，封装一个js供各子应用调用，各子应用访问是通过二级域名，此时出现跨域，并且需要把cookie等一些值提交到服务器作会话等验证123456789101112$.ajax(&amp;#123;                url:  ucs.config.restServer + ucs.rest[url],                data: data,                xhr">
+<meta property="og:updated_time" content="2017-02-04T09:32:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="node js处理excel能添加样式的插件">
-<meta name="twitter:description" content="工作需要node生成excel，并且能设置表头，用gg大神找了两个能实现些功的插件，记录一下。
-https://github.com/extrabacon/pyspreadsheet
-https://github.com/chuanyi/msexcel-builder
-不得不感叹node社区真的是很繁荣啊。">
+<meta name="twitter:title" content="jquery.ajax跨域请求附带请求头等参数">
+<meta name="twitter:description" content="项目中，封装一个js供各子应用调用，各子应用访问是通过二级域名，此时出现跨域，并且需要把cookie等一些值提交到服务器作会话等验证123456789101112$.ajax(&amp;#123;                url:  ucs.config.restServer + ucs.rest[url],                data: data,                xhr">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -89,14 +80,14 @@ https://github.com/chuanyi/msexcel-builder
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/01/16/node处理excel/" title="node js处理excel能添加样式的插件" itemprop="url">node js处理excel能添加样式的插件</a>
+      <a href="/2017/02/04/jquery-ajax跨域请求附带请求头等参数/" title="jquery.ajax跨域请求附带请求头等参数" itemprop="url">jquery.ajax跨域请求附带请求头等参数</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2017-01-16T08:07:02.000Z" itemprop="datePublished"> 发表于 2017-01-16</time>
+    <time datetime="2017-02-04T09:27:56.000Z" itemprop="datePublished"> 发表于 2017-02-04</time>
     
   </p>
 </header>
@@ -109,10 +100,8 @@ https://github.com/chuanyi/msexcel-builder
 		
 		</div>
 		
-		<p>工作需要node生成excel，并且能设置表头，用<br>gg大神找了两个能实现些功的插件，记录一下。</p>
-<pre><code>https://github.com/extrabacon/pyspreadsheet
-https://github.com/chuanyi/msexcel-builder
-</code></pre><p>不得不感叹node社区真的是很繁荣啊。    </p>
+		<p>项目中，封装一个js供各子应用调用，各子应用访问是通过二级域名，<br>此时出现跨域，并且需要把cookie等一些值提交到服务器作会话等验证<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">$.ajax(&#123;</div><div class="line">                <span class="attr">url</span>:  ucs.config.restServer + ucs.rest[url],</div><div class="line">                <span class="attr">data</span>: data,</div><div class="line">                <span class="attr">xhrFields</span>: &#123;  <span class="comment">//这是关键</span></div><div class="line">                    withCredentials: <span class="literal">true</span></div><div class="line">                &#125;,</div><div class="line">                <span class="attr">crossDomain</span>: <span class="literal">true</span>, <span class="comment">//这是关键</span></div><div class="line">                type: <span class="string">"GET"</span>,</div><div class="line">                <span class="attr">success</span>: <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</div><div class="line">                    fn &amp;&amp; fn(res);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div></pre></td></tr></table></figure></p>
+<p> 这样会把cookie等信息提交。服务可以根据信息做一些事情。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -120,13 +109,13 @@ https://github.com/chuanyi/msexcel-builder
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/node/">node</a>►<a class="article-category-link" href="/categories/node/excel/">excel</a>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/收集/">收集</a>
+  <span></span> <a href="/tags/jquery/">jquery</a>
   </div>
 
 </div>
@@ -135,7 +124,7 @@ https://github.com/chuanyi/msexcel-builder
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/01/16/node处理excel/" data-title="node js处理excel能添加样式的插件 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/02/04/jquery-ajax跨域请求附带请求头等参数/" data-title="jquery.ajax跨域请求附带请求头等参数 | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -148,19 +137,11 @@ https://github.com/chuanyi/msexcel-builder
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/01/25/spring加载多个属性文件（以及环境变量）/" title="spring加载多个属性文件（以及环境变量）">
-  <strong>上一篇：</strong><br/>
-  <span>
-  spring加载多个属性文件（以及环境变量）</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/03/31/hibernate自动长主键简单测试结论/"  title="关于hibernate自增长键的解释">
+<a href="/2017/02/04/nginx错误ERR-CONTENT-LENGTH-MISMATCH/"  title="nginx错误ERR_CONTENT_LENGTH_MISMATCH">
  <strong>下一篇：</strong><br/> 
- <span>关于hibernate自增长键的解释
+ <span>nginx错误ERR_CONTENT_LENGTH_MISMATCH
 </span>
 </a>
 </div>
