@@ -5,29 +5,26 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>关于hibernate自增长键的解释 | 有药就给你</title>
+    <title>vscode debug模式 | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="工作之初，遇到一个问题是，在集群中，多个hibnate对一个数据库操作的主键重复问题大家都认为采有自增长会产生重复主键。事实情况是怎么样的呢？让我们真实情部下了解一下。测试环境：spring+hibernate5,数据库主键字段设置为自增长。打开hibernate的sql输出，开始mysql的binlog日志。比如我的测试环境中，
-@Id
-@GenericGenerator(name = &amp;quo">
+    <meta name="description" content="Mac 平台:必须用 brew 安装,不要直接使用 go get 安装, 会出现签名, 权限问题, 导致 无法使用 dlv 调试工具.请严格参考 delve 项目官方安装文档.这一步最容易出问题.12# 安装 delev 工具:brew install go-delve/delve/delve
+注意，安装的时候会去用brew安装go,如果原来是自己手动安装go,得注意路径变化引发的情况，参照另一个">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于hibernate自增长键的解释">
-<meta property="og:url" content="http://yoursite.com/2016/03/31/hibernate自动长主键简单测试结论/index.html">
+<meta property="og:title" content="vscode debug模式">
+<meta property="og:url" content="http://yoursite.com/2017/02/12/vscode-debug模式/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="工作之初，遇到一个问题是，在集群中，多个hibnate对一个数据库操作的主键重复问题大家都认为采有自增长会产生重复主键。事实情况是怎么样的呢？让我们真实情部下了解一下。测试环境：spring+hibernate5,数据库主键字段设置为自增长。打开hibernate的sql输出，开始mysql的binlog日志。比如我的测试环境中，
-@Id
-@GenericGenerator(name = &amp;quo">
-<meta property="og:updated_time" content="2017-02-04T09:36:00.000Z">
+<meta property="og:description" content="Mac 平台:必须用 brew 安装,不要直接使用 go get 安装, 会出现签名, 权限问题, 导致 无法使用 dlv 调试工具.请严格参考 delve 项目官方安装文档.这一步最容易出问题.12# 安装 delev 工具:brew install go-delve/delve/delve
+注意，安装的时候会去用brew安装go,如果原来是自己手动安装go,得注意路径变化引发的情况，参照另一个">
+<meta property="og:updated_time" content="2017-02-12T08:30:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于hibernate自增长键的解释">
-<meta name="twitter:description" content="工作之初，遇到一个问题是，在集群中，多个hibnate对一个数据库操作的主键重复问题大家都认为采有自增长会产生重复主键。事实情况是怎么样的呢？让我们真实情部下了解一下。测试环境：spring+hibernate5,数据库主键字段设置为自增长。打开hibernate的sql输出，开始mysql的binlog日志。比如我的测试环境中，
-@Id
-@GenericGenerator(name = &amp;quo">
+<meta name="twitter:title" content="vscode debug模式">
+<meta name="twitter:description" content="Mac 平台:必须用 brew 安装,不要直接使用 go get 安装, 会出现签名, 权限问题, 导致 无法使用 dlv 调试工具.请严格参考 delve 项目官方安装文档.这一步最容易出问题.12# 安装 delev 工具:brew install go-delve/delve/delve
+注意，安装的时候会去用brew安装go,如果原来是自己手动安装go,得注意路径变化引发的情况，参照另一个">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -86,14 +83,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/03/31/hibernate自动长主键简单测试结论/" title="关于hibernate自增长键的解释" itemprop="url">关于hibernate自增长键的解释</a>
+      <a href="/2017/02/12/vscode-debug模式/" title="vscode debug模式" itemprop="url">vscode debug模式</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2016-03-30T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-31</time>
+    <time datetime="2017-02-12T08:25:30.000Z" itemprop="datePublished"> 发表于 2017-02-12</time>
     
   </p>
 </header>
@@ -106,29 +103,8 @@
 		
 		</div>
 		
-		<p>工作之初，遇到一个问题是，在集群中，多个hibnate对一个数据库操作的主键重复问题<br>大家都认为采有自增长会产生重复主键。事实情况是怎么样的呢？<br>让我们真实情部下了解一下。<br>测试环境：spring+hibernate5,数据库主键字段设置为自增长。<br>打开hibernate的sql输出，开始mysql的binlog日志。<br>比如我的测试环境中，</p>
-<pre><code>@Id
-@GenericGenerator(name = &quot;generatorId&quot;, strategy = &quot;native&quot;)
-// @GeneratedValue(generator = &quot;generatorId&quot;) //和生成策略名一样 或者
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-// 根据底层数据库自动选择方式，需要底层数据库的设置 如MySQL，会使用自增字段，需要将主键设置成auto_increment。
-@Column(name = &quot;id&quot;)
-@Type(type = &quot;int&quot;)
-private int id;
-
-@Column(name = &quot;name&quot;, length = 200)
-private String name;
-
-@Column(name = &quot;password&quot;, length = 200 )
-private String passowrd;
-
-@Column(name = &quot;birthday&quot;, columnDefinition = &quot;timestamp&quot;)
-private Date birthday;
-
-省略getter/setter等
-</code></pre><p>在这样的配置下，会观察到输出为：<br>    DEBUG SQL:92 - insert into user (birthday, name, password) values (?, ?, ?)</p>
-<p>hibernate根本就没有设置id，id是数据库自动生成的，数据库会保证id唯一。<br>我们再观查 binlog日志，<br>    SET TIMESTAMP=1459431449/<em>!</em>/;<br>    SET @@session.time_zone=’SYSTEM’/<em>!</em>/;<br>    insert into user (birthday, name, password) values (‘2016-03-31 21:37:29’, ‘feng’, null)    </p>
-<p>所以id也正如解释的那样，和hibernate一点关系也没有，集群操作中，这个id都是由数据库来保证唯一的，<br>hibernate不是很多人认为的那样，先一个获取了一个count（）的值来维持 自增长。        </p>
+		<p>Mac 平台:<br>必须用 brew 安装,<br>不要直接使用 go get 安装, 会出现签名, 权限问题, 导致 无法使用 dlv 调试工具.<br>请严格参考 delve 项目官方安装文档.这一步最容易出问题.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 安装 delev 工具:</div><div class="line">brew install go-delve/delve/delve</div></pre></td></tr></table></figure></p>
+<p>注意，安装的时候会去用brew安装go,如果原来是自己手动安装go,得注意路径变化引发的情况，参照另<br>一个坑<br>查看安装成果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">which dlv</div><div class="line">/usr/local/bin/dlv</div><div class="line"># 查看 dlv 版本:</div><div class="line">-&gt; % dlv version</div><div class="line">Delve Debugger</div><div class="line">Version: 0.11.0-alpha</div><div class="line">Build: v0.11.0</div><div class="line"># 查看安装情况:</div><div class="line">-&gt; % brew info delve</div></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -136,13 +112,13 @@ private Date birthday;
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
+  <a class="article-category-link" href="/categories/各种坑/">各种坑</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/hibernate/">hibernate</a>
+  <span></span> <a href="/tags/go/">go</a>
   </div>
 
 </div>
@@ -151,7 +127,7 @@ private Date birthday;
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/03/31/hibernate自动长主键简单测试结论/" data-title="关于hibernate自增长键的解释 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/02/12/vscode-debug模式/" data-title="vscode debug模式 | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -164,19 +140,11 @@ private Date birthday;
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/01/16/node处理excel/" title="node js处理excel能添加样式的插件">
-  <strong>上一篇：</strong><br/>
-  <span>
-  node js处理excel能添加样式的插件</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/03/30/hexo源文件备份/"  title="hexo源文件备份">
+<a href="/2017/02/12/sublime-go开发/"  title="sublime go开发">
  <strong>下一篇：</strong><br/> 
- <span>hexo源文件备份
+ <span>sublime go开发
 </span>
 </a>
 </div>
