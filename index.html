@@ -78,6 +78,68 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/02/12/sublime-go开发/" title="sublime go开发" itemprop="url">sublime go开发</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-12T02:55:57.000Z" itemprop="datePublished"> 发表于 2017-02-12</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>开发环境，Mac<br>前期用手动方式下载go SDK放在/usr/local/go目录<br>sublime 装好gosublime 各种配置，提示什么的能正常运行。<br>后期因为各种依赖，改用brew安装go,go自动加入环境路径，<br>把原来go移动到别路径，<br>但是sublime自动提示不好用了<br>经仔细检查，查看提示，<br>需要<br>Preferences -&gt; package settings -&gt; GoSublime -&gt; Settings - Uesrs需要重新配置下GOPATH，GOROOT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &#123;</div><div class="line">   &quot;env&quot;: &#123;</div><div class="line">       &quot;GOPATH&quot;: &quot;/Users/feng/Documents/workspace/code/go&quot;, </div><div class="line">       &quot;GOROOT&quot;: &quot;/usr/local/Cellar/go/1.7.4_2/libexec/&quot; //新的go目录，该目录下有src目录，引入系统包时，会到该目录查找。</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样才能正常运行，<br>同时，如果要使Command + B就能运行，tools –&gt;build System – &gt; new Systen<br>添加内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;shell_cmd&quot;: &quot;go run $file&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果go没有在环境变量中，则需要全路径。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/各种坑/">各种坑</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/go/">go</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/02/04/jquery-ajax跨域请求附带请求头等参数/" title="jquery.ajax跨域请求附带请求头等参数" itemprop="url">jquery.ajax跨域请求附带请求头等参数</a>
   </h1>
   <p class="article-author">By
@@ -569,7 +631,7 @@ type: categories
 		  
 		
 		  
-			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
+			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>2</sup></a></li>
 		  
 		
 		  
@@ -598,11 +660,11 @@ type: categories
 			
 		
 			
-				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -610,11 +672,15 @@ type: categories
 			
 		
 			
-				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+				<li><a href="/tags/go/" title="go">go<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 			
 		
 		</ul>
