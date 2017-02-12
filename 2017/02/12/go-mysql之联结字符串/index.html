@@ -20,7 +20,7 @@
 <meta property="og:site_name" content="有药就给你">
 <meta property="og:description" content="go-sql-driver1db, err := sql.Open(&amp;quot;mysql&amp;quot;, &amp;quot;bofide:123456@10.10.1.201:4006/authority_platform&amp;quot;)
 受别的语言的影响，以为联结就该是上面那样但是这样一定会报错的，1panic: default addr for network &amp;apos;10.10.1.201:40">
-<meta property="og:updated_time" content="2017-02-12T09:17:59.000Z">
+<meta property="og:updated_time" content="2017-02-12T09:24:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="go-mysql之联结字符串">
 <meta name="twitter:description" content="go-sql-driver1db, err := sql.Open(&amp;quot;mysql&amp;quot;, &amp;quot;bofide:123456@10.10.1.201:4006/authority_platform&amp;quot;)
@@ -107,6 +107,7 @@
 <p>受别的语言的影响，以为联结就该是上面那样<br>但是这样一定会报错的，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">panic: default addr for network &apos;10.10.1.201:4006&apos; unknown</div></pre></td></tr></table></figure></p>
 <p>真实的应该是这样子的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db, err := sql.Open(&quot;mysql&quot;, &quot;bofide:123456@tcp(10.10.1.201:4006)/authority_platform&quot;)</div></pre></td></tr></table></figure></p>
 <p>官方例子是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">user@unix(/path/to/socket)/dbname</div><div class="line">root:pw@unix(/tmp/mysql.sock)/myDatabase?loc=Local</div><div class="line">user:password@tcp(localhost:5555)/dbname?tls=skip-verify&amp;autocommit=true</div></pre></td></tr></table></figure></p>
+<p>具体实例参照：<br><a href="https://github.com/go-sql-driver/mysql/wiki/Examples" target="_blank" rel="external">https://github.com/go-sql-driver/mysql/wiki/Examples</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -231,15 +232,15 @@
 			
 		
 			
-				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/nginx/" title="nginx">nginx<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 			
 		
 		</ul>
