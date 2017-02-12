@@ -5,23 +5,26 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>sublime go开发 | 有药就给你</title>
+    <title>go-mysql之联结字符串 | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="开发环境，Mac前期用手动方式下载go SDK放在/usr/local/go目录sublime 装好gosublime 各种配置，提示什么的能正常运行。后期因为各种依赖，改用brew安装go,go自动加入环境路径，把原来go移动到别路径，但是sublime自动提示不好用了经仔细检查，查看提示，需要Preferences -&amp;gt; package settings -&amp;gt; GoSublime">
+    <meta name="description" content="go-sql-driver1db, err := sql.Open(&amp;quot;mysql&amp;quot;, &amp;quot;bofide:123456@10.10.1.201:4006/authority_platform&amp;quot;)
+受别的语言的影响，以为联结就该是上面那样但是这样一定会报错的，1panic: default addr for network &amp;apos;10.10.1.201:40">
 <meta property="og:type" content="article">
-<meta property="og:title" content="sublime go开发">
-<meta property="og:url" content="http://yoursite.com/2017/02/12/sublime-go开发/index.html">
+<meta property="og:title" content="go-mysql之联结字符串">
+<meta property="og:url" content="http://yoursite.com/2017/02/12/go-mysql之联结字符串/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="开发环境，Mac前期用手动方式下载go SDK放在/usr/local/go目录sublime 装好gosublime 各种配置，提示什么的能正常运行。后期因为各种依赖，改用brew安装go,go自动加入环境路径，把原来go移动到别路径，但是sublime自动提示不好用了经仔细检查，查看提示，需要Preferences -&amp;gt; package settings -&amp;gt; GoSublime">
-<meta property="og:updated_time" content="2017-02-12T03:11:46.000Z">
+<meta property="og:description" content="go-sql-driver1db, err := sql.Open(&amp;quot;mysql&amp;quot;, &amp;quot;bofide:123456@10.10.1.201:4006/authority_platform&amp;quot;)
+受别的语言的影响，以为联结就该是上面那样但是这样一定会报错的，1panic: default addr for network &amp;apos;10.10.1.201:40">
+<meta property="og:updated_time" content="2017-02-12T09:17:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="sublime go开发">
-<meta name="twitter:description" content="开发环境，Mac前期用手动方式下载go SDK放在/usr/local/go目录sublime 装好gosublime 各种配置，提示什么的能正常运行。后期因为各种依赖，改用brew安装go,go自动加入环境路径，把原来go移动到别路径，但是sublime自动提示不好用了经仔细检查，查看提示，需要Preferences -&amp;gt; package settings -&amp;gt; GoSublime">
+<meta name="twitter:title" content="go-mysql之联结字符串">
+<meta name="twitter:description" content="go-sql-driver1db, err := sql.Open(&amp;quot;mysql&amp;quot;, &amp;quot;bofide:123456@10.10.1.201:4006/authority_platform&amp;quot;)
+受别的语言的影响，以为联结就该是上面那样但是这样一定会报错的，1panic: default addr for network &amp;apos;10.10.1.201:40">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -80,14 +83,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/12/sublime-go开发/" title="sublime go开发" itemprop="url">sublime go开发</a>
+      <a href="/2017/02/12/go-mysql之联结字符串/" title="go-mysql之联结字符串" itemprop="url">go-mysql之联结字符串</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2017-02-12T02:55:57.000Z" itemprop="datePublished"> 发表于 2017-02-12</time>
+    <time datetime="2017-02-12T09:13:15.000Z" itemprop="datePublished"> 发表于 2017-02-12</time>
     
   </p>
 </header>
@@ -100,10 +103,10 @@
 		
 		</div>
 		
-		<p>开发环境，Mac<br>前期用手动方式下载go SDK放在/usr/local/go目录<br>sublime 装好gosublime 各种配置，提示什么的能正常运行。<br>后期因为各种依赖，改用brew安装go,go自动加入环境路径，<br>把原来go移动到别路径，<br>但是sublime自动提示不好用了<br>经仔细检查，查看提示，<br>需要<br>Preferences -&gt; package settings -&gt; GoSublime -&gt; Settings - Uesrs需要重新配置下GOPATH，GOROOT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &#123;</div><div class="line">   &quot;env&quot;: &#123;</div><div class="line">       &quot;GOPATH&quot;: &quot;/Users/feng/Documents/workspace/code/go&quot;, </div><div class="line">       &quot;GOROOT&quot;: &quot;/usr/local/Cellar/go/1.7.4_2/libexec/&quot; //新的go目录，</div><div class="line">       该目录下有src目录，引入系统包时，会到该目录查找。</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这样才能正常运行，<br>同时，如果要使Command + B就能运行，tools –&gt;build System – &gt; new Systen<br>添加内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;shell_cmd&quot;: &quot;go run $file&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>如果go没有在环境变量中，则需要全路径。</p>
-<p>同时，如果一些别的开发工具（如vscode），无法提示系统的包方法等，需要检查GOROOT环境变量是下是否有src目录，因为提示会从该路径查找。</p>
+		<p>go-sql-driver<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db, err := sql.Open(&quot;mysql&quot;, &quot;bofide:123456@10.10.1.201:4006/authority_platform&quot;)</div></pre></td></tr></table></figure></p>
+<p>受别的语言的影响，以为联结就该是上面那样<br>但是这样一定会报错的，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">panic: default addr for network &apos;10.10.1.201:4006&apos; unknown</div></pre></td></tr></table></figure></p>
+<p>真实的应该是这样子的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db, err := sql.Open(&quot;mysql&quot;, &quot;bofide:123456@tcp(10.10.1.201:4006)/authority_platform&quot;)</div></pre></td></tr></table></figure></p>
+<p>官方例子是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">user@unix(/path/to/socket)/dbname</div><div class="line">root:pw@unix(/tmp/mysql.sock)/myDatabase?loc=Local</div><div class="line">user:password@tcp(localhost:5555)/dbname?tls=skip-verify&amp;autocommit=true</div></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -126,7 +129,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/02/12/sublime-go开发/" data-title="sublime go开发 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/02/12/go-mysql之联结字符串/" data-title="go-mysql之联结字符串 | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -139,19 +142,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/02/12/vscode-debug模式/" title="vscode debug模式">
-  <strong>上一篇：</strong><br/>
-  <span>
-  vscode debug模式</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/02/04/jquery-ajax跨域请求附带请求头等参数/"  title="jquery.ajax跨域请求附带请求头等参数">
+<a href="/2017/02/12/vscode-debug模式/"  title="vscode debug模式">
  <strong>下一篇：</strong><br/> 
- <span>jquery.ajax跨域请求附带请求头等参数
+ <span>vscode debug模式
 </span>
 </a>
 </div>
