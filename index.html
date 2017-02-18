@@ -78,6 +78,128 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/02/18/udev自动挂载移动硬盘到固定位置/" title="udev自动挂载移动硬盘到固定位置" itemprop="url">udev自动挂载移动硬盘到固定位置</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-18T12:50:48.000Z" itemprop="datePublished"> 发表于 2017-02-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>1，首先需要安装支持格式ntfs-3g<br>2，vi /etc/udev/rules.d/10-usbstorage.rules<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">KERNEL!=&quot;sd*&quot;, GOTO=&quot;media_by_label_auto_mount_end&quot;  </div><div class="line">SUBSYSTEM!=&quot;block&quot;,GOTO=&quot;media_by_label_auto_mount_end&quot;  </div><div class="line">IMPORT&#123;program&#125;=&quot;/sbin/blkid -o udev -p %N&quot;  </div><div class="line">ENV&#123;ID_FS_TYPE&#125;==&quot;&quot;, GOTO=&quot;media_by_label_auto_mount_end&quot;  </div><div class="line">ENV&#123;ID_FS_LABEL&#125;!=&quot;&quot;, ENV&#123;dir_name&#125;=&quot;%E&#123;ID_FS_LABEL&#125;&quot;  </div><div class="line">ENV&#123;ID_FS_LABEL&#125;==&quot;&quot;, ENV&#123;dir_name&#125;=&quot;Untitled-%k&quot;  </div><div class="line">ACTION==&quot;add&quot;, ENV&#123;mount_options&#125;=&quot;relatime,sync&quot;  </div><div class="line">ACTION==&quot;add&quot;, ENV&#123;ID_FS_TYPE&#125;==&quot;vfat&quot;, ENV&#123;mount_options&#125;=&quot;iocharset=utf8,umask=000&quot;  </div><div class="line">ACTION==&quot;add&quot;, ENV&#123;ID_FS_TYPE&#125;==&quot;ntfs&quot;, ENV&#123;mount_options&#125;=&quot;iocharset=utf8,umask=000&quot;  </div><div class="line">ACTION==&quot;add&quot;, RUN+=&quot;/bin/mkdir -p /media/%E&#123;dir_name&#125;&quot;, RUN+=&quot;/bin/mount -o $env&#123;mount_options&#125; /dev/%k /media/%E&#123;dir_name&#125;&quot;  </div><div class="line">   </div><div class="line">ACTION==&quot;remove&quot;, ENV&#123;dir_name&#125;!=&quot;&quot;, RUN+=&quot;/bin/umount -l /media/%E&#123;dir_name&#125;&quot;, RUN+=&quot;/bin/rmdir /media/%E&#123;dir_name&#125;&quot;  </div><div class="line">LABEL=&quot;media_by_label_auto_mount_end&quot;</div></pre></td></tr></table></figure></p>
+<p>如果有卷标名，会按卷标名挂载在/media下面</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/linux/">linux</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/02/18/centos-samba匿名共享/" title="centos samba匿名共享" itemprop="url">centos samba匿名共享</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-18T12:46:56.000Z" itemprop="datePublished"> 发表于 2017-02-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>家里 centos做共享，为了方便都是匿名，以下配置即可实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">[global]  </div><div class="line"># 与主机名有关的设定信息  </div><div class="line">workgroup     = home     </div><div class="line"># 与登录文件有关的设定项目，注意变量 (%m)  </div><div class="line">log file = /var/log/samba/log.%m  </div><div class="line">max log size = 50  </div><div class="line"># 这里才是与密码有关的设定项目！  </div><div class="line">security = share  </div><div class="line">  </div><div class="line"># 分享的资源设定方面：  </div><div class="line">[temp]                           </div><div class="line">  #分享资源名称  </div><div class="line">comment    = Temporary file space </div><div class="line"> #简单的解释此资源  </div><div class="line">path       = /tmp                 </div><div class="line"> #实际 Linux 分享的目录  </div><div class="line">writable   = yes                  </div><div class="line"> #是否可写入？在此例为是的  </div><div class="line">browseable = yes                 </div><div class="line">  #能不能被浏览到资源名称  </div><div class="line">guest ok   = yes</div></pre></td></tr></table></figure></p>
+<p>其中security = share  是关键，注意原配置中多个地方出现，<br>可能生效值不是这个，需要注意<br>同时需要关闭selinux和防水墙。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/linux/">linux</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/02/18/CentOS-命令行下连接加密模式为-WPA-WPA2-PSK-的无线网络/" title="CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络" itemprop="url">CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络</a>
   </h1>
   <p class="article-author">By
@@ -571,150 +693,6 @@ https://github.com/chuanyi/msexcel-builder
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/03/31/hibernate自动长主键简单测试结论/" title="关于hibernate自增长键的解释" itemprop="url">关于hibernate自增长键的解释</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-30T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-31</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>工作之初，遇到一个问题是，在集群中，多个hibnate对一个数据库操作的主键重复问题<br>大家都认为采有自增长会产生重复主键。事实情况是怎么样的呢？<br>让我们真实情部下了解一下。<br>测试环境：spring+hibernate5,数据库主键字段设置为自增长。<br>打开hibernate的sql输出，开始mysql的binlog日志。<br>比如我的测试环境中，</p>
-<pre><code>@Id
-@GenericGenerator(name = &quot;generatorId&quot;, strategy = &quot;native&quot;)
-// @GeneratedValue(generator = &quot;generatorId&quot;) //和生成策略名一样 或者
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-// 根据底层数据库自动选择方式，需要底层数据库的设置 如MySQL，会使用自增字段，需要将主键设置成auto_increment。
-@Column(name = &quot;id&quot;)
-@Type(type = &quot;int&quot;)
-private int id;
-
-@Column(name = &quot;name&quot;, length = 200)
-private String name;
-
-@Column(name = &quot;password&quot;, length = 200 )
-private String passowrd;
-
-@Column(name = &quot;birthday&quot;, columnDefinition = &quot;timestamp&quot;)
-private Date birthday;
-
-省略getter/setter等
-</code></pre><p>在这样的配置下，会观察到输出为：<br>    DEBUG SQL:92 - insert into user (birthday, name, password) values (?, ?, ?)</p>
-<p>hibernate根本就没有设置id，id是数据库自动生成的，数据库会保证id唯一。<br>我们再观查 binlog日志，<br>    SET TIMESTAMP=1459431449/<em>!</em>/;<br>    SET @@session.time_zone=’SYSTEM’/<em>!</em>/;<br>    insert into user (birthday, name, password) values (‘2016-03-31 21:37:29’, ‘feng’, null)    </p>
-<p>所以id也正如解释的那样，和hibernate一点关系也没有，集群操作中，这个id都是由数据库来保证唯一的，<br>hibernate不是很多人认为的那样，先一个获取了一个count（）的值来维持 自增长。        </p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/hibernate/">hibernate</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/03/30/hexo源文件备份/" title="hexo源文件备份" itemprop="url">hexo源文件备份</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-29T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-30</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>hexo发布的文件都是以.md文件格式放在source目录，<br>每次生成时，需要读取文件分析 分类，目录等信息<br>所以需要备份，才可以在不同的电脑上操作。<br>最简单的就是直接备份到git.把文件目录复制到 public 目录一起发布即可备份了。<br> 一条命令搞定。</p>
-<pre><code>cp -rf source public &amp;&amp; hexo g &amp;&amp;  hexo d
-</code></pre><p> 同理，想备样式也可以搞定到这这个目录。    </p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/blog/">blog</a>►<a class="article-category-link" href="/categories/blog/软件/">软件</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/hexo/">hexo</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -756,7 +734,7 @@ private Date birthday;
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/收集/" title="收集">收集<sup>5</sup></a></li>
 		  
 		
 		  
@@ -773,6 +751,10 @@ private Date birthday;
 		<ul class="clearfix">
 		
 			
+				<li><a href="/tags/linux/" title="linux">linux<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
 			
 		
@@ -781,7 +763,7 @@ private Date birthday;
 			
 		
 			
-				<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -789,15 +771,11 @@ private Date birthday;
 			
 		
 			
-				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/nginx/" title="nginx">nginx<sup>1</sup></a></li>
 			
 		
 			
