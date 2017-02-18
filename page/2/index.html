@@ -5,23 +5,19 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>spring加载多个属性文件（以及环境变量） | 有药就给你</title>
+    <title>有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="看例就明白1234567&amp;lt;!-- 根据环境变量选择数据库文件 --&amp;gt;	&amp;lt;context:property-placeholder location=&amp;quot;classpath:db_$&amp;#123;mode&amp;#125;.properties&amp;quot;		ignore-unresolvable=&amp;quot;true&amp;quot; /&amp;gt;			&amp;lt;!-- 根据环境变量选择j">
-<meta property="og:type" content="article">
-<meta property="og:title" content="spring加载多个属性文件（以及环境变量）">
-<meta property="og:url" content="http://yoursite.com/2017/01/25/spring加载多个属性文件（以及环境变量）/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="有药就给你">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="看例就明白1234567&amp;lt;!-- 根据环境变量选择数据库文件 --&amp;gt;	&amp;lt;context:property-placeholder location=&amp;quot;classpath:db_$&amp;#123;mode&amp;#125;.properties&amp;quot;		ignore-unresolvable=&amp;quot;true&amp;quot; /&amp;gt;			&amp;lt;!-- 根据环境变量选择j">
-<meta property="og:updated_time" content="2017-01-25T03:25:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="spring加载多个属性文件（以及环境变量）">
-<meta name="twitter:description" content="看例就明白1234567&amp;lt;!-- 根据环境变量选择数据库文件 --&amp;gt;	&amp;lt;context:property-placeholder location=&amp;quot;classpath:db_$&amp;#123;mode&amp;#125;.properties&amp;quot;		ignore-unresolvable=&amp;quot;true&amp;quot; /&amp;gt;			&amp;lt;!-- 根据环境变量选择j">
+<meta name="twitter:title" content="有药就给你">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -74,99 +70,93 @@
 </div>
     </header>
     <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-  
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
+      <div id="main">
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/01/25/spring加载多个属性文件（以及环境变量）/" title="spring加载多个属性文件（以及环境变量）" itemprop="url">spring加载多个属性文件（以及环境变量）</a>
+      <a href="/2016/03/29/hexo-注意事项/" title="使用hexo注意事项" itemprop="url">使用hexo注意事项</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2017-01-25T03:12:32.000Z" itemprop="datePublished"> 发表于 2017-01-25</time>
+    <time datetime="2016-03-28T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-29</time>
     
   </p>
 </header>
-	<div class="article-content">
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		
-			
-		
-		</div>
-		
-		<p>看例就明白<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 根据环境变量选择数据库文件 --&gt;</div><div class="line">	&lt;context:property-placeholder location=&quot;classpath:db_$&#123;mode&#125;.properties&quot;</div><div class="line">		ignore-unresolvable=&quot;true&quot; /&gt;</div><div class="line">		</div><div class="line">	&lt;!-- 根据环境变量选择javaToNode的配置文件--&gt;</div><div class="line">	&lt;context:property-placeholder location=&quot;classpath:/javaToNode/javaToNode_$&#123;mode&#125;.properties&quot;</div><div class="line">		ignore-unresolvable=&quot;true&quot; /&gt;</div></pre></td></tr></table></figure></p>
-<p>ignore-unresolvable  为<code>true</code>,<br>mode 就是环境变量，linux可以是在 /etc/profile等文件设置 win可以在系里设置<br>也可以在运行程序时指定这些环境变量</p>
-  
-	</div>
-		<footer class="article-footer clearfix">
+    <div class="article-content">
+        
+        <p>什么搭建，发布的就不说了，网上教程一大堆，我就说说我使用中遇到的一些问题。</p>
+<h2 id="1，yml语言格式要求"><a href="#1，yml语言格式要求" class="headerlink" title="1，yml语言格式要求"></a>1，yml语言格式要求</h2><p>比如：</p>
+<blockquote>
+<p>title: 使用hexo注意事项</p>
+</blockquote>
+<p>需要注意的是title:后面有一空格，不然无法识别，会报错误。<br>配置文件也有同样的要求。</p>
+<h2 id="2，关于categories-tags-about"><a href="#2，关于categories-tags-about" class="headerlink" title="2，关于categories,tags,about"></a>2，关于categories,tags,about</h2><p>这两个默认是联结到网站 /categories,/tags ,/about,这不是问题，问题是这几个目录下都没有index页面<br>所以会报404，解决的办法是：</p>
+<pre><code>hexo new page categories
+hexo new page tags
+hexo new page about
+</code></pre><p>这时会在source下面对应目录生成index.md,接着需要修改对应的index.md文件，增加一个type: categories</p>
+<pre><code>---
+title: categories
+date: 2016-03-28 19:17:52
+type: categories
+---
+</code></pre><p>最后结果就是这样，type对应改为about,tags,然后成发布即可，about页面需要去手动添些自己想要的内容。毕竟它还是不知道你想要写些啥。</p>
+<h2 id="3，本地语言设置"><a href="#3，本地语言设置" class="headerlink" title="3，本地语言设置"></a>3，本地语言设置</h2><p>一般认为是zh_CN，但是各主题提代的语方代码不一定是这个，需要到对应的主题包languages里查看对应的中文语言是啥，比如hexo-theme-next里的简体中文对应的代码是zh_Hans.yml,这里设置hexo的语言为zh-Hans。</p>
+<pre><code>language: zh-Hans
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/开发/">开发</a>
+  <a class="article-category-link" href="/categories/blog/">blog</a>►<a class="article-category-link" href="/categories/blog/软件/">软件</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/spring/">spring</a>
+  <span></span> <a href="/tags/hexo/">hexo</a>
   </div>
 
 </div>
 
 
 
-	<div class="article-share" id="share">
-	
-	  <div data-url="http://yoursite.com/2017/01/25/spring加载多个属性文件（以及环境变量）/" data-title="spring加载多个属性文件（以及环境变量） | 有药就给你" data-tsina="null" class="share clearfix">
-	  </div>
-	
-	</div>
 
+<div class="comments-count">
+	
+</div>
 
 </footer>
 
-   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2017/02/04/nginx错误ERR-CONTENT-LENGTH-MISMATCH/" title="nginx错误ERR_CONTENT_LENGTH_MISMATCH">
-  <strong>上一篇：</strong><br/>
-  <span>
-  nginx错误ERR_CONTENT_LENGTH_MISMATCH</span>
-</a>
+
+    </article>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix">
+    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
 </div>
-
-
-<div class="next">
-<a href="/2017/01/16/node处理excel/"  title="node js处理excel能添加样式的插件">
- <strong>下一篇：</strong><br/> 
- <span>node js处理excel能添加样式的插件
-</span>
-</a>
-</div>
-
-</nav>
-
-	
-
-</div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- 
- 
-  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -367,89 +357,12 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
 });
 </script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  c.click(function(){
-    ta.css('display', 'block').addClass('fadeIn');
-  });
-  o.click(function(){
-    ta.css('display', 'none');
-  });
-  $(window).scroll(function(){
-    ta.css("top",Math.max(140,320-$(this).scrollTop()));
-  });
-});
-</script>
-
-
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina'),
-      description = $this.attr('description');
-  var html = [
-  '<div class="hoverqrcode clearfix"></div>',
-  '<a class="overlay" id="qrcode"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
-  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
-
-  $('.hoverqrcode').hide();
-
-  var myWidth = 0;
-  function updatehoverqrcode(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-    var qrsize = myWidth > 1024 ? 200:100;
-    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
-    var p = $('.article-share-qrcode').position();
-    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
-                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
-                          .qrcode(options);
-  };
-  $(window).resize(function(){
-    $('.hoverqrcode').hide();
-  });
-  $('.article-share-qrcode').click(function(){
-    updatehoverqrcode();
-    $('.hoverqrcode').toggle();
-  });
-  $('.article-share-qrcode').hover(function(){}, function(){
-      $('.hoverqrcode').hide();
-  });
-});   
-</script>
 
 
 
@@ -510,5 +423,5 @@ $(document).ready(function(){
 <!-- Tiny_search End -->
 
   </body>
-</html>
+ </html>
 

@@ -5,23 +5,32 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>jquery.ajax跨域请求附带请求头等参数 | 有药就给你</title>
+    <title>CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络 | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="项目中，封装一个js供各子应用调用，各子应用访问是通过二级域名，此时出现跨域，并且需要把cookie等一些值提交到服务器作会话等验证123456789101112$.ajax(&amp;#123;                url:  ucs.config.restServer + ucs.rest[url],                data: data,                xhr">
+    <meta name="description" content="CentOS 最小化安装后 需要使用命令行配置无线，记录如下：
+首先我们要安装一个帮我们生成加密密码并配置网卡的工具包 wpa_supplicantyum install -y wpa_supplicant
+1 编辑 /etc/sysconfig/network-scripts/ifcfg-wlan01ONBOOT=yes
+确保随机网卡就启动起来2 iwlist wlan0 scan查看有没有自己">
 <meta property="og:type" content="article">
-<meta property="og:title" content="jquery.ajax跨域请求附带请求头等参数">
-<meta property="og:url" content="http://yoursite.com/2017/02/04/jquery-ajax跨域请求附带请求头等参数/index.html">
+<meta property="og:title" content="CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络">
+<meta property="og:url" content="http://yoursite.com/2017/02/18/CentOS-命令行下连接加密模式为-WPA-WPA2-PSK-的无线网络/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="项目中，封装一个js供各子应用调用，各子应用访问是通过二级域名，此时出现跨域，并且需要把cookie等一些值提交到服务器作会话等验证123456789101112$.ajax(&amp;#123;                url:  ucs.config.restServer + ucs.rest[url],                data: data,                xhr">
-<meta property="og:updated_time" content="2017-02-04T09:32:48.000Z">
+<meta property="og:description" content="CentOS 最小化安装后 需要使用命令行配置无线，记录如下：
+首先我们要安装一个帮我们生成加密密码并配置网卡的工具包 wpa_supplicantyum install -y wpa_supplicant
+1 编辑 /etc/sysconfig/network-scripts/ifcfg-wlan01ONBOOT=yes
+确保随机网卡就启动起来2 iwlist wlan0 scan查看有没有自己">
+<meta property="og:updated_time" content="2017-02-18T10:55:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jquery.ajax跨域请求附带请求头等参数">
-<meta name="twitter:description" content="项目中，封装一个js供各子应用调用，各子应用访问是通过二级域名，此时出现跨域，并且需要把cookie等一些值提交到服务器作会话等验证123456789101112$.ajax(&amp;#123;                url:  ucs.config.restServer + ucs.rest[url],                data: data,                xhr">
+<meta name="twitter:title" content="CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络">
+<meta name="twitter:description" content="CentOS 最小化安装后 需要使用命令行配置无线，记录如下：
+首先我们要安装一个帮我们生成加密密码并配置网卡的工具包 wpa_supplicantyum install -y wpa_supplicant
+1 编辑 /etc/sysconfig/network-scripts/ifcfg-wlan01ONBOOT=yes
+确保随机网卡就启动起来2 iwlist wlan0 scan查看有没有自己">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -80,14 +89,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/04/jquery-ajax跨域请求附带请求头等参数/" title="jquery.ajax跨域请求附带请求头等参数" itemprop="url">jquery.ajax跨域请求附带请求头等参数</a>
+      <a href="/2017/02/18/CentOS-命令行下连接加密模式为-WPA-WPA2-PSK-的无线网络/" title="CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络" itemprop="url">CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2017-02-04T09:27:56.000Z" itemprop="datePublished"> 发表于 2017-02-04</time>
+    <time datetime="2017-02-18T10:44:03.000Z" itemprop="datePublished"> 发表于 2017-02-18</time>
     
   </p>
 </header>
@@ -100,8 +109,12 @@
 		
 		</div>
 		
-		<p>项目中，封装一个js供各子应用调用，各子应用访问是通过二级域名，<br>此时出现跨域，并且需要把cookie等一些值提交到服务器作会话等验证<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">$.ajax(&#123;</div><div class="line">                <span class="attr">url</span>:  ucs.config.restServer + ucs.rest[url],</div><div class="line">                <span class="attr">data</span>: data,</div><div class="line">                <span class="attr">xhrFields</span>: &#123;  <span class="comment">//这是关键</span></div><div class="line">                    withCredentials: <span class="literal">true</span></div><div class="line">                &#125;,</div><div class="line">                <span class="attr">crossDomain</span>: <span class="literal">true</span>, <span class="comment">//这是关键</span></div><div class="line">                type: <span class="string">"GET"</span>,</div><div class="line">                <span class="attr">success</span>: <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</div><div class="line">                    fn &amp;&amp; fn(res);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div></pre></td></tr></table></figure></p>
-<p> 这样会把cookie等信息提交。服务可以根据信息做一些事情。</p>
+		<p>CentOS 最小化安装后 需要使用命令行配置无线，<br>记录如下：</p>
+<p>首先我们要安装一个帮我们生成加密密码并配置网卡的工具包 wpa_supplicant<br>yum install -y wpa_supplicant</p>
+<p>1 编辑 /etc/sysconfig/network-scripts/ifcfg-wlan0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ONBOOT=yes</div></pre></td></tr></table></figure></p>
+<p>确保随机网卡就启动起来<br>2 iwlist wlan0 scan<br>查看有没有自己想加入的网络，比如我的rinawale<br>3  把生成的加密信息加入到ifcfg-wlan0中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wpa_passphrase  rinawale &apos;59122801&apos;  | grep -v &apos;&#123;\|&#125;&apos; &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-wlan0 ;</div><div class="line">echo &apos;WPA=yes&apos; &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-wlan0</div></pre></td></tr></table></figure></p>
+<p>4  试试 可能执行完了这个还执行ifup wlan0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wpa_supplicant -iwlan0 -B -c /etc/wpa_supplicant/wpa_supplicant.conf</div></pre></td></tr></table></figure></p>
+<p>5 随机启动<br>cat &gt;&gt; /etc/rc.local&lt;<eof wpa_supplicant="" -iwlan0="" -b="" -c="" etc="" wpa_supplicant.conf="" ifup="" wlan0="" eof="" 附最后我的ifcfg-wlan0文件="" <figure="" class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">DEVICE=wlan0</div><div class="line">HWADDR=74:2F:68:9B:1F:40</div><div class="line">TYPE=Ethernet</div><div class="line">UUID=861d2178-b235-45c9-be99-b0fd3085d9d0</div><div class="line">ONBOOT=yes</div><div class="line">NM_CONTROLLED=yes</div><div class="line">#BOOTPROTO=dhcp</div><div class="line">BOOTPROTO=static</div><div class="line">IPADDR=192.168.0.50</div><div class="line">NETMASK=255.255.255.0</div><div class="line">GATEWAY=192.168.0.1</div><div class="line">ssid=&quot;rinawale&quot;</div><div class="line">#psk=&quot;59122801&quot;</div><div class="line">psk=0985fbaacaa8d060da9bfebacc752bb8f92364969370a6e01974fa521114741d</div><div class="line">WPA=yes</div></pre></td></tr></table></eof></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -109,13 +122,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
+  <a class="article-category-link" href="/categories/资料收集/">资料收集</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/jquery/">jquery</a>
+  <span></span> <a href="/tags/linux/">linux</a>
   </div>
 
 </div>
@@ -124,7 +137,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/02/04/jquery-ajax跨域请求附带请求头等参数/" data-title="jquery.ajax跨域请求附带请求头等参数 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/02/18/CentOS-命令行下连接加密模式为-WPA-WPA2-PSK-的无线网络/" data-title="CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络 | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -137,19 +150,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/02/12/sublime-go开发/" title="sublime go开发">
-  <strong>上一篇：</strong><br/>
-  <span>
-  sublime go开发</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/02/04/nginx错误ERR-CONTENT-LENGTH-MISMATCH/"  title="nginx错误ERR_CONTENT_LENGTH_MISMATCH">
+<a href="/2017/02/12/go-mysql之联结字符串/"  title="go-mysql之联结字符串">
  <strong>下一篇：</strong><br/> 
- <span>nginx错误ERR_CONTENT_LENGTH_MISMATCH
+ <span>go-mysql之联结字符串
 </span>
 </a>
 </div>
