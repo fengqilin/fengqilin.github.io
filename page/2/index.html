@@ -78,6 +78,67 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/01/25/spring加载多个属性文件（以及环境变量）/" title="spring加载多个属性文件（以及环境变量）" itemprop="url">spring加载多个属性文件（以及环境变量）</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-01-25T03:12:32.000Z" itemprop="datePublished"> 发表于 2017-01-25</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>看例就明白<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 根据环境变量选择数据库文件 --&gt;</div><div class="line">	&lt;context:property-placeholder location=&quot;classpath:db_$&#123;mode&#125;.properties&quot;</div><div class="line">		ignore-unresolvable=&quot;true&quot; /&gt;</div><div class="line">		</div><div class="line">	&lt;!-- 根据环境变量选择javaToNode的配置文件--&gt;</div><div class="line">	&lt;context:property-placeholder location=&quot;classpath:/javaToNode/javaToNode_$&#123;mode&#125;.properties&quot;</div><div class="line">		ignore-unresolvable=&quot;true&quot; /&gt;</div></pre></td></tr></table></figure></p>
+<p>ignore-unresolvable  为<code>true</code>,<br>mode 就是环境变量，linux可以是在 /etc/profile等文件设置 win可以在系里设置<br>也可以在运行程序时指定这些环境变量</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/开发/">开发</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/spring/">spring</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/01/16/node处理excel/" title="node js处理excel能添加样式的插件" itemprop="url">node js处理excel能添加样式的插件</a>
   </h1>
   <p class="article-author">By
@@ -398,7 +459,7 @@ type: categories
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>6</sup></a></li>
+			<li><a href="/categories/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
@@ -427,19 +488,15 @@ type: categories
 			
 		
 			
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/nginx/" title="nginx">nginx<sup>1</sup></a></li>
 			
 		
 			
@@ -448,6 +505,10 @@ type: categories
 		
 			
 				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 		</ul>

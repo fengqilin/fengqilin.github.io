@@ -5,23 +5,26 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>sublime go开发 | 有药就给你</title>
+    <title>nginx thrift负载均衡配置 | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="开发环境，Mac前期用手动方式下载go SDK放在/usr/local/go目录sublime 装好gosublime 各种配置，提示什么的能正常运行。后期因为各种依赖，改用brew安装go,go自动加入环境路径，把原来go移动到别路径，但是sublime自动提示不好用了经仔细检查，查看提示，需要Preferences -&amp;gt; package settings -&amp;gt; GoSublime">
+    <meta name="description" content="最近想搞thrift,因为多台服务器，所以得有负载均衡，因为网站使用nginx，首先想到的就是nginx好在1.90，添加了支持TCP协议的负载均衡,所以就用先nginx试试。nginx1.90对TCP协议的代理并不是默认开启的，需要在编译的时候配置 –with-stream 参数  
+然后，就是修改配置文件 nginx.conf添加 根节点，也就是和http {  }并列的12345678910">
 <meta property="og:type" content="article">
-<meta property="og:title" content="sublime go开发">
-<meta property="og:url" content="http://yoursite.com/2017/02/12/sublime-go开发/index.html">
+<meta property="og:title" content="nginx thrift负载均衡配置">
+<meta property="og:url" content="http://yoursite.com/2017/02/23/nginx-thrift均衡配置/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="开发环境，Mac前期用手动方式下载go SDK放在/usr/local/go目录sublime 装好gosublime 各种配置，提示什么的能正常运行。后期因为各种依赖，改用brew安装go,go自动加入环境路径，把原来go移动到别路径，但是sublime自动提示不好用了经仔细检查，查看提示，需要Preferences -&amp;gt; package settings -&amp;gt; GoSublime">
-<meta property="og:updated_time" content="2017-02-12T03:11:46.000Z">
+<meta property="og:description" content="最近想搞thrift,因为多台服务器，所以得有负载均衡，因为网站使用nginx，首先想到的就是nginx好在1.90，添加了支持TCP协议的负载均衡,所以就用先nginx试试。nginx1.90对TCP协议的代理并不是默认开启的，需要在编译的时候配置 –with-stream 参数  
+然后，就是修改配置文件 nginx.conf添加 根节点，也就是和http {  }并列的12345678910">
+<meta property="og:updated_time" content="2017-02-23T09:08:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="sublime go开发">
-<meta name="twitter:description" content="开发环境，Mac前期用手动方式下载go SDK放在/usr/local/go目录sublime 装好gosublime 各种配置，提示什么的能正常运行。后期因为各种依赖，改用brew安装go,go自动加入环境路径，把原来go移动到别路径，但是sublime自动提示不好用了经仔细检查，查看提示，需要Preferences -&amp;gt; package settings -&amp;gt; GoSublime">
+<meta name="twitter:title" content="nginx thrift负载均衡配置">
+<meta name="twitter:description" content="最近想搞thrift,因为多台服务器，所以得有负载均衡，因为网站使用nginx，首先想到的就是nginx好在1.90，添加了支持TCP协议的负载均衡,所以就用先nginx试试。nginx1.90对TCP协议的代理并不是默认开启的，需要在编译的时候配置 –with-stream 参数  
+然后，就是修改配置文件 nginx.conf添加 根节点，也就是和http {  }并列的12345678910">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -80,14 +83,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/12/sublime-go开发/" title="sublime go开发" itemprop="url">sublime go开发</a>
+      <a href="/2017/02/23/nginx-thrift均衡配置/" title="nginx thrift负载均衡配置" itemprop="url">nginx thrift负载均衡配置</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2017-02-12T02:55:57.000Z" itemprop="datePublished"> 发表于 2017-02-12</time>
+    <time datetime="2017-02-23T08:58:03.000Z" itemprop="datePublished"> 发表于 2017-02-23</time>
     
   </p>
 </header>
@@ -100,10 +103,10 @@
 		
 		</div>
 		
-		<p>开发环境，Mac<br>前期用手动方式下载go SDK放在/usr/local/go目录<br>sublime 装好gosublime 各种配置，提示什么的能正常运行。<br>后期因为各种依赖，改用brew安装go,go自动加入环境路径，<br>把原来go移动到别路径，<br>但是sublime自动提示不好用了<br>经仔细检查，查看提示，<br>需要<br>Preferences -&gt; package settings -&gt; GoSublime -&gt; Settings - Uesrs需要重新配置下GOPATH，GOROOT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &#123;</div><div class="line">   &quot;env&quot;: &#123;</div><div class="line">       &quot;GOPATH&quot;: &quot;/Users/feng/Documents/workspace/code/go&quot;, </div><div class="line">       &quot;GOROOT&quot;: &quot;/usr/local/Cellar/go/1.7.4_2/libexec/&quot; //新的go目录，</div><div class="line">       该目录下有src目录，引入系统包时，会到该目录查找。</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这样才能正常运行，<br>同时，如果要使Command + B就能运行，tools –&gt;build System – &gt; new Systen<br>添加内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;shell_cmd&quot;: &quot;go run $file&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>如果go没有在环境变量中，则需要全路径。</p>
-<p>同时，如果一些别的开发工具（如vscode），无法提示系统的包方法等，需要检查GOROOT环境变量是下是否有src目录，因为提示会从该路径查找。</p>
+		<p>最近想搞thrift,因为多台服务器，所以得有负载均衡，因为网站使用nginx，首先想到的就是nginx<br>好在1.90，添加了支持TCP协议的负载均衡,所以就用先nginx试试。<br>nginx1.90对TCP协议的代理并不是默认开启的，需要在编译的时候配置 –with-stream 参数  </p>
+<p>然后，就是修改配置文件 nginx.conf<br>添加 根节点，也就是和http {  }并列的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">stream &#123;</div><div class="line">    upstream backend &#123;</div><div class="line">      ##  hash $remote_addr consistent;  ##有这个，同一IP一直锁定在一台机器</div><div class="line">        server 127.0.0.1:9000 max_fails=3 weight=2  fail_timeout=30s;</div><div class="line">       server 127.0.0.1:9001 max_fails=3  weight=1 fail_timeout=30s;</div><div class="line">    &#125;</div><div class="line">    server &#123;</div><div class="line">        listen  8999;</div><div class="line">        proxy_connect_timeout 1s;</div><div class="line">        proxy_timeout 3s;</div><div class="line">        proxy_pass backend;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>max_fails  尝试失败次数<br>weight  权重，越大分配越多<br>更多参照  <a href="http://nginx.org/en/docs/stream/ngx_stream_core_module.html" target="_blank" rel="external">http://nginx.org/en/docs/stream/ngx_stream_core_module.html</a></p>
+<p>最后，联结8999端口，就会轮流分配到后端的 9000 ,9001<br>接下来尝试 Haproxy  使用</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -111,13 +114,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/各种坑/">各种坑</a>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/go/">go</a>
+  <span></span> <a href="/tags/nginx/">nginx</a>
   </div>
 
 </div>
@@ -126,7 +129,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/02/12/sublime-go开发/" data-title="sublime go开发 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/02/23/nginx-thrift均衡配置/" data-title="nginx thrift负载均衡配置 | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -139,19 +142,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/02/12/vscode-debug模式/" title="vscode debug模式">
-  <strong>上一篇：</strong><br/>
-  <span>
-  vscode debug模式</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/02/04/jquery-ajax跨域请求附带请求头等参数/"  title="jquery.ajax跨域请求附带请求头等参数">
+<a href="/2017/02/23/COMODO证书申请安装/"  title="COMODO证书申请安装">
  <strong>下一篇：</strong><br/> 
- <span>jquery.ajax跨域请求附带请求头等参数
+ <span>COMODO证书申请安装
 </span>
 </a>
 </div>
