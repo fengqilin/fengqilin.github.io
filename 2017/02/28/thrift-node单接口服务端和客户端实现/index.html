@@ -5,41 +5,26 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>使用hexo注意事项 | 有药就给你</title>
+    <title>thrift node单接口服务端和客户端实现 | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="什么搭建，发布的就不说了，网上教程一大堆，我就说说我使用中遇到的一些问题。
-1，yml语言格式要求比如：
-
-title: 使用hexo注意事项
-
-需要注意的是title:后面有一空格，不然无法识别，会报错误。配置文件也有同样的要求。
-2，关于categories,tags,about这两个默认是联结到网站 /categories,/tags ,/about,这不是问题，问题是这几个目录下都没有in">
+    <meta name="description" content="按上一遍文章定义的idl生成node的接口文件生成文件名为两个: HelloWord_types.js  HelloWorldService.js
+第一步  npm install thrift第二步  服务器端代码123456789101112131415161718192021var thrift = require(&amp;quot;thrift&amp;quot;);var  helloService">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用hexo注意事项">
-<meta property="og:url" content="http://yoursite.com/2016/03/29/hexo-注意事项/index.html">
+<meta property="og:title" content="thrift node单接口服务端和客户端实现">
+<meta property="og:url" content="http://yoursite.com/2017/02/28/thrift-node单接口服务端和客户端实现/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="什么搭建，发布的就不说了，网上教程一大堆，我就说说我使用中遇到的一些问题。
-1，yml语言格式要求比如：
-
-title: 使用hexo注意事项
-
-需要注意的是title:后面有一空格，不然无法识别，会报错误。配置文件也有同样的要求。
-2，关于categories,tags,about这两个默认是联结到网站 /categories,/tags ,/about,这不是问题，问题是这几个目录下都没有in">
-<meta property="og:updated_time" content="2017-01-24T06:56:54.000Z">
+<meta property="og:description" content="按上一遍文章定义的idl生成node的接口文件生成文件名为两个: HelloWord_types.js  HelloWorldService.js
+第一步  npm install thrift第二步  服务器端代码123456789101112131415161718192021var thrift = require(&amp;quot;thrift&amp;quot;);var  helloService">
+<meta property="og:updated_time" content="2017-02-28T09:53:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用hexo注意事项">
-<meta name="twitter:description" content="什么搭建，发布的就不说了，网上教程一大堆，我就说说我使用中遇到的一些问题。
-1，yml语言格式要求比如：
-
-title: 使用hexo注意事项
-
-需要注意的是title:后面有一空格，不然无法识别，会报错误。配置文件也有同样的要求。
-2，关于categories,tags,about这两个默认是联结到网站 /categories,/tags ,/about,这不是问题，问题是这几个目录下都没有in">
+<meta name="twitter:title" content="thrift node单接口服务端和客户端实现">
+<meta name="twitter:description" content="按上一遍文章定义的idl生成node的接口文件生成文件名为两个: HelloWord_types.js  HelloWorldService.js
+第一步  npm install thrift第二步  服务器端代码123456789101112131415161718192021var thrift = require(&amp;quot;thrift&amp;quot;);var  helloService">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -98,14 +83,14 @@ title: 使用hexo注意事项
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/03/29/hexo-注意事项/" title="使用hexo注意事项" itemprop="url">使用hexo注意事项</a>
+      <a href="/2017/02/28/thrift-node单接口服务端和客户端实现/" title="thrift node单接口服务端和客户端实现" itemprop="url">thrift node单接口服务端和客户端实现</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2016-03-28T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-29</time>
+    <time datetime="2017-02-28T09:40:54.000Z" itemprop="datePublished"> 发表于 2017-02-28</time>
     
   </p>
 </header>
@@ -114,43 +99,28 @@ title: 使用hexo注意事项
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1，yml语言格式要求"><span class="toc-number">1.</span> <span class="toc-text">1，yml语言格式要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2，关于categories-tags-about"><span class="toc-number">2.</span> <span class="toc-text">2，关于categories,tags,about</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3，本地语言设置"><span class="toc-number">3.</span> <span class="toc-text">3，本地语言设置</span></a></li></ol>
+			
 		
 		</div>
 		
-		<p>什么搭建，发布的就不说了，网上教程一大堆，我就说说我使用中遇到的一些问题。</p>
-<h2 id="1，yml语言格式要求"><a href="#1，yml语言格式要求" class="headerlink" title="1，yml语言格式要求"></a>1，yml语言格式要求</h2><p>比如：</p>
-<blockquote>
-<p>title: 使用hexo注意事项</p>
-</blockquote>
-<p>需要注意的是title:后面有一空格，不然无法识别，会报错误。<br>配置文件也有同样的要求。</p>
-<h2 id="2，关于categories-tags-about"><a href="#2，关于categories-tags-about" class="headerlink" title="2，关于categories,tags,about"></a>2，关于categories,tags,about</h2><p>这两个默认是联结到网站 /categories,/tags ,/about,这不是问题，问题是这几个目录下都没有index页面<br>所以会报404，解决的办法是：</p>
-<pre><code>hexo new page categories
-hexo new page tags
-hexo new page about
-</code></pre><p>这时会在source下面对应目录生成index.md,接着需要修改对应的index.md文件，增加一个type: categories</p>
-<pre><code>---
-title: categories
-date: 2016-03-28 19:17:52
-type: categories
----
-</code></pre><p>最后结果就是这样，type对应改为about,tags,然后成发布即可，about页面需要去手动添些自己想要的内容。毕竟它还是不知道你想要写些啥。</p>
-<h2 id="3，本地语言设置"><a href="#3，本地语言设置" class="headerlink" title="3，本地语言设置"></a>3，本地语言设置</h2><p>一般认为是zh_CN，但是各主题提代的语方代码不一定是这个，需要到对应的主题包languages里查看对应的中文语言是啥，比如hexo-theme-next里的简体中文对应的代码是zh_Hans.yml,这里设置hexo的语言为zh-Hans。</p>
-<pre><code>language: zh-Hans
-</code></pre>  
+		<p>按上一遍文章定义的idl生成node的接口文件<br>生成文件名为两个: HelloWord_types.js  HelloWorldService.js</p>
+<p>第一步  npm install thrift<br>第二步  服务器端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">var thrift = require(&quot;thrift&quot;);</div><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line">var ttypes = require(&apos;../thriftIDL/gen-nodejs/HelloWord_types&apos;);</div><div class="line"></div><div class="line">var server = thrift.createServer(helloService,</div><div class="line">    &#123;</div><div class="line">        sayHello:function (name ,callBack) &#123;</div><div class="line">            console.log(port+&quot;sayHello:&quot; + name);</div><div class="line">            callBack();</div><div class="line">        &#125;,</div><div class="line">        nextStatus:function (name ,callBack) &#123;</div><div class="line">            console.log(port +  &quot;next ......&quot;);</div><div class="line">            callBack(null,&quot;下一步是.....&quot;)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">);</div><div class="line">server.listen(9000);</div><div class="line">console.log(&quot;server start&quot;);</div><div class="line">server.on(&quot;error&quot;,function(e)&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>第三步 客服端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line"></div><div class="line">var connection = thrift.createConnection(&apos;127.0.0.1&apos;, 9000);</div><div class="line">var client = thrift.createClient(helloService, connection);</div><div class="line">connection.on(&quot;error&quot;,function(e)</div><div class="line">&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div><div class="line">client.sayHello(&quot;什么么玩意儿啊&quot;,function (err,res) &#123;</div><div class="line">     console.log(&quot;----无返回值&quot;)</div><div class="line">&#125;);</div><div class="line"></div><div class="line">client.nextStatus(&quot;有遥遥摇摇&quot;,function (err,res) &#123;</div><div class="line">    console.log(&quot;----&quot; + res)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>先运行服务器端，再运行客户端，应该就可行了。<br>单接口还是很简单的，一个端口绑定着一个服务，一个服务对应着一个接口文件，<br>如果要提供N多个服务就得N多个接口，是不有点怪异？  接下来讲多接口的支持 。</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/blog/">blog</a>►<a class="article-category-link" href="/categories/blog/软件/">软件</a>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/hexo/">hexo</a>
+  <span></span> <a href="/tags/thrift/">thrift</a><a href="/tags/node/">node</a>
   </div>
 
 </div>
@@ -159,7 +129,7 @@ type: categories
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/03/29/hexo-注意事项/" data-title="使用hexo注意事项 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/02/28/thrift-node单接口服务端和客户端实现/" data-title="thrift node单接口服务端和客户端实现 | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -172,14 +142,14 @@ type: categories
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/03/30/hexo源文件备份/" title="hexo源文件备份">
-  <strong>上一篇：</strong><br/>
-  <span>
-  hexo源文件备份</span>
+
+<div class="next">
+<a href="/2017/02/28/thrift-IDL文件/"  title="thrift IDL文件">
+ <strong>下一篇：</strong><br/> 
+ <span>thrift IDL文件
+</span>
 </a>
 </div>
-
 
 </nav>
 
@@ -191,7 +161,7 @@ type: categories
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1，yml语言格式要求"><span class="toc-number">1.</span> <span class="toc-text">1，yml语言格式要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2，关于categories-tags-about"><span class="toc-number">2.</span> <span class="toc-text">2，关于categories,tags,about</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3，本地语言设置"><span class="toc-number">3.</span> <span class="toc-text">3，本地语言设置</span></a></li></ol>
+ 
  
   </div>
 

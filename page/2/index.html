@@ -78,6 +78,67 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/02/04/jquery-ajax跨域请求附带请求头等参数/" title="jquery.ajax跨域请求附带请求头等参数" itemprop="url">jquery.ajax跨域请求附带请求头等参数</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-04T09:27:56.000Z" itemprop="datePublished"> 发表于 2017-02-04</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>项目中，封装一个js供各子应用调用，各子应用访问是通过二级域名，<br>此时出现跨域，并且需要把cookie等一些值提交到服务器作会话等验证<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">$.ajax(&#123;</div><div class="line">                <span class="attr">url</span>:  ucs.config.restServer + ucs.rest[url],</div><div class="line">                <span class="attr">data</span>: data,</div><div class="line">                <span class="attr">xhrFields</span>: &#123;  <span class="comment">//这是关键</span></div><div class="line">                    withCredentials: <span class="literal">true</span></div><div class="line">                &#125;,</div><div class="line">                <span class="attr">crossDomain</span>: <span class="literal">true</span>, <span class="comment">//这是关键</span></div><div class="line">                type: <span class="string">"GET"</span>,</div><div class="line">                <span class="attr">success</span>: <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</div><div class="line">                    fn &amp;&amp; fn(res);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div></pre></td></tr></table></figure></p>
+<p> 这样会把cookie等信息提交。服务可以根据信息做一些事情。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/jquery/">jquery</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/02/04/nginx错误ERR-CONTENT-LENGTH-MISMATCH/" title="nginx错误ERR_CONTENT_LENGTH_MISMATCH" itemprop="url">nginx错误ERR_CONTENT_LENGTH_MISMATCH</a>
   </h1>
   <p class="article-author">By
@@ -524,7 +585,7 @@ type: categories
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>7</sup></a></li>
+			<li><a href="/categories/收集/" title="收集">收集<sup>8</sup></a></li>
 		  
 		
 		  
@@ -557,19 +618,19 @@ type: categories
 			
 		
 			
+				<li><a href="/tags/thrift/" title="thrift">thrift<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/thrift/" title="thrift">thrift<sup>1</sup></a></li>
 			
 		
 			
@@ -578,6 +639,10 @@ type: categories
 		
 			
 				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 		</ul>
