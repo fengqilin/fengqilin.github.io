@@ -78,6 +78,69 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/02/28/thrift-node多接口服务端和客户端实现/" title="thrift node多接口服务端和客户端实现" itemprop="url">thrift node多接口服务端和客户端实现</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-28T09:54:57.000Z" itemprop="datePublished"> 发表于 2017-02-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>网上找资料好久，搞不明白，难道都是使用单接口模式，提供N多端口调用，想想都可怕，如果集群，负载匀衡怎么做呢？<br>现在说说多接口支持的node代码实现<br>再定义一个idl  TwoService.idl 内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">namespace java com.bofide.thrift</div><div class="line">service TwoService&#123;</div><div class="line">  i32 sum(1:i32 one,2:i32 two)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>生成对应的node接口文件 TwoService.js  TwoService_types.js<br>还是先上服务器端代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">var thrift=require(&quot;thrift&quot;);</div><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line">var  twoServiceInterface =require(&apos;../thriftIDL/gen-nodejs/TwoService.js&apos;);</div><div class="line"></div><div class="line">var mProcessor =  new  thrift.MultiplexedProcessor();</div><div class="line">//注册第一个服务，服务名， HelloWorldService，这个值在调用的时候会用到</div><div class="line">mProcessor.registerProcessor(&quot;HelloWorldService&quot;, new helloService.Processor(&#123;</div><div class="line">            sayHello: function (name, callBack) &#123;</div><div class="line">                console.log(port + &quot;sayHello:&quot; + name);</div><div class="line">                callBack();</div><div class="line">            &#125;,</div><div class="line">            nextStatus: function (name, callBack) &#123;</div><div class="line">                console.log(port + &quot;next ......&quot;);</div><div class="line">                callBack(null, &quot;下一步是.....&quot;)</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    )</div><div class="line">);</div><div class="line">//注册第一个服务，服务名，TwoService，这个值在调用的时候会用到</div><div class="line">mProcessor.registerProcessor(&quot;TwoService&quot;,new twoServiceInterface.Processor(</div><div class="line">        &#123;</div><div class="line">            sum:function (a,b,callBack) &#123;</div><div class="line">                console.log(&quot;ffsdfasdfsd&quot;);</div><div class="line">                callBack(null,a+b);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    )</div><div class="line">);</div><div class="line">//这个和单接口不一样</div><div class="line">var server =  thrift.createMultiplexServer(mProcessor);</div><div class="line">server.listen(9000);</div><div class="line">console.log(&quot;server start&quot;);</div><div class="line">server.on(&quot;error&quot;,function(e)&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>现在上客户端代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">var thrift=require(&quot;thrift&quot;);</div><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line">var  twoService =require(&apos;../thriftIDL/gen-nodejs/TwoService.js&apos;);</div><div class="line">var connection = thrift.createConnection(&apos;127.0.0.1&apos;, 9000);</div><div class="line">//第一个参数即上面提到的服务名 ，第二个接口定义，第三个联结</div><div class="line">var two  =  new  thrift.Multiplexer().createClient(&quot;TwoService&quot;,twoService,connection);</div><div class="line">connection.on(&quot;error&quot;,function(e)</div><div class="line">&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"></div><div class="line">two.sum(12,23,function (err,res) &#123;</div><div class="line">    console.log( &quot;----&quot; + res );</div><div class="line">    //调用完了之后再调用别的服务里的方法  服务名也得需要对应起来的 </div><div class="line">    var hello =  new  thrift.Multiplexer().createClient(&quot;HelloWorldService&quot;,helloService,connection);</div><div class="line">    hello.sayHello(&quot;什么么玩意儿啊&quot;,function (err,res) &#123;</div><div class="line">        console.log(&quot;----无返回值&quot;)</div><div class="line">    &#125;);</div><div class="line">    hello.nextStatus(&quot;fdfasdf&quot; ,function (err,res) &#123;</div><div class="line">        console.log(&quot;----无返回值&quot; + res)</div><div class="line">    &#125;);</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>这样才能一个端口提供N多服务，用服务名区分，感觉这样才是比较科学的。 </p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/thrift/">thrift</a><a href="/tags/node/">node</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/02/28/thrift-node单接口服务端和客户端实现/" title="thrift node单接口服务端和客户端实现" itemprop="url">thrift node单接口服务端和客户端实现</a>
   </h1>
   <p class="article-author">By
@@ -633,69 +696,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/02/12/sublime-go开发/" title="sublime go开发" itemprop="url">sublime go开发</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-02-12T02:55:57.000Z" itemprop="datePublished"> 发表于 2017-02-12</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>开发环境，Mac<br>前期用手动方式下载go SDK放在/usr/local/go目录<br>sublime 装好gosublime 各种配置，提示什么的能正常运行。<br>后期因为各种依赖，改用brew安装go,go自动加入环境路径，<br>把原来go移动到别路径，<br>但是sublime自动提示不好用了<br>经仔细检查，查看提示，<br>需要<br>Preferences -&gt; package settings -&gt; GoSublime -&gt; Settings - Uesrs需要重新配置下GOPATH，GOROOT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &#123;</div><div class="line">   &quot;env&quot;: &#123;</div><div class="line">       &quot;GOPATH&quot;: &quot;/Users/feng/Documents/workspace/code/go&quot;, </div><div class="line">       &quot;GOROOT&quot;: &quot;/usr/local/Cellar/go/1.7.4_2/libexec/&quot; //新的go目录，</div><div class="line">       该目录下有src目录，引入系统包时，会到该目录查找。</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这样才能正常运行，<br>同时，如果要使Command + B就能运行，tools –&gt;build System – &gt; new Systen<br>添加内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;shell_cmd&quot;: &quot;go run $file&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>如果go没有在环境变量中，则需要全路径。</p>
-<p>同时，如果一些别的开发工具（如vscode），无法提示系统的包方法等，需要检查GOROOT环境变量是下是否有src目录，因为提示会从该路径查找。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/各种坑/">各种坑</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/go/">go</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -741,7 +741,7 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>8</sup></a></li>
+			<li><a href="/categories/收集/" title="收集">收集<sup>9</sup></a></li>
 		  
 		
 		  
@@ -766,6 +766,10 @@
 			
 		
 			
+				<li><a href="/tags/thrift/" title="thrift">thrift<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
 			
 		
@@ -774,19 +778,7 @@
 			
 		
 			
-				<li><a href="/tags/thrift/" title="thrift">thrift<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/node/" title="node">node<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>2</sup></a></li>
 			
 		
 			
@@ -795,6 +787,14 @@
 		
 			
 				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
 			
 		
 			
