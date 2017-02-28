@@ -5,41 +5,26 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>使用hexo注意事项 | 有药就给你</title>
+    <title>thrift IDL文件 | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="什么搭建，发布的就不说了，网上教程一大堆，我就说说我使用中遇到的一些问题。
-1，yml语言格式要求比如：
-
-title: 使用hexo注意事项
-
-需要注意的是title:后面有一空格，不然无法识别，会报错误。配置文件也有同样的要求。
-2，关于categories,tags,about这两个默认是联结到网站 /categories,/tags ,/about,这不是问题，问题是这几个目录下都没有in">
+    <meta name="description" content="thrift开发中，第一步就是IDL文件定义常见数据类型什么的，就不说了12345namespace java com.bofide.thriftservice HelloWorldService&amp;#123;  string sayHello(1:string name),  string nextStatus(1:string currStatus)&amp;#125;
+namespace 不是必须的，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用hexo注意事项">
-<meta property="og:url" content="http://yoursite.com/2016/03/29/hexo-注意事项/index.html">
+<meta property="og:title" content="thrift IDL文件">
+<meta property="og:url" content="http://yoursite.com/2017/02/28/thrift-IDL文件/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="什么搭建，发布的就不说了，网上教程一大堆，我就说说我使用中遇到的一些问题。
-1，yml语言格式要求比如：
-
-title: 使用hexo注意事项
-
-需要注意的是title:后面有一空格，不然无法识别，会报错误。配置文件也有同样的要求。
-2，关于categories,tags,about这两个默认是联结到网站 /categories,/tags ,/about,这不是问题，问题是这几个目录下都没有in">
-<meta property="og:updated_time" content="2017-01-24T06:56:54.000Z">
+<meta property="og:description" content="thrift开发中，第一步就是IDL文件定义常见数据类型什么的，就不说了12345namespace java com.bofide.thriftservice HelloWorldService&amp;#123;  string sayHello(1:string name),  string nextStatus(1:string currStatus)&amp;#125;
+namespace 不是必须的，">
+<meta property="og:updated_time" content="2017-02-28T09:30:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用hexo注意事项">
-<meta name="twitter:description" content="什么搭建，发布的就不说了，网上教程一大堆，我就说说我使用中遇到的一些问题。
-1，yml语言格式要求比如：
-
-title: 使用hexo注意事项
-
-需要注意的是title:后面有一空格，不然无法识别，会报错误。配置文件也有同样的要求。
-2，关于categories,tags,about这两个默认是联结到网站 /categories,/tags ,/about,这不是问题，问题是这几个目录下都没有in">
+<meta name="twitter:title" content="thrift IDL文件">
+<meta name="twitter:description" content="thrift开发中，第一步就是IDL文件定义常见数据类型什么的，就不说了12345namespace java com.bofide.thriftservice HelloWorldService&amp;#123;  string sayHello(1:string name),  string nextStatus(1:string currStatus)&amp;#125;
+namespace 不是必须的，">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -98,14 +83,14 @@ title: 使用hexo注意事项
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/03/29/hexo-注意事项/" title="使用hexo注意事项" itemprop="url">使用hexo注意事项</a>
+      <a href="/2017/02/28/thrift-IDL文件/" title="thrift IDL文件" itemprop="url">thrift IDL文件</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2016-03-28T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-29</time>
+    <time datetime="2017-02-28T09:23:11.000Z" itemprop="datePublished"> 发表于 2017-02-28</time>
     
   </p>
 </header>
@@ -114,43 +99,26 @@ title: 使用hexo注意事项
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1，yml语言格式要求"><span class="toc-number">1.</span> <span class="toc-text">1，yml语言格式要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2，关于categories-tags-about"><span class="toc-number">2.</span> <span class="toc-text">2，关于categories,tags,about</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3，本地语言设置"><span class="toc-number">3.</span> <span class="toc-text">3，本地语言设置</span></a></li></ol>
+			
 		
 		</div>
 		
-		<p>什么搭建，发布的就不说了，网上教程一大堆，我就说说我使用中遇到的一些问题。</p>
-<h2 id="1，yml语言格式要求"><a href="#1，yml语言格式要求" class="headerlink" title="1，yml语言格式要求"></a>1，yml语言格式要求</h2><p>比如：</p>
-<blockquote>
-<p>title: 使用hexo注意事项</p>
-</blockquote>
-<p>需要注意的是title:后面有一空格，不然无法识别，会报错误。<br>配置文件也有同样的要求。</p>
-<h2 id="2，关于categories-tags-about"><a href="#2，关于categories-tags-about" class="headerlink" title="2，关于categories,tags,about"></a>2，关于categories,tags,about</h2><p>这两个默认是联结到网站 /categories,/tags ,/about,这不是问题，问题是这几个目录下都没有index页面<br>所以会报404，解决的办法是：</p>
-<pre><code>hexo new page categories
-hexo new page tags
-hexo new page about
-</code></pre><p>这时会在source下面对应目录生成index.md,接着需要修改对应的index.md文件，增加一个type: categories</p>
-<pre><code>---
-title: categories
-date: 2016-03-28 19:17:52
-type: categories
----
-</code></pre><p>最后结果就是这样，type对应改为about,tags,然后成发布即可，about页面需要去手动添些自己想要的内容。毕竟它还是不知道你想要写些啥。</p>
-<h2 id="3，本地语言设置"><a href="#3，本地语言设置" class="headerlink" title="3，本地语言设置"></a>3，本地语言设置</h2><p>一般认为是zh_CN，但是各主题提代的语方代码不一定是这个，需要到对应的主题包languages里查看对应的中文语言是啥，比如hexo-theme-next里的简体中文对应的代码是zh_Hans.yml,这里设置hexo的语言为zh-Hans。</p>
-<pre><code>language: zh-Hans
-</code></pre>  
+		<p>thrift开发中，第一步就是IDL文件定义<br>常见数据类型什么的，就不说了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">namespace java com.bofide.thrift</div><div class="line">service HelloWorldService&#123;</div><div class="line">  string sayHello(1:string name),</div><div class="line">  string nextStatus(1:string currStatus)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>namespace 不是必须的，如果生成node基本没什么用的<br>参数前面一定要用编号，不然就等着错吧<br>一般步骤，先安装thrift<br><a href="http://thrift.apache.org/download" target="_blank" rel="external">http://thrift.apache.org/download</a><br>现在不搞Java和Node，先记录这个两个常用命令<br>thrift –gen js:node  idl文件<br>thrift –gen java  idl文件  </p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/blog/">blog</a>►<a class="article-category-link" href="/categories/blog/软件/">软件</a>
+  <a class="article-category-link" href="/categories/总结/">总结</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/hexo/">hexo</a>
+  <span></span> <a href="/tags/thrift/">thrift</a>
   </div>
 
 </div>
@@ -159,7 +127,7 @@ type: categories
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/03/29/hexo-注意事项/" data-title="使用hexo注意事项 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/02/28/thrift-IDL文件/" data-title="thrift IDL文件 | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -172,14 +140,14 @@ type: categories
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/03/30/hexo源文件备份/" title="hexo源文件备份">
-  <strong>上一篇：</strong><br/>
-  <span>
-  hexo源文件备份</span>
+
+<div class="next">
+<a href="/2017/02/23/nginx-thrift均衡配置/"  title="nginx thrift负载均衡配置">
+ <strong>下一篇：</strong><br/> 
+ <span>nginx thrift负载均衡配置
+</span>
 </a>
 </div>
-
 
 </nav>
 
@@ -191,7 +159,7 @@ type: categories
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1，yml语言格式要求"><span class="toc-number">1.</span> <span class="toc-text">1，yml语言格式要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2，关于categories-tags-about"><span class="toc-number">2.</span> <span class="toc-text">2，关于categories,tags,about</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3，本地语言设置"><span class="toc-number">3.</span> <span class="toc-text">3，本地语言设置</span></a></li></ol>
+ 
  
   </div>
 
