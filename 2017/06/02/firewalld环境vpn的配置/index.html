@@ -5,24 +5,24 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>COMODO证书申请安装 | 有药就给你</title>
+    <title>firewalld环境vpn的配置 | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="在https://cheapsslsecurity.com/申请了通配符的证书，也就是Wildcard，如查DV验证，比较容易，可以不用知道域名持有者的邮箱，在网站上下载一个文件放在根目录即可。申请之后，发给一个私钥文件，还可以在网站上下载一个压缩包，有四个文件1,AddTrustExternalCARoot.crt2,COMODORSAAddTrustCA.crt3,COMODORSADomai">
-<meta name="keywords" content="linux,https">
+    <meta name="description" content="```为了模拟一个 pc 对外提供代理，通过该pc上的vpn访问网络的一个环境。因此在一台外网linux 建立vpn环境。操作系统：centos 71,安装 pptpd ，直接yum pptpd就可以配置IP,用户等信息， 这一步网上资料都很多。2.如果没有开防火墙，这时都能连上此vpn了，但是是无法通过vpn ，经过vpn这台主机访问网络的。3 需要用到防火墙伪装转发功能，所以需要开防火墙。ce">
+<meta name="keywords" content="linux,vpn">
 <meta property="og:type" content="article">
-<meta property="og:title" content="COMODO证书申请安装">
-<meta property="og:url" content="http://yoursite.com/2017/02/23/COMODO证书申请安装/index.html">
+<meta property="og:title" content="firewalld环境vpn的配置">
+<meta property="og:url" content="http://yoursite.com/2017/06/02/firewalld环境vpn的配置/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="在https://cheapsslsecurity.com/申请了通配符的证书，也就是Wildcard，如查DV验证，比较容易，可以不用知道域名持有者的邮箱，在网站上下载一个文件放在根目录即可。申请之后，发给一个私钥文件，还可以在网站上下载一个压缩包，有四个文件1,AddTrustExternalCARoot.crt2,COMODORSAAddTrustCA.crt3,COMODORSADomai">
-<meta property="og:updated_time" content="2017-02-23T01:41:39.000Z">
+<meta property="og:description" content="```为了模拟一个 pc 对外提供代理，通过该pc上的vpn访问网络的一个环境。因此在一台外网linux 建立vpn环境。操作系统：centos 71,安装 pptpd ，直接yum pptpd就可以配置IP,用户等信息， 这一步网上资料都很多。2.如果没有开防火墙，这时都能连上此vpn了，但是是无法通过vpn ，经过vpn这台主机访问网络的。3 需要用到防火墙伪装转发功能，所以需要开防火墙。ce">
+<meta property="og:updated_time" content="2017-06-02T08:40:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="COMODO证书申请安装">
-<meta name="twitter:description" content="在https://cheapsslsecurity.com/申请了通配符的证书，也就是Wildcard，如查DV验证，比较容易，可以不用知道域名持有者的邮箱，在网站上下载一个文件放在根目录即可。申请之后，发给一个私钥文件，还可以在网站上下载一个压缩包，有四个文件1,AddTrustExternalCARoot.crt2,COMODORSAAddTrustCA.crt3,COMODORSADomai">
+<meta name="twitter:title" content="firewalld环境vpn的配置">
+<meta name="twitter:description" content="```为了模拟一个 pc 对外提供代理，通过该pc上的vpn访问网络的一个环境。因此在一台外网linux 建立vpn环境。操作系统：centos 71,安装 pptpd ，直接yum pptpd就可以配置IP,用户等信息， 这一步网上资料都很多。2.如果没有开防火墙，这时都能连上此vpn了，但是是无法通过vpn ，经过vpn这台主机访问网络的。3 需要用到防火墙伪装转发功能，所以需要开防火墙。ce">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/23/COMODO证书申请安装/" title="COMODO证书申请安装" itemprop="url">COMODO证书申请安装</a>
+      <a href="/2017/06/02/firewalld环境vpn的配置/" title="firewalld环境vpn的配置" itemprop="url">firewalld环境vpn的配置</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2017-02-23T01:18:25.000Z" itemprop="datePublished"> 发表于 2017-02-23</time>
+    <time datetime="2017-06-02T08:13:13.000Z" itemprop="datePublished"> 发表于 2017-06-02</time>
     
   </p>
 </header>
@@ -101,8 +101,11 @@
 		
 		</div>
 		
-		<p>在<a href="https://cheapsslsecurity.com/申请了通配符的证书，" target="_blank" rel="external">https://cheapsslsecurity.com/申请了通配符的证书，</a><br>也就是Wildcard，如查DV验证，比较容易，可以不用知道域名持有者的邮箱，<br>在网站上下载一个文件放在根目录即可。<br>申请之后，发给一个私钥文件，还可以在网站上下载一个压缩包，<br>有四个文件<br>1,AddTrustExternalCARoot.crt<br>2,COMODORSAAddTrustCA.crt<br>3,COMODORSADomainValidationSecureServerCA.crt<br>4,STAR_bofide_cn.crt<br>最后一个文件是自己申请网站的证书书。<br>把四个证书按<br>4、3，2，1顺序合在一起，就是自己网站的证书，加上收到的key(或是自己保留的key)<br>这两个文件就是所需要的。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">       # listen       80;</div><div class="line">        listen 80 default;</div><div class="line">        listen 443 ssl;</div><div class="line">       # ssl_certificate  /usr/local/nginx/conf/cert/bofide_ov.crt;</div><div class="line">       # ssl_certificate_key /usr/local/nginx/conf/cert/ov.key;</div><div class="line">         ssl_certificate  /usr/local/nginx/conf/cert/bofide2year.cn;</div><div class="line">        ssl_certificate_key /usr/local/nginx/conf/cert/private2year.key;</div><div class="line"></div><div class="line">        ssl_session_cache    shared:SSL:50m;</div><div class="line">        ssl_session_timeout  5m;</div><div class="line">        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</div><div class="line"> .....</div></pre></td></tr></table></figure></p>
-<p> 今天看了一文说1是可以不要的，因为如果信任的不用发送，不信任的，发送了同样不信任，没意义，这样还可以减小传输量。我原来安装别的证书就没合并，理论上说其实就自己证书就可以了。<br> 没试，以后试下</p>
+		<p>```<br>为了模拟一个 pc 对外提供代理，通过该pc上的vpn访问网络的一个环境。<br>因此在一台外网linux 建立vpn环境。<br>操作系统：centos 7<br>1,安装 pptpd ，直接yum pptpd就可以<br>配置IP,用户等信息， 这一步网上资料都很多。<br>2.如果没有开防火墙，这时都能连上此vpn了，但是是无法通过vpn ，经过vpn这台主机<br>访问网络的。<br>3 需要用到防火墙伪装转发功能，所以需要开防火墙。<br>centos7标配是 firewalld ,所以<br>开放这个两个端口<br>firewall-cmd –permanent –add-port=1723/tcp<br>firewall-cmd –permanent –add-port=53/udp<br>开放这个协议<br>firewall-cmd –permanent –direct –add-rule ipv4 filter INPUT 0 -p gre -j ACCEPT</p>
+<p>伪装  eth1是该主机的外网接口<br>firewall-cmd –permanent –direct –add-rule ipv4 filter POSTROUTING 0 -t nat -o  eth1 -j MASQUERADE </p>
+<p>允许通过  ppp+表示这个开头的联结，当有联接时是这个开头的，比如 ppp0   eth1是该主机的外网接口</p>
+<p>firewall-cmd –permanent –direct –add-rule ipv4 filter FORWARD 0 -i ppp+ -o  eth1 -j ACCEPT<br>firewall-cmd –permanent –direct –add-rule ipv4 filter FORWARD 0 -i  eth1  -o ppp+ -j ACCEPT</p>
+<p>OK，可以了</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -116,7 +119,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/linux/">linux</a><a href="/tags/https/">https</a>
+  <span></span> <a href="/tags/linux/">linux</a><a href="/tags/vpn/">vpn</a>
   </div>
 
 </div>
@@ -125,7 +128,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/02/23/COMODO证书申请安装/" data-title="COMODO证书申请安装 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/06/02/firewalld环境vpn的配置/" data-title="firewalld环境vpn的配置 | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -138,19 +141,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/02/23/nginx-thrift均衡配置/" title="nginx thrift负载均衡配置">
-  <strong>上一篇：</strong><br/>
-  <span>
-  nginx thrift负载均衡配置</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/02/18/udev自动挂载移动硬盘到固定位置/"  title="udev自动挂载移动硬盘到固定位置">
+<a href="/2017/03/12/ndoe-thrift客户端重连/"  title="ndoe thrift客户端重连">
  <strong>下一篇：</strong><br/> 
- <span>udev自动挂载移动硬盘到固定位置
+ <span>ndoe thrift客户端重连
 </span>
 </a>
 </div>
