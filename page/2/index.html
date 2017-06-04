@@ -78,6 +78,72 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/02/18/CentOS-命令行下连接加密模式为-WPA-WPA2-PSK-的无线网络/" title="CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络" itemprop="url">CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-18T10:44:03.000Z" itemprop="datePublished"> 发表于 2017-02-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>CentOS 最小化安装后 需要使用命令行配置无线，<br>记录如下：</p>
+<p>首先我们要安装一个帮我们生成加密密码并配置网卡的工具包 wpa_supplicant<br>yum install -y wpa_supplicant</p>
+<p>1 编辑 /etc/sysconfig/network-scripts/ifcfg-wlan0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ONBOOT=yes</div></pre></td></tr></table></figure></p>
+<p>确保随机网卡就启动起来<br>2 iwlist wlan0 scan<br>查看有没有自己想加入的网络，比如我的rinawale<br>3  把生成的加密信息加入到ifcfg-wlan0中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wpa_passphrase  rinawale &apos;59122801&apos;  | grep -v &apos;&#123;\|&#125;&apos; &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-wlan0 ;</div><div class="line">echo &apos;WPA=yes&apos; &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-wlan0</div></pre></td></tr></table></figure></p>
+<p>4  试试 可能执行完了这个还执行ifup wlan0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wpa_supplicant -iwlan0 -B -c /etc/wpa_supplicant/wpa_supplicant.conf</div></pre></td></tr></table></figure></p>
+<p>5 随机启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cat &gt;&gt; /etc/rc.local&lt;&lt;EOF</div><div class="line">wpa_supplicant -iwlan0 -B -c /etc/wpa_supplicant/wpa_supplicant.conf</div><div class="line">ifup  wlan0</div><div class="line">EOF</div></pre></td></tr></table></figure></p>
+<p>附最后我的ifcfg-wlan0文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">DEVICE=wlan0</div><div class="line">HWADDR=74:2F:68:9B:1F:40</div><div class="line">TYPE=Ethernet</div><div class="line">UUID=861d2178-b235-45c9-be99-b0fd3085d9d0</div><div class="line">ONBOOT=yes</div><div class="line">NM_CONTROLLED=yes</div><div class="line">#BOOTPROTO=dhcp</div><div class="line">BOOTPROTO=static</div><div class="line">IPADDR=192.168.0.50</div><div class="line">NETMASK=255.255.255.0</div><div class="line">GATEWAY=192.168.0.1</div><div class="line">ssid=&quot;rinawale&quot;</div><div class="line">#psk=&quot;59122801&quot;</div><div class="line">psk=0985fbaacaa8d060da9bfebacc752bb8f92364969370a6e01974fa521114741d</div><div class="line">WPA=yes</div></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/linux/">linux</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/02/12/go-mysql之联结字符串/" title="go-mysql之联结字符串" itemprop="url">go-mysql之联结字符串</a>
   </h1>
   <p class="article-author">By
@@ -650,87 +716,9 @@ private Date birthday;
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/03/29/hexo-注意事项/" title="使用hexo注意事项" itemprop="url">使用hexo注意事项</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-28T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-29</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>什么搭建，发布的就不说了，网上教程一大堆，我就说说我使用中遇到的一些问题。</p>
-<h2 id="1，yml语言格式要求"><a href="#1，yml语言格式要求" class="headerlink" title="1，yml语言格式要求"></a>1，yml语言格式要求</h2><p>比如：</p>
-<blockquote>
-<p>title: 使用hexo注意事项</p>
-</blockquote>
-<p>需要注意的是title:后面有一空格，不然无法识别，会报错误。<br>配置文件也有同样的要求。</p>
-<h2 id="2，关于categories-tags-about"><a href="#2，关于categories-tags-about" class="headerlink" title="2，关于categories,tags,about"></a>2，关于categories,tags,about</h2><p>这两个默认是联结到网站 /categories,/tags ,/about,这不是问题，问题是这几个目录下都没有index页面<br>所以会报404，解决的办法是：</p>
-<pre><code>hexo new page categories
-hexo new page tags
-hexo new page about
-</code></pre><p>这时会在source下面对应目录生成index.md,接着需要修改对应的index.md文件，增加一个type: categories</p>
-<pre><code>---
-title: categories
-date: 2016-03-28 19:17:52
-type: categories
----
-</code></pre><p>最后结果就是这样，type对应改为about,tags,然后成发布即可，about页面需要去手动添些自己想要的内容。毕竟它还是不知道你想要写些啥。</p>
-<h2 id="3，本地语言设置"><a href="#3，本地语言设置" class="headerlink" title="3，本地语言设置"></a>3，本地语言设置</h2><p>一般认为是zh_CN，但是各主题提代的语方代码不一定是这个，需要到对应的主题包languages里查看对应的中文语言是啥，比如hexo-theme-next里的简体中文对应的代码是zh_Hans.yml,这里设置hexo的语言为zh-Hans。</p>
-<pre><code>language: zh-Hans
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/blog/">blog</a>►<a class="article-category-link" href="/categories/blog/软件/">软件</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/hexo/">hexo</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
   </nav>
 
 </div>
@@ -773,7 +761,7 @@ type: categories
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>10</sup></a></li>
+			<li><a href="/categories/收集/" title="收集">收集<sup>11</sup></a></li>
 		  
 		
 		  
@@ -798,11 +786,15 @@ type: categories
 			
 		
 			
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/thrift/" title="thrift">thrift<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>2</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -810,23 +802,11 @@ type: categories
 			
 		
 			
-				<li><a href="/tags/nginx/" title="nginx">nginx<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/vpn/" title="vpn">vpn<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+				<li><a href="/tags/开发/" title="开发">开发<sup>1</sup></a></li>
 			
 		
 			
@@ -834,7 +814,19 @@ type: categories
 			
 		
 			
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 		</ul>

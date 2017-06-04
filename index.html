@@ -78,6 +78,66 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/06/04/在Node环境下使用tinymce文件管理插件responsive-filemanager/" title="在Node环境下使用tinymce文件管理插件responsive filemanager" itemprop="url">在Node环境下使用tinymce文件管理插件responsive filemanager</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-06-04T04:47:52.000Z" itemprop="datePublished"> 发表于 2017-06-04</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">开发环境为 node + mogone,前端使用到 TinyMCE  ，他有一个 文件管理插件叫做MoxieManager ，收费。所以找了一个免费的  [responsive filemanager](http://www.responsivefilemanager.com/),</div><div class="line">功能非常强大，可以用于管理、上传、下载文件.有两个版本，.net和php版本。</div><div class="line">我们服务器为linux，所以选择php版本。</div><div class="line">1.服务器安装nginx , php环境。</div><div class="line">2，下载responsive filemanager插件，https://github.com/trippo/ResponsiveFilemanager</div><div class="line">解压后放后得到filemanager目录，把此目录放入 node静态目录，如我们的public</div><div class="line"></div><div class="line">3,将 将tinymce/plugins/responsivefilemanager文件夹拷贝到TinyMCE的插件路径中，例  如public/js/tinymce/plugins中。</div><div class="line">4， 修改配置文件。找到 filemanager/config/config.php文件，   </div><div class="line">  A,修改其中的</div><div class="line">上传文件夹目录(upload_dir)， 指定为Node的一静态目录。</div><div class="line">/*</div><div class="line">       |--------------------------------------------------------------------------</div><div class="line">       | path from base_url to base of upload folder</div><div class="line">       |--------------------------------------------------------------------------</div><div class="line">       |</div><div class="line">       | with start and final /</div><div class="line">       |</div><div class="line">       */</div><div class="line">       &apos;upload_dir&apos; =&gt; &apos;/uploads/&apos;,</div><div class="line"></div><div class="line">如上，访问uploads下下面的a.txt,路径为  xxx.com/uploads/a.txt.   </div><div class="line"></div><div class="line">B，当前目录(current_path),</div><div class="line">/*</div><div class="line">        |--------------------------------------------------------------------------</div><div class="line">        | relative path from filemanager folder to upload folder</div><div class="line">        |--------------------------------------------------------------------------</div><div class="line">        |</div><div class="line">        | with final /</div><div class="line">        |</div><div class="line">        */</div><div class="line">        &apos;current_path&apos; =&gt; &apos;../uploads/&apos;,  </div><div class="line">        </div><div class="line">C      似地修改缩略图路径(thumbs_base_path)为 </div><div class="line">/*</div><div class="line">       |--------------------------------------------------------------------------</div><div class="line">       | relative path from filemanager folder to thumbs folder</div><div class="line">       |--------------------------------------------------------------------------</div><div class="line">       |</div><div class="line">       | with final /</div><div class="line">       | DO NOT put inside upload folder</div><div class="line">       |</div><div class="line">       */</div><div class="line">       &apos;thumbs_base_path&apos; =&gt; &apos;../thumbs/&apos;,    </div><div class="line"> 6 设置中文     及上传大小限制</div><div class="line"> /*</div><div class="line">         |--------------------------------------------------------------------------</div><div class="line">         | default language file name</div><div class="line">         |--------------------------------------------------------------------------</div><div class="line">         */</div><div class="line">         &apos;default_language&apos; =&gt; &quot;zh_CN&quot;,  </div><div class="line">          </div><div class="line">     &apos;MaxSizeUpload&apos; =&gt; 50, //50M </div><div class="line"></div><div class="line">6 配轩nginx 进行转发  php文件全转发给php服务处理，其他的全交Node服务器处理。    </div><div class="line">7 有时上传成功，但是目录里没有文件，需要给对应的目录有写入权限。  同时php.ini里文件上传限制要比前面设置的大。 </div><div class="line">8，TinyMCE的初始化代码      </div><div class="line"> &lt;script type=&quot;text/javascript&quot;&gt;</div><div class="line">tinymce.init(&#123;</div><div class="line">    selector: &quot;textarea&quot;,</div><div class="line">    plugins: [</div><div class="line">        &quot;responsivefilemanager advlist autolink lists link image charmap print preview anchor&quot;,</div><div class="line">        &quot;searchreplace visualblocks code fullscreen&quot;, &quot;emoticons&quot;</div><div class="line">    ],</div><div class="line">    toolbar: &quot;insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | emoticons | link image | code&quot;,</div><div class="line">    autosave_ask_before_unload: false,</div><div class="line">    external_filemanager_path:&quot;/filemanager/&quot;,</div><div class="line">    filemanager_title:&quot;Responsive Filemanager&quot; ,</div><div class="line">    external_plugins: &#123; &quot;filemanager&quot; : &quot;/filemanager/plugin.min.js&quot;&#125;,</div><div class="line">    relative_urls : false</div><div class="line">&#125;);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/nginx/">nginx</a><a href="/tags/node/">node</a><a href="/tags/开发/">开发</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/06/02/firewalld环境vpn的配置/" title="firewalld环境vpn的配置" itemprop="url">firewalld环境vpn的配置</a>
   </h1>
   <p class="article-author">By
@@ -614,75 +674,9 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/02/18/CentOS-命令行下连接加密模式为-WPA-WPA2-PSK-的无线网络/" title="CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络" itemprop="url">CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-02-18T10:44:03.000Z" itemprop="datePublished"> 发表于 2017-02-18</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>CentOS 最小化安装后 需要使用命令行配置无线，<br>记录如下：</p>
-<p>首先我们要安装一个帮我们生成加密密码并配置网卡的工具包 wpa_supplicant<br>yum install -y wpa_supplicant</p>
-<p>1 编辑 /etc/sysconfig/network-scripts/ifcfg-wlan0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ONBOOT=yes</div></pre></td></tr></table></figure></p>
-<p>确保随机网卡就启动起来<br>2 iwlist wlan0 scan<br>查看有没有自己想加入的网络，比如我的rinawale<br>3  把生成的加密信息加入到ifcfg-wlan0中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wpa_passphrase  rinawale &apos;59122801&apos;  | grep -v &apos;&#123;\|&#125;&apos; &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-wlan0 ;</div><div class="line">echo &apos;WPA=yes&apos; &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-wlan0</div></pre></td></tr></table></figure></p>
-<p>4  试试 可能执行完了这个还执行ifup wlan0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wpa_supplicant -iwlan0 -B -c /etc/wpa_supplicant/wpa_supplicant.conf</div></pre></td></tr></table></figure></p>
-<p>5 随机启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cat &gt;&gt; /etc/rc.local&lt;&lt;EOF</div><div class="line">wpa_supplicant -iwlan0 -B -c /etc/wpa_supplicant/wpa_supplicant.conf</div><div class="line">ifup  wlan0</div><div class="line">EOF</div></pre></td></tr></table></figure></p>
-<p>附最后我的ifcfg-wlan0文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">DEVICE=wlan0</div><div class="line">HWADDR=74:2F:68:9B:1F:40</div><div class="line">TYPE=Ethernet</div><div class="line">UUID=861d2178-b235-45c9-be99-b0fd3085d9d0</div><div class="line">ONBOOT=yes</div><div class="line">NM_CONTROLLED=yes</div><div class="line">#BOOTPROTO=dhcp</div><div class="line">BOOTPROTO=static</div><div class="line">IPADDR=192.168.0.50</div><div class="line">NETMASK=255.255.255.0</div><div class="line">GATEWAY=192.168.0.1</div><div class="line">ssid=&quot;rinawale&quot;</div><div class="line">#psk=&quot;59122801&quot;</div><div class="line">psk=0985fbaacaa8d060da9bfebacc752bb8f92364969370a6e01974fa521114741d</div><div class="line">WPA=yes</div></pre></td></tr></table></figure></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/linux/">linux</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
   </nav>
 
 </div>
@@ -725,7 +719,7 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>10</sup></a></li>
+			<li><a href="/categories/收集/" title="收集">收集<sup>11</sup></a></li>
 		  
 		
 		  
@@ -750,11 +744,15 @@
 			
 		
 			
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/thrift/" title="thrift">thrift<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>2</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -762,23 +760,11 @@
 			
 		
 			
-				<li><a href="/tags/nginx/" title="nginx">nginx<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/vpn/" title="vpn">vpn<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+				<li><a href="/tags/开发/" title="开发">开发<sup>1</sup></a></li>
 			
 		
 			
@@ -786,7 +772,19 @@
 			
 		
 			
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 		</ul>
