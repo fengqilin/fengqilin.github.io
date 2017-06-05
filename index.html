@@ -78,6 +78,66 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/06/05/mongorestore出现错认证不能过/" title="mongorestore出现错认证不能过" itemprop="url">mongorestore出现错认证不能过</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-06-05T00:48:32.000Z" itemprop="datePublished"> 发表于 2017-06-05</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">在确保用户名和密码正的前题下， 调用 mongorestore  出现错误：  </div><div class="line">Failed: error connecting to db server: server returned error on SASL authentication step: Authentication failed.    </div><div class="line">解决方案是添加参数   </div><div class="line">--authenticationDatabase  参数制定认证数据库</div></pre></td></tr></table></figure>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/mongo/">mongo</a><a href="/tags/开发/">开发</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/06/04/在Node环境下使用tinymce文件管理插件responsive-filemanager/" title="在Node环境下使用tinymce文件管理插件responsive filemanager" itemprop="url">在Node环境下使用tinymce文件管理插件responsive filemanager</a>
   </h1>
   <p class="article-author">By
@@ -110,7 +170,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/nginx/">nginx</a><a href="/tags/node/">node</a><a href="/tags/开发/">开发</a>
+  <span></span> <a href="/tags/开发/">开发</a><a href="/tags/nginx/">nginx</a><a href="/tags/node/">node</a>
   </div>
 
 </div>
@@ -613,67 +673,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/02/18/centos-samba匿名共享/" title="centos samba匿名共享" itemprop="url">centos samba匿名共享</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-02-18T12:46:56.000Z" itemprop="datePublished"> 发表于 2017-02-18</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>家里 centos做共享，为了方便都是匿名，以下配置即可实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">[global]  </div><div class="line"># 与主机名有关的设定信息  </div><div class="line">workgroup     = home     </div><div class="line"># 与登录文件有关的设定项目，注意变量 (%m)  </div><div class="line">log file = /var/log/samba/log.%m  </div><div class="line">max log size = 50  </div><div class="line"># 这里才是与密码有关的设定项目！  </div><div class="line">security = share  </div><div class="line">  </div><div class="line"># 分享的资源设定方面：  </div><div class="line">[temp]                           </div><div class="line">  #分享资源名称  </div><div class="line">comment    = Temporary file space </div><div class="line"> #简单的解释此资源  </div><div class="line">path       = /tmp                 </div><div class="line"> #实际 Linux 分享的目录  </div><div class="line">writable   = yes                  </div><div class="line"> #是否可写入？在此例为是的  </div><div class="line">browseable = yes                 </div><div class="line">  #能不能被浏览到资源名称  </div><div class="line">guest ok   = yes</div></pre></td></tr></table></figure></p>
-<p>其中security = share  是关键，注意原配置中多个地方出现，<br>可能生效值不是这个，需要注意<br>同时需要关闭selinux和防水墙。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/linux/">linux</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -719,7 +718,7 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>11</sup></a></li>
+			<li><a href="/categories/收集/" title="收集">收集<sup>12</sup></a></li>
 		  
 		
 		  
@@ -740,10 +739,6 @@
 			
 		
 			
-				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
@@ -756,11 +751,35 @@
 			
 		
 			
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/开发/" title="开发">开发<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
 			
 		
 			
+				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
 			
 		
 			
@@ -769,22 +788,6 @@
 		
 			
 				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/开发/" title="开发">开发<sup>1</sup></a></li>
 			
 		
 		</ul>

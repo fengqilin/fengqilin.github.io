@@ -5,24 +5,24 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>thrift node单接口服务端和客户端实现 | 有药就给你</title>
+    <title>mongorestore出现错认证不能过 | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="按上一遍文章定义的idl生成node的接口文件生成文件名为两个: HelloWord_types.js  HelloWorldService.js 第一步  npm install thrift第二步  服务器端代码123456789101112131415161718192021var thrift = require(&amp;quot;thrift&amp;quot;);var  helloService">
-<meta name="keywords" content="thrift,node">
+    <meta name="description" content="1234在确保用户名和密码正的前题下， 调用 mongorestore  出现错误：  Failed: error connecting to db server: server returned error on SASL authentication step: Authentication failed.    解决方案是添加参数   --authenticationDatabase  参数">
+<meta name="keywords" content="mongo,开发">
 <meta property="og:type" content="article">
-<meta property="og:title" content="thrift node单接口服务端和客户端实现">
-<meta property="og:url" content="http://yoursite.com/2017/02/28/thrift-node单接口服务端和客户端实现/index.html">
+<meta property="og:title" content="mongorestore出现错认证不能过">
+<meta property="og:url" content="http://yoursite.com/2017/06/05/mongorestore出现错认证不能过/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="按上一遍文章定义的idl生成node的接口文件生成文件名为两个: HelloWord_types.js  HelloWorldService.js 第一步  npm install thrift第二步  服务器端代码123456789101112131415161718192021var thrift = require(&amp;quot;thrift&amp;quot;);var  helloService">
-<meta property="og:updated_time" content="2017-02-28T09:53:59.000Z">
+<meta property="og:description" content="1234在确保用户名和密码正的前题下， 调用 mongorestore  出现错误：  Failed: error connecting to db server: server returned error on SASL authentication step: Authentication failed.    解决方案是添加参数   --authenticationDatabase  参数">
+<meta property="og:updated_time" content="2017-06-05T00:50:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="thrift node单接口服务端和客户端实现">
-<meta name="twitter:description" content="按上一遍文章定义的idl生成node的接口文件生成文件名为两个: HelloWord_types.js  HelloWorldService.js 第一步  npm install thrift第二步  服务器端代码123456789101112131415161718192021var thrift = require(&amp;quot;thrift&amp;quot;);var  helloService">
+<meta name="twitter:title" content="mongorestore出现错认证不能过">
+<meta name="twitter:description" content="1234在确保用户名和密码正的前题下， 调用 mongorestore  出现错误：  Failed: error connecting to db server: server returned error on SASL authentication step: Authentication failed.    解决方案是添加参数   --authenticationDatabase  参数">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/28/thrift-node单接口服务端和客户端实现/" title="thrift node单接口服务端和客户端实现" itemprop="url">thrift node单接口服务端和客户端实现</a>
+      <a href="/2017/06/05/mongorestore出现错认证不能过/" title="mongorestore出现错认证不能过" itemprop="url">mongorestore出现错认证不能过</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2017-02-28T09:40:54.000Z" itemprop="datePublished"> 发表于 2017-02-28</time>
+    <time datetime="2017-06-05T00:48:32.000Z" itemprop="datePublished"> 发表于 2017-06-05</time>
     
   </p>
 </header>
@@ -101,10 +101,7 @@
 		
 		</div>
 		
-		<p>按上一遍文章定义的idl生成node的接口文件<br>生成文件名为两个: HelloWord_types.js  HelloWorldService.js</p>
-<p>第一步  npm install thrift<br>第二步  服务器端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">var thrift = require(&quot;thrift&quot;);</div><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line">var ttypes = require(&apos;../thriftIDL/gen-nodejs/HelloWord_types&apos;);</div><div class="line"></div><div class="line">var server = thrift.createServer(helloService,</div><div class="line">    &#123;</div><div class="line">        sayHello:function (name ,callBack) &#123;</div><div class="line">            console.log(port+&quot;sayHello:&quot; + name);</div><div class="line">            callBack();</div><div class="line">        &#125;,</div><div class="line">        nextStatus:function (name ,callBack) &#123;</div><div class="line">            console.log(port +  &quot;next ......&quot;);</div><div class="line">            callBack(null,&quot;下一步是.....&quot;)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">);</div><div class="line">server.listen(9000);</div><div class="line">console.log(&quot;server start&quot;);</div><div class="line">server.on(&quot;error&quot;,function(e)&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>第三步 客服端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line"></div><div class="line">var connection = thrift.createConnection(&apos;127.0.0.1&apos;, 9000);</div><div class="line">var client = thrift.createClient(helloService, connection);</div><div class="line">connection.on(&quot;error&quot;,function(e)</div><div class="line">&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div><div class="line">client.sayHello(&quot;什么么玩意儿啊&quot;,function (err,res) &#123;</div><div class="line">     console.log(&quot;----无返回值&quot;)</div><div class="line">&#125;);</div><div class="line"></div><div class="line">client.nextStatus(&quot;有遥遥摇摇&quot;,function (err,res) &#123;</div><div class="line">    console.log(&quot;----&quot; + res)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<p>先运行服务器端，再运行客户端，应该就可行了。<br>单接口还是很简单的，一个端口绑定着一个服务，一个服务对应着一个接口文件，<br>如果要提供N多个服务就得N多个接口，是不有点怪异？  接下来讲多接口的支持 。</p>
+		<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">在确保用户名和密码正的前题下， 调用 mongorestore  出现错误：  </div><div class="line">Failed: error connecting to db server: server returned error on SASL authentication step: Authentication failed.    </div><div class="line">解决方案是添加参数   </div><div class="line">--authenticationDatabase  参数制定认证数据库</div></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -118,7 +115,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/thrift/">thrift</a><a href="/tags/node/">node</a>
+  <span></span> <a href="/tags/mongo/">mongo</a><a href="/tags/开发/">开发</a>
   </div>
 
 </div>
@@ -127,7 +124,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/02/28/thrift-node单接口服务端和客户端实现/" data-title="thrift node单接口服务端和客户端实现 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/06/05/mongorestore出现错认证不能过/" data-title="mongorestore出现错认证不能过 | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -140,19 +137,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/02/28/thrift-node多接口服务端和客户端实现/" title="thrift node多接口服务端和客户端实现">
-  <strong>上一篇：</strong><br/>
-  <span>
-  thrift node多接口服务端和客户端实现</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/02/28/thrift-IDL文件/"  title="thrift IDL文件">
+<a href="/2017/06/04/在Node环境下使用tinymce文件管理插件responsive-filemanager/"  title="在Node环境下使用tinymce文件管理插件responsive filemanager">
  <strong>下一篇：</strong><br/> 
- <span>thrift IDL文件
+ <span>在Node环境下使用tinymce文件管理插件responsive filemanager
 </span>
 </a>
 </div>
