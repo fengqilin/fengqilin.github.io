@@ -78,6 +78,66 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/06/05/Mac-linux环境tess4j使用/" title="Mac,linux环境tess4j使用" itemprop="url">Mac,linux环境tess4j使用</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-06-05T00:55:24.000Z" itemprop="datePublished"> 发表于 2017-06-05</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">tess4j是一个java环境的图形识别软件，它是通过JNA调用dll或so达到识别图片的功能。</div><div class="line">在window环境，JAR包中已包含dll,不用处理即可。简单几行代码即可</div><div class="line">File imageFile = new File(&quot;/Users/feng/Documents/workspace/rand-code-imgage.jpg&quot;);  </div><div class="line">        ITesseract instance = new Tesseract();  // JNA Interface Mapping  </div><div class="line">        instance.setDatapath(&quot;/Users/feng/Downloads/Tess4J3.3.1/tessdata&quot;);</div><div class="line">         </div><div class="line">          String result = instance.doOCR(imageFile);  </div><div class="line">          System.out.println(result);  </div><div class="line">setDatapath 需要下载最新的tessdata。</div><div class="line"></div><div class="line">在Mac环境，需要自己安装 tesseract </div><div class="line">brew install tesseract --all-languages   </div><div class="line">在linux (centos)安装：</div><div class="line">在安装了epel后，</div><div class="line">yum install tesseract 即可</div></pre></td></tr></table></figure>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/tess4j/">tess4j</a><a href="/tags/开发/">开发</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/06/05/mongorestore出现错认证不能过/" title="mongorestore出现错认证不能过" itemprop="url">mongorestore出现错认证不能过</a>
   </h1>
   <p class="article-author">By
@@ -110,7 +170,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/mongo/">mongo</a><a href="/tags/开发/">开发</a>
+  <span></span> <a href="/tags/开发/">开发</a><a href="/tags/mongo/">mongo</a>
   </div>
 
 </div>
@@ -612,67 +672,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/02/18/udev自动挂载移动硬盘到固定位置/" title="udev自动挂载移动硬盘到固定位置" itemprop="url">udev自动挂载移动硬盘到固定位置</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-02-18T12:50:48.000Z" itemprop="datePublished"> 发表于 2017-02-18</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>1，首先需要安装支持格式ntfs-3g<br>2，vi /etc/udev/rules.d/10-usbstorage.rules<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">KERNEL!=&quot;sd*&quot;, GOTO=&quot;media_by_label_auto_mount_end&quot;  </div><div class="line">SUBSYSTEM!=&quot;block&quot;,GOTO=&quot;media_by_label_auto_mount_end&quot;  </div><div class="line">IMPORT&#123;program&#125;=&quot;/sbin/blkid -o udev -p %N&quot;  </div><div class="line">ENV&#123;ID_FS_TYPE&#125;==&quot;&quot;, GOTO=&quot;media_by_label_auto_mount_end&quot;  </div><div class="line">ENV&#123;ID_FS_LABEL&#125;!=&quot;&quot;, ENV&#123;dir_name&#125;=&quot;%E&#123;ID_FS_LABEL&#125;&quot;  </div><div class="line">ENV&#123;ID_FS_LABEL&#125;==&quot;&quot;, ENV&#123;dir_name&#125;=&quot;Untitled-%k&quot;  </div><div class="line">ACTION==&quot;add&quot;, ENV&#123;mount_options&#125;=&quot;relatime,sync&quot;  </div><div class="line">ACTION==&quot;add&quot;, ENV&#123;ID_FS_TYPE&#125;==&quot;vfat&quot;, ENV&#123;mount_options&#125;=&quot;iocharset=utf8,umask=000&quot;  </div><div class="line">ACTION==&quot;add&quot;, ENV&#123;ID_FS_TYPE&#125;==&quot;ntfs&quot;, ENV&#123;mount_options&#125;=&quot;iocharset=utf8,umask=000&quot;  </div><div class="line">ACTION==&quot;add&quot;, RUN+=&quot;/bin/mkdir -p /media/%E&#123;dir_name&#125;&quot;, RUN+=&quot;/bin/mount -o $env&#123;mount_options&#125; /dev/%k /media/%E&#123;dir_name&#125;&quot;  </div><div class="line">   </div><div class="line">ACTION==&quot;remove&quot;, ENV&#123;dir_name&#125;!=&quot;&quot;, RUN+=&quot;/bin/umount -l /media/%E&#123;dir_name&#125;&quot;, RUN+=&quot;/bin/rmdir /media/%E&#123;dir_name&#125;&quot;  </div><div class="line">LABEL=&quot;media_by_label_auto_mount_end&quot;</div></pre></td></tr></table></figure></p>
-<p>如果有卷标名，会按卷标名挂载在/media下面</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/linux/">linux</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -718,7 +717,7 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>12</sup></a></li>
+			<li><a href="/categories/收集/" title="收集">收集<sup>13</sup></a></li>
 		  
 		
 		  
@@ -743,7 +742,7 @@
 			
 		
 			
-				<li><a href="/tags/thrift/" title="thrift">thrift<sup>3</sup></a></li>
+				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
 			
 		
 			
@@ -751,11 +750,11 @@
 			
 		
 			
-				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
+				<li><a href="/tags/thrift/" title="thrift">thrift<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>2</sup></a></li>
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
 			
 		
 			
@@ -763,23 +762,11 @@
 			
 		
 			
-				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
 			
 		
 			
@@ -788,6 +775,22 @@
 		
 			
 				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
 			
 		
 		</ul>
