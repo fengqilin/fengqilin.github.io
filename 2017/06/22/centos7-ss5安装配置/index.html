@@ -12,17 +12,17 @@
     
 
     
-    <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435363738394041yum -y install gcc automake makeyum -y install pam-devel openldap-devel cyrus-sasl-devel openssl-develwget http://jaist.dl.sour">
+    <meta name="description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445yum -y install gcc automake makeyum -y install pam-devel openldap-devel cyrus-sasl-devel openssl-develwget http://jaist">
 <meta name="keywords" content="linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="centos7 ss5安装配置">
 <meta property="og:url" content="http://yoursite.com/2017/06/22/centos7-ss5安装配置/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041yum -y install gcc automake makeyum -y install pam-devel openldap-devel cyrus-sasl-devel openssl-develwget http://jaist.dl.sour">
-<meta property="og:updated_time" content="2017-06-22T06:23:18.000Z">
+<meta property="og:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445yum -y install gcc automake makeyum -y install pam-devel openldap-devel cyrus-sasl-devel openssl-develwget http://jaist">
+<meta property="og:updated_time" content="2017-06-22T06:31:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="centos7 ss5安装配置">
-<meta name="twitter:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041yum -y install gcc automake makeyum -y install pam-devel openldap-devel cyrus-sasl-devel openssl-develwget http://jaist.dl.sour">
+<meta name="twitter:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445yum -y install gcc automake makeyum -y install pam-devel openldap-devel cyrus-sasl-devel openssl-develwget http://jaist">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -101,7 +101,7 @@
 		
 		</div>
 		
-		<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">yum -y install gcc automake make</div><div class="line">yum -y install pam-devel openldap-devel cyrus-sasl-devel openssl-devel</div><div class="line"></div><div class="line"></div><div class="line">wget http://jaist.dl.sourceforge.net/sourceforge/ss5/ss5-3.6.1-1.tar.gz</div><div class="line">tar zxvf ss5-3.6.1-1.tar.gz</div><div class="line">cd ss5-3.6.1</div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div><div class="line"></div><div class="line">#启动ss5服务</div><div class="line">/etc/init.d/ss5 start</div><div class="line"></div><div class="line">注意，ss5可能没有x权限，需要手动加上</div><div class="line">配黑点文件：   </div><div class="line"> /etc/opt/ss5/ss5.conf</div><div class="line"> 默认端口1080 </div><div class="line"> 默认是无权限验证  </div><div class="line"> </div><div class="line"> #       SHost           SPort           Authentication</div><div class="line">#</div><div class="line">auth    0.0.0.0/0               -              -</div><div class="line">但这样可能还是代理上不了的</div><div class="line">需要更改   为可用（去掉注释）</div><div class="line">permit -        0.0.0.0/0       -       0.0.0.0/0       -       -       -       -       -</div><div class="line"> 如果不记录日志：</div><div class="line"> /etc/init.d/ss5 添加 -m</div><div class="line"> # Start daemon.</div><div class="line">echo -n &quot;Starting ss5... &quot;</div><div class="line">if [ $OS = &quot;Linux&quot; ]; then</div><div class="line">daemon /usr/sbin/ss5 -m -t $SS5_OPTS</div><div class="line">touch /var/lock/subsys/ss5</div><div class="line">if [ $OS = &quot;SunOS&quot; ]; then</div><div class="line">/usr/sbin/ss5 -m -t</div><div class="line">touch /var/lock/subsys/ss5</div><div class="line">else</div><div class="line">/usr/local/sbin/ss5 -m -t</div><div class="line">fi</div><div class="line">echo &quot;done&quot;</div><div class="line">fi</div></pre></td></tr></table></figure>
+		<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">yum -y install gcc automake make</div><div class="line">yum -y install pam-devel openldap-devel cyrus-sasl-devel openssl-devel</div><div class="line"></div><div class="line"></div><div class="line">wget http://jaist.dl.sourceforge.net/sourceforge/ss5/ss5-3.6.1-1.tar.gz</div><div class="line">tar zxvf ss5-3.6.1-1.tar.gz</div><div class="line">cd ss5-3.6.1</div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div><div class="line"></div><div class="line">#启动ss5服务</div><div class="line">/etc/init.d/ss5 start</div><div class="line"></div><div class="line">注意，ss5可能没有x权限，需要手动加上</div><div class="line">配黑点文件：   </div><div class="line"> /etc/opt/ss5/ss5.conf</div><div class="line"> 默认端口1080 </div><div class="line"> 默认是无权限验证  </div><div class="line"> </div><div class="line"> #       SHost           SPort           Authentication</div><div class="line">#</div><div class="line">auth    0.0.0.0/0               -              -</div><div class="line">但这样可能还是代理上不了的</div><div class="line">需要更改   为可用（去掉注释）</div><div class="line">permit -        0.0.0.0/0       -       0.0.0.0/0       -       -       -       -       -</div><div class="line"> 如果不记录日志：</div><div class="line"> /etc/init.d/ss5 添加 -m</div><div class="line"> # Start daemon.</div><div class="line">echo -n &quot;Starting ss5... &quot;</div><div class="line">if [ $OS = &quot;Linux&quot; ]; then</div><div class="line">daemon /usr/sbin/ss5 -m -t $SS5_OPTS</div><div class="line">touch /var/lock/subsys/ss5</div><div class="line">if [ $OS = &quot;SunOS&quot; ]; then</div><div class="line">/usr/sbin/ss5 -m -t</div><div class="line">touch /var/lock/subsys/ss5</div><div class="line">else</div><div class="line">/usr/local/sbin/ss5 -m -t</div><div class="line">fi</div><div class="line">echo &quot;done&quot;</div><div class="line">fi</div><div class="line"></div><div class="line">其它：建立定时自动重启ss5的脚本ss5restart.sh （解决ss5断断续续出现1080端口不通的问题）</div><div class="line"></div><div class="line">*/10 * * * *  /etc/init.d/ss5 restart</div></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -137,6 +137,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2017/08/08/jenkins-Wrong-volume-permissions/" title="jenkins  Wrong volume permissions">
+  <strong>上一篇：</strong><br/>
+  <span>
+  jenkins  Wrong volume permissions</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2017/06/05/Mac-linux环境tess4j使用/"  title="Mac,linux环境tess4j使用">
@@ -197,7 +205,7 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>14</sup></a></li>
+			<li><a href="/categories/收集/" title="收集">收集<sup>15</sup></a></li>
 		  
 		
 		  
@@ -226,11 +234,11 @@
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
+				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
 			
 		
 			
@@ -242,7 +250,15 @@
 			
 		
 			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -250,11 +266,11 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/docker/" title="docker">docker<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/vpn/" title="vpn">vpn<sup>1</sup></a></li>
+				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
 			
 		
 			
@@ -266,11 +282,11 @@
 			
 		
 			
-				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+				<li><a href="/tags/vpn/" title="vpn">vpn<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
 			
 		
 		</ul>

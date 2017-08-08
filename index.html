@@ -78,6 +78,66 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/08/08/jenkins-Wrong-volume-permissions/" title="jenkins  Wrong volume permissions" itemprop="url">jenkins  Wrong volume permissions</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-08-08T09:37:24.000Z" itemprop="datePublished"> 发表于 2017-08-08</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Linux 主机， root账号运行 docker运行 jenkins 一切正常，</div><div class="line">当挂载主机目录时，则出现   </div><div class="line"></div><div class="line">touch: cannot touch ‘/var/jenkins_home/copy_reference_file.log’: Permission denied</div><div class="line">Can not write to /var/jenkins_home/copy_reference_file.log. Wrong volume permissions?</div><div class="line"></div><div class="line">解决步骤：   </div><div class="line">1，确认目录权限  </div><div class="line"> docker run -ti --rm --entrypoint=&quot;/bin/bash&quot; jenkins -c &quot;whoami &amp;&amp; id&quot;</div><div class="line"> jenkins</div><div class="line"> uid=1000(jenkins) gid=1000(jenkins) groups=1000(jenkins) </div><div class="line"> 而本地的 /var/jenkins_home 是root用户创建， </div><div class="line"> </div><div class="line"> uid=0(root) gid=0(root) 组=0(root) 环境=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023</div><div class="line">2，/var/jenkins_home </div><div class="line">chown -R 1000 /var/jenkins_home  </div><div class="line">注意，可能本地没有1000的用户，如果没有需要创建，但用户名不必为jenkins</div><div class="line">如果有则可不必计较，虽然用户名可能不一是jenkins</div><div class="line">3,再启动试试，可能还是有问题</div><div class="line">这时查看 SELinux状态  /usr/sbin/sestatus -v    </div><div class="line">如果没有关闭，需要关闭</div><div class="line">关闭SELinux：</div><div class="line">1、临时关闭（不用重启机器）：</div><div class="line">setenforce 0                  ##设置SELinux 成为permissive模式</div><div class="line">                              ##setenforce 1 设置SELinux 成为enforcing模式</div><div class="line">2、修改配置文件需要重启机器：</div><div class="line">修改/etc/selinux/config 文件</div><div class="line">将SELINUX=enforcing改为SELINUX=disabled</div><div class="line">重启机器即可</div></pre></td></tr></table></figure>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/docker/">docker</a><a href="/tags/jenkins/">jenkins</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/06/22/centos7-ss5安装配置/" title="centos7 ss5安装配置" itemprop="url">centos7 ss5安装配置</a>
   </h1>
   <p class="article-author">By
@@ -91,7 +151,7 @@
 </header>
     <div class="article-content">
         
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">yum -y install gcc automake make</div><div class="line">yum -y install pam-devel openldap-devel cyrus-sasl-devel openssl-devel</div><div class="line"></div><div class="line"></div><div class="line">wget http://jaist.dl.sourceforge.net/sourceforge/ss5/ss5-3.6.1-1.tar.gz</div><div class="line">tar zxvf ss5-3.6.1-1.tar.gz</div><div class="line">cd ss5-3.6.1</div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div><div class="line"></div><div class="line">#启动ss5服务</div><div class="line">/etc/init.d/ss5 start</div><div class="line"></div><div class="line">注意，ss5可能没有x权限，需要手动加上</div><div class="line">配黑点文件：   </div><div class="line"> /etc/opt/ss5/ss5.conf</div><div class="line"> 默认端口1080 </div><div class="line"> 默认是无权限验证  </div><div class="line"> </div><div class="line"> #       SHost           SPort           Authentication</div><div class="line">#</div><div class="line">auth    0.0.0.0/0               -              -</div><div class="line">但这样可能还是代理上不了的</div><div class="line">需要更改   为可用（去掉注释）</div><div class="line">permit -        0.0.0.0/0       -       0.0.0.0/0       -       -       -       -       -</div><div class="line"> 如果不记录日志：</div><div class="line"> /etc/init.d/ss5 添加 -m</div><div class="line"> # Start daemon.</div><div class="line">echo -n &quot;Starting ss5... &quot;</div><div class="line">if [ $OS = &quot;Linux&quot; ]; then</div><div class="line">daemon /usr/sbin/ss5 -m -t $SS5_OPTS</div><div class="line">touch /var/lock/subsys/ss5</div><div class="line">if [ $OS = &quot;SunOS&quot; ]; then</div><div class="line">/usr/sbin/ss5 -m -t</div><div class="line">touch /var/lock/subsys/ss5</div><div class="line">else</div><div class="line">/usr/local/sbin/ss5 -m -t</div><div class="line">fi</div><div class="line">echo &quot;done&quot;</div><div class="line">fi</div></pre></td></tr></table></figure>
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">yum -y install gcc automake make</div><div class="line">yum -y install pam-devel openldap-devel cyrus-sasl-devel openssl-devel</div><div class="line"></div><div class="line"></div><div class="line">wget http://jaist.dl.sourceforge.net/sourceforge/ss5/ss5-3.6.1-1.tar.gz</div><div class="line">tar zxvf ss5-3.6.1-1.tar.gz</div><div class="line">cd ss5-3.6.1</div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div><div class="line"></div><div class="line">#启动ss5服务</div><div class="line">/etc/init.d/ss5 start</div><div class="line"></div><div class="line">注意，ss5可能没有x权限，需要手动加上</div><div class="line">配黑点文件：   </div><div class="line"> /etc/opt/ss5/ss5.conf</div><div class="line"> 默认端口1080 </div><div class="line"> 默认是无权限验证  </div><div class="line"> </div><div class="line"> #       SHost           SPort           Authentication</div><div class="line">#</div><div class="line">auth    0.0.0.0/0               -              -</div><div class="line">但这样可能还是代理上不了的</div><div class="line">需要更改   为可用（去掉注释）</div><div class="line">permit -        0.0.0.0/0       -       0.0.0.0/0       -       -       -       -       -</div><div class="line"> 如果不记录日志：</div><div class="line"> /etc/init.d/ss5 添加 -m</div><div class="line"> # Start daemon.</div><div class="line">echo -n &quot;Starting ss5... &quot;</div><div class="line">if [ $OS = &quot;Linux&quot; ]; then</div><div class="line">daemon /usr/sbin/ss5 -m -t $SS5_OPTS</div><div class="line">touch /var/lock/subsys/ss5</div><div class="line">if [ $OS = &quot;SunOS&quot; ]; then</div><div class="line">/usr/sbin/ss5 -m -t</div><div class="line">touch /var/lock/subsys/ss5</div><div class="line">else</div><div class="line">/usr/local/sbin/ss5 -m -t</div><div class="line">fi</div><div class="line">echo &quot;done&quot;</div><div class="line">fi</div><div class="line"></div><div class="line">其它：建立定时自动重启ss5的脚本ss5restart.sh （解决ss5断断续续出现1080端口不通的问题）</div><div class="line"></div><div class="line">*/10 * * * *  /etc/init.d/ss5 restart</div></pre></td></tr></table></figure>
 
         
         
@@ -608,69 +668,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/02/23/nginx-thrift均衡配置/" title="nginx thrift负载均衡配置" itemprop="url">nginx thrift负载均衡配置</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-02-23T08:58:03.000Z" itemprop="datePublished"> 发表于 2017-02-23</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>最近想搞thrift,因为多台服务器，所以得有负载均衡，因为网站使用nginx，首先想到的就是nginx<br>好在1.90，添加了支持TCP协议的负载均衡,所以就用先nginx试试。<br>nginx1.90对TCP协议的代理并不是默认开启的，需要在编译的时候配置 –with-stream 参数  </p>
-<p>然后，就是修改配置文件 nginx.conf<br>添加 根节点，也就是和http {  }并列的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">stream &#123;</div><div class="line">    upstream backend &#123;</div><div class="line">      ##  hash $remote_addr consistent;  ##有这个，同一IP一直锁定在一台机器</div><div class="line">        server 127.0.0.1:9000 max_fails=3 weight=2  fail_timeout=30s;</div><div class="line">       server 127.0.0.1:9001 max_fails=3  weight=1 fail_timeout=30s;</div><div class="line">    &#125;</div><div class="line">    server &#123;</div><div class="line">        listen  8999;</div><div class="line">        proxy_connect_timeout 1s;</div><div class="line">        proxy_timeout 3s;</div><div class="line">        proxy_pass backend;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>max_fails  尝试失败次数<br>weight  权重，越大分配越多<br>更多参照  <a href="http://nginx.org/en/docs/stream/ngx_stream_core_module.html" target="_blank" rel="external">http://nginx.org/en/docs/stream/ngx_stream_core_module.html</a><br>好像还有 阿里 nginx_tcp_proxy_module 更历害的样子，有时间也一起试试</p>
-<p>最后，联结8999端口，就会轮流分配到后端的 9000 ,9001<br>接下来尝试 Haproxy  使用</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/nginx/">nginx</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -716,7 +713,7 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>14</sup></a></li>
+			<li><a href="/categories/收集/" title="收集">收集<sup>15</sup></a></li>
 		  
 		
 		  
@@ -745,11 +742,11 @@
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
+				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
 			
 		
 			
@@ -761,7 +758,15 @@
 			
 		
 			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -769,11 +774,11 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/docker/" title="docker">docker<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/vpn/" title="vpn">vpn<sup>1</sup></a></li>
+				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
 			
 		
 			
@@ -785,11 +790,11 @@
 			
 		
 			
-				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+				<li><a href="/tags/vpn/" title="vpn">vpn<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
 			
 		
 		</ul>
