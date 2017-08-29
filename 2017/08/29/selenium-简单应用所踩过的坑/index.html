@@ -5,24 +5,24 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>关于hibernate自增长键的解释 | 有药就给你</title>
+    <title>selenium 简单应用所踩过的坑 | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="工作之初，遇到一个问题是，在集群中，多个hibnate对一个数据库操作的主键重复问题大家都认为采有自增长会产生重复主键。事实情况是怎么样的呢？让我们真实情部下了解一下。测试环境：spring+hibernate5,数据库主键字段设置为自增长。打开hibernate的sql输出，开始mysql的binlog日志。比如我的测试环境中， @Id @GenericGenerator(name = &amp;quo">
-<meta name="keywords" content="hibernate">
+    <meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091Selenium 是个很神奇的工具，可以直接把各种浏览">
+<meta name="keywords" content="selenium,测试">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于hibernate自增长键的解释">
-<meta property="og:url" content="http://yoursite.com/2016/03/31/hibernate自动长主键简单测试结论/index.html">
+<meta property="og:title" content="selenium 简单应用所踩过的坑">
+<meta property="og:url" content="http://yoursite.com/2017/08/29/selenium-简单应用所踩过的坑/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="工作之初，遇到一个问题是，在集群中，多个hibnate对一个数据库操作的主键重复问题大家都认为采有自增长会产生重复主键。事实情况是怎么样的呢？让我们真实情部下了解一下。测试环境：spring+hibernate5,数据库主键字段设置为自增长。打开hibernate的sql输出，开始mysql的binlog日志。比如我的测试环境中， @Id @GenericGenerator(name = &amp;quo">
-<meta property="og:updated_time" content="2017-02-04T09:36:00.000Z">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091Selenium 是个很神奇的工具，可以直接把各种浏览">
+<meta property="og:updated_time" content="2017-08-29T08:43:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于hibernate自增长键的解释">
-<meta name="twitter:description" content="工作之初，遇到一个问题是，在集群中，多个hibnate对一个数据库操作的主键重复问题大家都认为采有自增长会产生重复主键。事实情况是怎么样的呢？让我们真实情部下了解一下。测试环境：spring+hibernate5,数据库主键字段设置为自增长。打开hibernate的sql输出，开始mysql的binlog日志。比如我的测试环境中， @Id @GenericGenerator(name = &amp;quo">
+<meta name="twitter:title" content="selenium 简单应用所踩过的坑">
+<meta name="twitter:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091Selenium 是个很神奇的工具，可以直接把各种浏览">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/03/31/hibernate自动长主键简单测试结论/" title="关于hibernate自增长键的解释" itemprop="url">关于hibernate自增长键的解释</a>
+      <a href="/2017/08/29/selenium-简单应用所踩过的坑/" title="selenium 简单应用所踩过的坑" itemprop="url">selenium 简单应用所踩过的坑</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2016-03-30T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-31</time>
+    <time datetime="2017-08-29T08:20:14.000Z" itemprop="datePublished"> 发表于 2017-08-29</time>
     
   </p>
 </header>
@@ -101,29 +101,7 @@
 		
 		</div>
 		
-		<p>工作之初，遇到一个问题是，在集群中，多个hibnate对一个数据库操作的主键重复问题<br>大家都认为采有自增长会产生重复主键。事实情况是怎么样的呢？<br>让我们真实情部下了解一下。<br>测试环境：spring+hibernate5,数据库主键字段设置为自增长。<br>打开hibernate的sql输出，开始mysql的binlog日志。<br>比如我的测试环境中，</p>
-<pre><code>@Id
-@GenericGenerator(name = &quot;generatorId&quot;, strategy = &quot;native&quot;)
-// @GeneratedValue(generator = &quot;generatorId&quot;) //和生成策略名一样 或者
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-// 根据底层数据库自动选择方式，需要底层数据库的设置 如MySQL，会使用自增字段，需要将主键设置成auto_increment。
-@Column(name = &quot;id&quot;)
-@Type(type = &quot;int&quot;)
-private int id;
-
-@Column(name = &quot;name&quot;, length = 200)
-private String name;
-
-@Column(name = &quot;password&quot;, length = 200 )
-private String passowrd;
-
-@Column(name = &quot;birthday&quot;, columnDefinition = &quot;timestamp&quot;)
-private Date birthday;
-
-省略getter/setter等
-</code></pre><p>在这样的配置下，会观察到输出为：<br>    DEBUG SQL:92 - insert into user (birthday, name, password) values (?, ?, ?)</p>
-<p>hibernate根本就没有设置id，id是数据库自动生成的，数据库会保证id唯一。<br>我们再观查 binlog日志，<br>    SET TIMESTAMP=1459431449/<em>!</em>/;<br>    SET @@session.time_zone=’SYSTEM’/<em>!</em>/;<br>    insert into user (birthday, name, password) values (‘2016-03-31 21:37:29’, ‘feng’, null)    </p>
-<p>所以id也正如解释的那样，和hibernate一点关系也没有，集群操作中，这个id都是由数据库来保证唯一的，<br>hibernate不是很多人认为的那样，先一个获取了一个count（）的值来维持 自增长。        </p>
+		<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line">Selenium 是个很神奇的工具，可以直接把各种浏览器启动起来，然后在里面执行各种操作。</div><div class="line">主要还是结合编程用于自动测试。可以直持 .net ,java,python等语言。但我这次使不是用于</div><div class="line">测试。这次是为了代理机器上vpn自动拨号，代理机器上的vpn是通过网页输入用户名密码进行登录，</div><div class="line">正好符合Selenium场景。</div><div class="line">环境:vs2015  </div><div class="line">下载： CodedUITestCrossBrowserSetup.msi  </div><div class="line">IEDriverServer_Win32_3.5.0.zip/IEDriverServer_x64_3.5.0.zip             selenium-dotnet-3.5.1.zip</div><div class="line">   </div><div class="line">1，安装   CodedUITestCrossBrowserSetup.msi,解压IEDriverServer_Win32_3.5.0.zip把.exe放入系统路径或是当前执行环境中</div><div class="line">  解压 selenium-dotnet-3.5.1.zip得到.net引用包。</div><div class="line">2 建立项目，在引用中加上 selenium-dotnet-3.5.1 的 dll</div><div class="line"></div><div class="line">开发中的问题：</div><div class="line">1.    &#123;&quot;Unexpected error launching Internet Explorer.</div><div class="line"> Browser zoom level was set to 84%. It should be set to 100%&quot;&#125;</div><div class="line"> 解决：</div><div class="line"> InternetExplorerOptions options = new InternetExplorerOptions();</div><div class="line"> options.IgnoreZoomLevel = true;</div><div class="line"> var  driver  =   new InternetExplorerDriver(options);</div><div class="line">2 解决非信任证书的提示问题：</div><div class="line">    driver.Navigate().GoToUrl(&quot;javascript:document.getElementById(&apos;overridelink&apos;).click()&quot;);</div><div class="line">3，window mode窗口的关闭</div><div class="line">   这个没有找到好的办法，通过执行js解决</div><div class="line">  首先切换到mode窗口，执行js  window.opener = null; window.close() </div><div class="line">4，提交按钮不响应，</div><div class="line">   简单粗暴，使用js 搞定 document.getElementById(&apos;submit_1&apos;).click()  </div><div class="line">5 confirm的确认</div><div class="line"> 这个没啥难点，关键是需要一点延时，不然报找不到</div><div class="line"> </div><div class="line"> 下面是全部代码</div><div class="line"></div><div class="line"> </div><div class="line">using OpenQA.Selenium.IE;</div><div class="line">using OpenQA.Selenium.Support.UI;</div><div class="line">using System;</div><div class="line">using System.Collections.Generic;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">namespace LanchIE</div><div class="line">&#123;</div><div class="line">    class Program</div><div class="line">    &#123;</div><div class="line">        static void Main(string[] args)</div><div class="line">        &#123;</div><div class="line">            InternetExplorerOptions options = new InternetExplorerOptions();</div><div class="line">            options.IgnoreZoomLevel = true;</div><div class="line">            var  driver  =   new InternetExplorerDriver(options);</div><div class="line">            driver.Url = &quot;https://xx.xxx.xxx.xx/&quot;;    </div><div class="line">            Console.WriteLine(&quot;start ie ok.....&quot;);</div><div class="line">            driver.Navigate().GoToUrl(&quot;javascript:document.getElementById(&apos;overridelink&apos;).click()&quot;);</div><div class="line">            //</div><div class="line">            String currWindow =  driver.CurrentWindowHandle;</div><div class="line">             ICollection&lt;String&gt; windows =  driver.WindowHandles;</div><div class="line">                 foreach(String s in  windows )&#123;</div><div class="line">                    if (s.Equals(currWindow))</div><div class="line">                    &#123;</div><div class="line">                    &#125;</div><div class="line">                    else &#123;</div><div class="line">                        var popup = driver.SwitchTo().Window(s);</div><div class="line">                        driver.ExecuteScript(&quot; window.opener = null; window.close()&quot;);</div><div class="line">                       // Console.WriteLine(s + popup.Url);</div><div class="line">                       // popup.Close();</div><div class="line">                    &#125;   </div><div class="line">                 &#125;</div><div class="line">            driver.SwitchTo().Window(currWindow);</div><div class="line">            driver.FindElementById(&quot;name_1&quot;).SendKeys(&quot;guangfengtongtian1_cb&quot;);</div><div class="line">            driver.FindElementById(&quot;pwd_1&quot;).SendKeys(&quot;picc@bj&quot;);</div><div class="line">           Console.WriteLine( driver.FindElementById(&quot;submit_1&quot;).GetAttribute(&quot;value&quot;));</div><div class="line">           // driver.FindElementById(&quot;submit_1&quot;).Click();</div><div class="line">            var js = &quot;document.getElementById(&apos;submit_1&apos;).click()&quot;;</div><div class="line">            driver.ExecuteScript(js);</div><div class="line">            //wait 100 uMs *  1000000</div><div class="line">            WebDriverWait wait = new WebDriverWait(driver,new  TimeSpan(100000000));</div><div class="line">            wait.Until(ExpectedConditions.AlertIsPresent());</div><div class="line">             </div><div class="line">            var alt = driver.SwitchTo().Alert();</div><div class="line">            if (alt != null) &#123;</div><div class="line">                alt.Accept();</div><div class="line">            &#125;</div><div class="line">            driver.SwitchTo().Window(currWindow);</div><div class="line"></div><div class="line"></div><div class="line">            // driver.FindElementByClassName(&quot;btn_login&quot;).Click();</div><div class="line">            //driver.FindElementById</div><div class="line">            //  driver.Quit();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -137,7 +115,7 @@ private Date birthday;
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/hibernate/">hibernate</a>
+  <span></span> <a href="/tags/selenium/">selenium</a><a href="/tags/测试/">测试</a>
   </div>
 
 </div>
@@ -146,7 +124,7 @@ private Date birthday;
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/03/31/hibernate自动长主键简单测试结论/" data-title="关于hibernate自增长键的解释 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/08/29/selenium-简单应用所踩过的坑/" data-title="selenium 简单应用所踩过的坑 | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -159,19 +137,11 @@ private Date birthday;
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/01/16/node处理excel/" title="node js处理excel能添加样式的插件">
-  <strong>上一篇：</strong><br/>
-  <span>
-  node js处理excel能添加样式的插件</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/03/30/hexo源文件备份/"  title="hexo源文件备份">
+<a href="/2017/08/09/docker-管理工具nsenter/"  title="docker 管理工具nsenter">
  <strong>下一篇：</strong><br/> 
- <span>hexo源文件备份
+ <span>docker 管理工具nsenter
 </span>
 </a>
 </div>
