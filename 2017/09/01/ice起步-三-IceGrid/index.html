@@ -5,24 +5,23 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络 | 有药就给你</title>
+    <title>ice起步(三)_IceGrid | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="CentOS 最小化安装后 需要使用命令行配置无线，记录如下： 首先我们要安装一个帮我们生成加密密码并配置网卡的工具包 wpa_supplicantyum install -y wpa_supplicant 1 编辑 /etc/sysconfig/network-scripts/ifcfg-wlan01ONBOOT=yes 确保随机网卡就启动起来2 iwlist wlan0 scan查看有没有自己">
-<meta name="keywords" content="linux">
+    <meta name="description" content="可以理解为分布式的一个架构，一个 IceGrid域由一个注册表（Registry）和任何数目的节点(Node)构成。注册表记录所有的服务地址，实现负载均衡，容灾等功能。1 Registry不依赖其他任务服务，类似dubo的zookeeper注册中心， 配置文件registry.cfg：123456IceGrid.Registry.Client.Endpoints=tcp -p 4061IceGri">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CentOS 命令行下连接加密模式为 WPA&#x2F;WPA2-PSK 的无线网络">
-<meta property="og:url" content="http://yoursite.com/2017/02/18/CentOS-命令行下连接加密模式为-WPA-WPA2-PSK-的无线网络/index.html">
+<meta property="og:title" content="ice起步(三)_IceGrid">
+<meta property="og:url" content="http://yoursite.com/2017/09/01/ice起步-三-IceGrid/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="CentOS 最小化安装后 需要使用命令行配置无线，记录如下： 首先我们要安装一个帮我们生成加密密码并配置网卡的工具包 wpa_supplicantyum install -y wpa_supplicant 1 编辑 /etc/sysconfig/network-scripts/ifcfg-wlan01ONBOOT=yes 确保随机网卡就启动起来2 iwlist wlan0 scan查看有没有自己">
-<meta property="og:updated_time" content="2017-02-20T06:44:16.000Z">
+<meta property="og:description" content="可以理解为分布式的一个架构，一个 IceGrid域由一个注册表（Registry）和任何数目的节点(Node)构成。注册表记录所有的服务地址，实现负载均衡，容灾等功能。1 Registry不依赖其他任务服务，类似dubo的zookeeper注册中心， 配置文件registry.cfg：123456IceGrid.Registry.Client.Endpoints=tcp -p 4061IceGri">
+<meta property="og:updated_time" content="2017-09-01T07:54:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CentOS 命令行下连接加密模式为 WPA&#x2F;WPA2-PSK 的无线网络">
-<meta name="twitter:description" content="CentOS 最小化安装后 需要使用命令行配置无线，记录如下： 首先我们要安装一个帮我们生成加密密码并配置网卡的工具包 wpa_supplicantyum install -y wpa_supplicant 1 编辑 /etc/sysconfig/network-scripts/ifcfg-wlan01ONBOOT=yes 确保随机网卡就启动起来2 iwlist wlan0 scan查看有没有自己">
+<meta name="twitter:title" content="ice起步(三)_IceGrid">
+<meta name="twitter:description" content="可以理解为分布式的一个架构，一个 IceGrid域由一个注册表（Registry）和任何数目的节点(Node)构成。注册表记录所有的服务地址，实现负载均衡，容灾等功能。1 Registry不依赖其他任务服务，类似dubo的zookeeper注册中心， 配置文件registry.cfg：123456IceGrid.Registry.Client.Endpoints=tcp -p 4061IceGri">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -81,14 +80,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/18/CentOS-命令行下连接加密模式为-WPA-WPA2-PSK-的无线网络/" title="CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络" itemprop="url">CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络</a>
+      <a href="/2017/09/01/ice起步-三-IceGrid/" title="ice起步(三)_IceGrid" itemprop="url">ice起步(三)_IceGrid</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2017-02-18T10:44:03.000Z" itemprop="datePublished"> 发表于 2017-02-18</time>
+    <time datetime="2017-09-01T07:23:08.000Z" itemprop="datePublished"> 发表于 2017-09-01</time>
     
   </p>
 </header>
@@ -101,28 +100,15 @@
 		
 		</div>
 		
-		<p>CentOS 最小化安装后 需要使用命令行配置无线，<br>记录如下：</p>
-<p>首先我们要安装一个帮我们生成加密密码并配置网卡的工具包 wpa_supplicant<br>yum install -y wpa_supplicant</p>
-<p>1 编辑 /etc/sysconfig/network-scripts/ifcfg-wlan0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ONBOOT=yes</div></pre></td></tr></table></figure></p>
-<p>确保随机网卡就启动起来<br>2 iwlist wlan0 scan<br>查看有没有自己想加入的网络，比如我的rinawale<br>3  把生成的加密信息加入到ifcfg-wlan0中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wpa_passphrase  rinawale &apos;59122801&apos;  | grep -v &apos;&#123;\|&#125;&apos; &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-wlan0 ;</div><div class="line">echo &apos;WPA=yes&apos; &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-wlan0</div></pre></td></tr></table></figure></p>
-<p>4  试试 可能执行完了这个还执行ifup wlan0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wpa_supplicant -iwlan0 -B -c /etc/wpa_supplicant/wpa_supplicant.conf</div></pre></td></tr></table></figure></p>
-<p>5 随机启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cat &gt;&gt; /etc/rc.local&lt;&lt;EOF</div><div class="line">wpa_supplicant -iwlan0 -B -c /etc/wpa_supplicant/wpa_supplicant.conf</div><div class="line">ifup  wlan0</div><div class="line">EOF</div></pre></td></tr></table></figure></p>
-<p>附最后我的ifcfg-wlan0文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">DEVICE=wlan0</div><div class="line">HWADDR=74:2F:68:9B:1F:40</div><div class="line">TYPE=Ethernet</div><div class="line">UUID=861d2178-b235-45c9-be99-b0fd3085d9d0</div><div class="line">ONBOOT=yes</div><div class="line">NM_CONTROLLED=yes</div><div class="line">#BOOTPROTO=dhcp</div><div class="line">BOOTPROTO=static</div><div class="line">IPADDR=192.168.0.50</div><div class="line">NETMASK=255.255.255.0</div><div class="line">GATEWAY=192.168.0.1</div><div class="line">ssid=&quot;rinawale&quot;</div><div class="line">#psk=&quot;59122801&quot;</div><div class="line">psk=0985fbaacaa8d060da9bfebacc752bb8f92364969370a6e01974fa521114741d</div><div class="line">WPA=yes</div></pre></td></tr></table></figure></p>
+		<p>可以理解为分布式的一个架构，一个 IceGrid域由一个注册表（Registry）和任何数目的节点(Node)构成。<br>注册表记录所有的服务地址，实现负载均衡，容灾等功能。<br>1 Registry不依赖其他任务服务，类似dubo的zookeeper注册中心，<br> 配置文件registry.cfg：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">IceGrid.Registry.Client.Endpoints=tcp -p 4061</div><div class="line">IceGrid.Registry.Server.Endpoints=tcp</div><div class="line">IceGrid.Registry.Internal.Endpoints=tcp</div><div class="line">IceGrid.Registry.AdminPermissionsVerifier=IceGrid/NullPermissionsVerifier</div><div class="line">IceGrid.Registry.LMDB.Path=/home/ice/registryDb</div><div class="line">IceGrid.Registry.DynamicRegistration=1</div></pre></td></tr></table></figure></p>
+<p>在一台机器上把这个服务运行起来<br>icegridregistry –Ice.Config=/home/ice/registry.cfg  –daemon<br>当然也可以在一台机器运行，为了更好的体验分，我在另一台机器上运行这个服务，需要注意防火墙开发4061端口。<br>2，服务器端代码 IceBoxPrinter 无变化，但配置文件需要修改。<br>这里我重建了一个配置文件 registry.properties 内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">#IceBox.InstanceName=SimplePrinterBox</div><div class="line">IceBox.InheritProperties=1</div><div class="line">Ice.Trace.Network=1</div><div class="line">Ice.Trace.ThreadPool=1 </div><div class="line">#所有服务初始化完成之后打印 xxx ready</div><div class="line">IceBox.PrintServicesReady=SimplePrinterBox iceGrid  ready.....</div><div class="line">#SimplePrinter配置</div><div class="line">IceBox.Service.SimplePrinter=com.feng.ice.server.icebox.IceBoxPrinter 100 101 102</div><div class="line">SimplePrinter.Endpoints=tcp -p 10000  </div><div class="line">#可不指定端口号 改成 SimplePrinter.Endpoints=tcp ，随机端口</div><div class="line">#不方便本地调试。</div><div class="line">#上面无变化，下面新加，需要指定好registry的主机端口号</div><div class="line">##iceGrid</div><div class="line">Ice.Default.Locator=IceGrid/Locator:tcp -h 10.10.1.201 -p 4061</div><div class="line">SimplePrinter.AdapterId=SimplePrinterAdapter</div><div class="line"># SimplePrinter.AdapterId=SimplePrinterAdapter这个值，会在客户端用到，需要唯一</div></pre></td></tr></table></figure></p>
+<p>3 启动IceBox 进行注册：main class com.zeroc.IceBox.Server  添加参数：<br>–Ice.Config=/路径/registry.properties<br>4 客户端调用代码更改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">package com.feng.ice.client;</div><div class="line"></div><div class="line">import com.feng.ice.Demo.PrinterPrx;</div><div class="line"></div><div class="line">public class ClientGrid &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		String[] initParams =  new String[]&#123;&quot;--Ice.Default.Locator=IceGrid/Locator:tcp -h 10.10.1.201 -p 4061&quot;&#125;;</div><div class="line">		try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(initParams))</div><div class="line">        &#123;</div><div class="line">           // com.zeroc.Ice.ObjectPrx base = communicator.stringToProxy(&quot;SimplePrinter:default -p 10000&quot;);</div><div class="line">            com.zeroc.Ice.ObjectPrx base = communicator.stringToProxy(&quot;SimplePrinter@SimplePrinterAdapter&quot;);</div><div class="line">            PrinterPrx printer =  PrinterPrx.checkedCast(base);</div><div class="line">            if(printer == null)</div><div class="line">            &#123;</div><div class="line">                throw new Error(&quot;Invalid proxy&quot;);</div><div class="line">            &#125;</div><div class="line">            for(int i=0;i&lt;10;i++)&#123;</div><div class="line">            	 printer.printString(&quot;Hello World! &quot; + i);</div><div class="line">            	 System.out.println(&quot;---------&gt;&quot; + i );</div><div class="line">            &#125;</div><div class="line">           </div><div class="line">        &#125;</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>communicator.stringToProxy(“SimplePrinter@SimplePrinterAdapter”); 这个前面是 需要和代码和配置文件对应起来<br>5 就这样子。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/linux/">linux</a>
-  </div>
 
 </div>
 
@@ -130,7 +116,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/02/18/CentOS-命令行下连接加密模式为-WPA-WPA2-PSK-的无线网络/" data-title="CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/09/01/ice起步-三-IceGrid/" data-title="ice起步(三)_IceGrid | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -143,19 +129,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/02/18/centos-samba匿名共享/" title="centos samba匿名共享">
-  <strong>上一篇：</strong><br/>
-  <span>
-  centos samba匿名共享</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/02/12/go-mysql之联结字符串/"  title="go-mysql之联结字符串">
+<a href="/2017/09/01/ice起步(二)IceBox/"  title="ice起步(二)_IceBox">
  <strong>下一篇：</strong><br/> 
- <span>go-mysql之联结字符串
+ <span>ice起步(二)_IceBox
 </span>
 </a>
 </div>

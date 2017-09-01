@@ -78,6 +78,121 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/09/01/ice起步-三-IceGrid/" title="ice起步(三)_IceGrid" itemprop="url">ice起步(三)_IceGrid</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-09-01T07:23:08.000Z" itemprop="datePublished"> 发表于 2017-09-01</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>可以理解为分布式的一个架构，一个 IceGrid域由一个注册表（Registry）和任何数目的节点(Node)构成。<br>注册表记录所有的服务地址，实现负载均衡，容灾等功能。<br>1 Registry不依赖其他任务服务，类似dubo的zookeeper注册中心，<br> 配置文件registry.cfg：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">IceGrid.Registry.Client.Endpoints=tcp -p 4061</div><div class="line">IceGrid.Registry.Server.Endpoints=tcp</div><div class="line">IceGrid.Registry.Internal.Endpoints=tcp</div><div class="line">IceGrid.Registry.AdminPermissionsVerifier=IceGrid/NullPermissionsVerifier</div><div class="line">IceGrid.Registry.LMDB.Path=/home/ice/registryDb</div><div class="line">IceGrid.Registry.DynamicRegistration=1</div></pre></td></tr></table></figure></p>
+<p>在一台机器上把这个服务运行起来<br>icegridregistry –Ice.Config=/home/ice/registry.cfg  –daemon<br>当然也可以在一台机器运行，为了更好的体验分，我在另一台机器上运行这个服务，需要注意防火墙开发4061端口。<br>2，服务器端代码 IceBoxPrinter 无变化，但配置文件需要修改。<br>这里我重建了一个配置文件 registry.properties 内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">#IceBox.InstanceName=SimplePrinterBox</div><div class="line">IceBox.InheritProperties=1</div><div class="line">Ice.Trace.Network=1</div><div class="line">Ice.Trace.ThreadPool=1 </div><div class="line">#所有服务初始化完成之后打印 xxx ready</div><div class="line">IceBox.PrintServicesReady=SimplePrinterBox iceGrid  ready.....</div><div class="line">#SimplePrinter配置</div><div class="line">IceBox.Service.SimplePrinter=com.feng.ice.server.icebox.IceBoxPrinter 100 101 102</div><div class="line">SimplePrinter.Endpoints=tcp -p 10000  </div><div class="line">#可不指定端口号 改成 SimplePrinter.Endpoints=tcp ，随机端口</div><div class="line">#不方便本地调试。</div><div class="line">#上面无变化，下面新加，需要指定好registry的主机端口号</div><div class="line">##iceGrid</div><div class="line">Ice.Default.Locator=IceGrid/Locator:tcp -h 10.10.1.201 -p 4061</div><div class="line">SimplePrinter.AdapterId=SimplePrinterAdapter</div><div class="line"># SimplePrinter.AdapterId=SimplePrinterAdapter这个值，会在客户端用到，需要唯一</div></pre></td></tr></table></figure></p>
+<p>3 启动IceBox 进行注册：main class com.zeroc.IceBox.Server  添加参数：<br>–Ice.Config=/路径/registry.properties<br>4 客户端调用代码更改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">package com.feng.ice.client;</div><div class="line"></div><div class="line">import com.feng.ice.Demo.PrinterPrx;</div><div class="line"></div><div class="line">public class ClientGrid &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		String[] initParams =  new String[]&#123;&quot;--Ice.Default.Locator=IceGrid/Locator:tcp -h 10.10.1.201 -p 4061&quot;&#125;;</div><div class="line">		try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(initParams))</div><div class="line">        &#123;</div><div class="line">           // com.zeroc.Ice.ObjectPrx base = communicator.stringToProxy(&quot;SimplePrinter:default -p 10000&quot;);</div><div class="line">            com.zeroc.Ice.ObjectPrx base = communicator.stringToProxy(&quot;SimplePrinter@SimplePrinterAdapter&quot;);</div><div class="line">            PrinterPrx printer =  PrinterPrx.checkedCast(base);</div><div class="line">            if(printer == null)</div><div class="line">            &#123;</div><div class="line">                throw new Error(&quot;Invalid proxy&quot;);</div><div class="line">            &#125;</div><div class="line">            for(int i=0;i&lt;10;i++)&#123;</div><div class="line">            	 printer.printString(&quot;Hello World! &quot; + i);</div><div class="line">            	 System.out.println(&quot;---------&gt;&quot; + i );</div><div class="line">            &#125;</div><div class="line">           </div><div class="line">        &#125;</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>communicator.stringToProxy(“SimplePrinter@SimplePrinterAdapter”); 这个前面是 需要和代码和配置文件对应起来<br>5 就这样子。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/09/01/ice起步(二)IceBox/" title="ice起步(二)_IceBox" itemprop="url">ice起步(二)_IceBox</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-09-01T06:52:11.000Z" itemprop="datePublished"> 发表于 2017-09-01</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>IceBox 可以代替通常的server,方便进行很多ice服务管理，<br>可以理解成一个类似tomcat的容器，  里面可以有很多服务。<br>服务器 接口方法实现接上一篇。<br>步骤，<br>1，实现com.zeroc.IceBox.Service，完成方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">package com.feng.ice.server.icebox;</div><div class="line"></div><div class="line">import com.feng.ice.server.impl.PrinterI;</div><div class="line">import com.zeroc.Ice.Communicator;</div><div class="line">import com.zeroc.IceBox.Service;</div><div class="line">public class IceBoxPrinter  implements  Service &#123;</div><div class="line">	private com.zeroc.Ice.ObjectAdapter _adapter;</div><div class="line">	public void start(String name,  Communicator communicator, String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(  &quot;name:&quot; + name);</div><div class="line">		for(String s:args)</div><div class="line">		System.out.println(  &quot;args:&quot; + s);</div><div class="line">		_adapter = communicator.createObjectAdapter(name);</div><div class="line">		com.zeroc.Ice.Object object =   new PrinterI();</div><div class="line">		//_adapter.add(object, com.zeroc.Ice.Util.stringToIdentity(&quot;SimplePrinter&quot;));</div><div class="line">		_adapter.add(object, com.zeroc.Ice.Util.stringToIdentity(&quot;SimplePrinter&quot;));</div><div class="line">		_adapter.activate();</div><div class="line">	&#125;</div><div class="line">	public void stop() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		 _adapter.deactivate();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2 配置文件 config.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">IceBox.InheritProperties=1</div><div class="line">Ice.Trace.Network=1</div><div class="line">Ice.Trace.ThreadPool=1 </div><div class="line">#所有服务初始化完成之后打印 xxx ready</div><div class="line">IceBox.PrintServicesReady=SimplePrinterBox  ready.....</div><div class="line">#SimplePrinter配置</div><div class="line">IceBox.Service.SimplePrinter=com.feng.ice.server.icebox.IceBoxPrinter 100 101 102</div><div class="line">SimplePrinter.Endpoints=tcp -p 10000</div><div class="line">#SendMSM配置</div><div class="line">#IceBox.Service.SendMessage=com.feng.ice.server.icebox.IceBoxSendMSM  200 201 202</div><div class="line">#SendMessage.Endpoints=tcp -p 10001</div></pre></td></tr></table></figure></p>
+<p>可以一个配置文件里配置多个服务，如上面的最后三句。<br>3 启动：main class com.zeroc.IceBox.Server  添加参数：<br>–Ice.Config=/路径/config.properties<br>4 客户端访问无变化。<br>5 更多参数参照官网说明。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/ice/">ice</a>►<a class="article-category-link" href="/categories/ice/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/ice/">ice</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/09/01/ice起步-一/" title="ice起步(一)" itemprop="url">ice起步(一)</a>
   </h1>
   <p class="article-author">By
@@ -95,25 +210,10 @@
 <pre><code>偏好设置--&gt; ice builder 配置Ice Home
 </code></pre><hr>
 <p>开发步骤：<br>1 编写slice文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[[&quot;java:package:com.feng.ice&quot;]]  </div><div class="line">module Demo</div><div class="line">&#123;</div><div class="line">    interface Printer</div><div class="line">    &#123;</div><div class="line">        void printString(string s);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>项目上右键 ice builder –&gt; compile<br>最后生成的包名是 com.feng.ice.Demo;<br>没事改改，尝试他们的关系。<br>将会生成四个文件：<br>_Markert.java<br>_PrinterPrxI.java<br>Printer.java<br>PrinterPrx.java<br>按书上说会生成什么helper的，我反正是没见到，网上大多教程也是生成一大堆，<br>还是实践的人太少啊。<br>2 ，服务器端<br>  A,实现接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">  package com.feng.ice.server.impl;</div><div class="line">  import com.feng.ice.Demo.Printer;</div><div class="line">  import com.zeroc.Ice.Current;</div><div class="line">  public class PrinterI  implements Printer &#123;</div><div class="line">   @Override</div><div class="line">   public void printString(String s, Current current) &#123;</div><div class="line">     System.out.println(&quot; printer server :&quot; + s);</div><div class="line">   &#125;</div><div class="line">  &#125;  </div><div class="line">```  </div><div class="line">B,写个main方法，注册服务  </div><div class="line">```  </div><div class="line">package com.feng.ice.server;</div><div class="line">import com.feng.ice.server.impl.PrinterI;</div><div class="line">public class Server &#123;</div><div class="line">public static void main(String[] args) &#123;</div><div class="line"> try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args))</div><div class="line">     &#123;</div><div class="line">         com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints(&quot;SimplePrinterAdapter&quot;, &quot;default -p 10000&quot;);</div><div class="line">         com.zeroc.Ice.Object object = new PrinterI();</div><div class="line">         adapter.add(object, com.zeroc.Ice.Util.stringToIdentity(&quot;SimplePrinter&quot;));</div><div class="line">         adapter.activate();</div><div class="line">         communicator.waitForShutdown();</div><div class="line">     &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">```  </div><div class="line">启动起来，就OK了，注意会在10000端口号监听，所以要确保没有占用这个端口号。</div><div class="line"></div><div class="line">3 客户端调用</div></pre></td></tr></table></figure></p>
-<p>package com.feng.ice.client;<br>import com.feng.ice.Demo.PrinterPrx;<br>public class Client {<br>    public static void main(String[] args) {</p>
-<pre><code>    try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args)) 
-    {
-        com.zeroc.Ice.ObjectPrx base = communicator.stringToProxy(&quot;SimplePrinter:default -p 10000&quot;);
-        PrinterPrx printer =  PrinterPrx.checkedCast(base);
-        if(printer == null)
-        {
-            throw new Error(&quot;Invalid proxy&quot;);
-        }
-        for(int i=0;i&lt;10;i++){
-             printer.printString(&quot;Hello World! &quot; + i);
-             System.out.println(&quot;---------&gt;&quot; + i );
-        }
-
-    }
-
-}
-</code></pre><p>}<br>```<br> communicator.stringToProxy(“SimplePrinter:default -p 10000”);是关键，需要和服务器端保持一致。<br> 这样子一个简单的调用就应该可以了。接下来IceBox</p>
+<p>项目上右键 ice builder –&gt; compile<br>最后生成的包名是 com.feng.ice.Demo;<br>没事改改，尝试他们的关系。<br>将会生成四个文件：<br>_Markert.java<br>_PrinterPrxI.java<br>Printer.java<br>PrinterPrx.java<br>按书上说会生成什么helper的，我反正是没见到，网上大多教程也是生成一大堆，<br>还是实践的人太少啊。<br>2 ，服务器端<br>  A,实现接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">package com.feng.ice.server.impl;</div><div class="line">import com.feng.ice.Demo.Printer;</div><div class="line">import com.zeroc.Ice.Current;</div><div class="line">public class PrinterI  implements Printer &#123;</div><div class="line"> @Override</div><div class="line"> public void printString(String s, Current current) &#123;</div><div class="line">   System.out.println(&quot; printer server :&quot; + s);</div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>B,写个main方法，注册服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">package com.feng.ice.server;</div><div class="line">import com.feng.ice.server.impl.PrinterI;</div><div class="line">public class Server &#123;</div><div class="line">public static void main(String[] args) &#123;</div><div class="line"> try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args))</div><div class="line">     &#123;</div><div class="line">         com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints(&quot;SimplePrinterAdapter&quot;, &quot;default -p 10000&quot;);</div><div class="line">         com.zeroc.Ice.Object object = new PrinterI();</div><div class="line">         adapter.add(object, com.zeroc.Ice.Util.stringToIdentity(&quot;SimplePrinter&quot;));</div><div class="line">         adapter.activate();</div><div class="line">         communicator.waitForShutdown();</div><div class="line">     &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>启动起来，就OK了，注意会在10000端口号监听，所以要确保没有占用这个端口号。<br>3 客户端调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">package com.feng.ice.client;</div><div class="line">import com.feng.ice.Demo.PrinterPrx;</div><div class="line">public class Client &#123;</div><div class="line">	public static void main(String[] args) &#123;</div><div class="line">		</div><div class="line">		try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args)) </div><div class="line">        &#123;</div><div class="line">            com.zeroc.Ice.ObjectPrx base = communicator.stringToProxy(&quot;SimplePrinter:default -p 10000&quot;);</div><div class="line">            PrinterPrx printer =  PrinterPrx.checkedCast(base);</div><div class="line">            if(printer == null)</div><div class="line">            &#123;</div><div class="line">                throw new Error(&quot;Invalid proxy&quot;);</div><div class="line">            &#125;</div><div class="line">            for(int i=0;i&lt;10;i++)&#123;</div><div class="line">            	 printer.printString(&quot;Hello World! &quot; + i);</div><div class="line">            	 System.out.println(&quot;---------&gt;&quot; + i );</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p> communicator.stringToProxy(“SimplePrinter:default -p 10000”);是关键，需要和服务器端保持一致。<br> 这样子一个简单的调用就应该可以了。接下来IceBox</p>
 
         
         
@@ -574,115 +674,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/06/02/firewalld环境vpn的配置/" title="firewalld环境vpn的配置" itemprop="url">firewalld环境vpn的配置</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-06-02T08:13:13.000Z" itemprop="datePublished"> 发表于 2017-06-02</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">为了模拟一个 pc 对外提供代理，通过该pc上的vpn访问网络的一个环境。</div><div class="line">因此在一台外网linux 建立vpn环境。</div><div class="line">操作系统：centos 7</div><div class="line">1,安装 pptpd ，直接yum pptpd就可以</div><div class="line">配置IP,用户等信息， 这一步网上资料都很多。</div><div class="line">2.如果没有开防火墙，这时都能连上此vpn了，但是是无法通过vpn ，经过vpn这台主机</div><div class="line">访问网络的。</div><div class="line">3 需要用到防火墙伪装转发功能，所以需要开防火墙。</div><div class="line">centos7标配是 firewalld ,所以</div><div class="line">开放这个两个端口</div><div class="line">firewall-cmd --permanent --add-port=1723/tcp</div><div class="line">firewall-cmd --permanent --add-port=53/udp </div><div class="line">开放这个协议</div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p gre -j ACCEPT</div><div class="line"></div><div class="line">伪装  eth1是该主机的外网接口</div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter POSTROUTING 0 -t nat -o  eth1 -j MASQUERADE </div><div class="line"></div><div class="line">允许通过  ppp+表示这个开头的联结，当有联接时是这个开头的，比如 ppp0   eth1是该主机的外网接口</div><div class="line"></div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i ppp+ -o  eth1 -j ACCEPT</div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i  eth1  -o ppp+ -j ACCEPT</div><div class="line"></div><div class="line">OK，可以了</div></pre></td></tr></table></figure>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/linux/">linux</a><a href="/tags/vpn/">vpn</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/03/12/ndoe-thrift客户端重连/" title="ndoe thrift客户端重连" itemprop="url">ndoe thrift客户端重连</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-03-12T14:55:48.000Z" itemprop="datePublished"> 发表于 2017-03-12</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -712,7 +703,7 @@
 		  
 		
 		  
-			<li><a href="/categories/ice/" title="ice">ice<sup>1</sup></a></li>
+			<li><a href="/categories/ice/" title="ice">ice<sup>2</sup></a></li>
 		  
 		
 		  
@@ -720,11 +711,11 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
+			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>4</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>4</sup></a></li>
+			<li><a href="/categories/收集/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
 		  
 		
 		  
@@ -736,11 +727,11 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>17</sup></a></li>
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>2</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/收集/" title="收集">收集<sup>17</sup></a></li>
 		  
 		
 		  
@@ -785,6 +776,10 @@
 			
 		
 			
+				<li><a href="/tags/ice/" title="ice">ice<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
 			
 		
@@ -793,15 +788,7 @@
 			
 		
 			
-				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/vpn/" title="vpn">vpn<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
+				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
 			
 		
 			
@@ -809,7 +796,7 @@
 			
 		
 			
-				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
+				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
 			
 		
 			
@@ -821,6 +808,10 @@
 			
 		
 			
+				<li><a href="/tags/vpn/" title="vpn">vpn<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
 			
 		
@@ -829,11 +820,11 @@
 			
 		
 			
-				<li><a href="/tags/ice/" title="ice">ice<sup>1</sup></a></li>
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 		</ul>
