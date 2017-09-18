@@ -19,7 +19,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/09/18/etcd集群实践/index.html">
 <meta property="og:site_name" content="有药就给你">
 <meta property="og:description" content="这两天要搞kubernetes ,提及etcd，etcd具体介绍自己百度一下，我们现在实践的etcd集群的建立。环境：vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233都是centos7  没有装防火墙A ,三台机器使用 yum install etcd修改  /usr/lib/systemd/system/etcd.service1234567">
-<meta property="og:updated_time" content="2017-09-18T07:15:38.000Z">
+<meta property="og:updated_time" content="2017-09-18T07:19:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="etcd集群实践">
 <meta name="twitter:description" content="这两天要搞kubernetes ,提及etcd，etcd具体介绍自己百度一下，我们现在实践的etcd集群的建立。环境：vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233都是centos7  没有装防火墙A ,三台机器使用 yum install etcd修改  /usr/lib/systemd/system/etcd.service1234567">
@@ -103,7 +103,7 @@
 		
 		<p>这两天要搞kubernetes ,提及etcd，etcd具体介绍自己百度一下，我们现在实践的etcd集群的建立。<br>环境：<br>vm-h1 10.10.1.231<br>vm-h2 10.10.1.232<br>vm-h3 10.10.1.233<br>都是centos7  没有装防火墙<br>A ,三台机器使用 yum install etcd<br>修改  /usr/lib/systemd/system/etcd.service<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">[Unit]</div><div class="line">Description=Etcd Server</div><div class="line">After=network.target</div><div class="line">After=network-online.target</div><div class="line">Wants=network-online.target</div><div class="line"></div><div class="line">[Service]</div><div class="line">Type=notify</div><div class="line">WorkingDirectory=/var/lib/etcd/</div><div class="line">EnvironmentFile=-/etc/etcd/etcd.conf</div><div class="line">User=etcd</div><div class="line"># set GOMAXPROCS to number of processors</div><div class="line">ExecStart=/bin/bash -c &quot;GOMAXPROCS=$(nproc) /usr/bin/etcd --name=\&quot;$&#123;ETCD_NAME&#125;\&quot; \</div><div class="line">  --initial-advertise-peer-urls=\&quot;$&#123;ETCD_INITIAL_ADVERTISE_PEER_URLS&#125;\&quot; \</div><div class="line">  --listen-peer-urls=\&quot;$&#123;ETCD_LISTEN_PEER_URLS&#125;\&quot; \</div><div class="line">  --listen-client-urls=\&quot;$&#123;ETCD_LISTEN_CLIENT_URLS&#125;\&quot; \</div><div class="line">  --advertise-client-urls=\&quot;$&#123;ETCD_ADVERTISE_CLIENT_URLS&#125;\&quot; \</div><div class="line">  --initial-cluster-token=\&quot;$&#123;ETCD_INITIAL_CLUSTER_TOKEN&#125;\&quot; \</div><div class="line">  --initial-cluster=\&quot;$&#123;ETCD_INITIAL_CLUSTER&#125;\&quot; \</div><div class="line">  --initial-cluster-state=\&quot;$&#123;ETCD_INITIAL_CLUSTER_STATE&#125;\&quot; \</div><div class="line">  --data-dir=\&quot;$&#123;ETCD_DATA_DIR&#125;\&quot; &quot;</div><div class="line"></div><div class="line">Restart=on-failure</div><div class="line">LimitNOFILE=65536</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=multi-user.target</div></pre></td></tr></table></figure></p>
 <p>原始内容里没有开启集群的代码，折腾好久<br>B 修改 /etc/etcd/etcd.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># [member]</div><div class="line">ETCD_NAME=&quot;vm-h1&quot;</div><div class="line">ETCD_DATA_DIR=&quot;/var/lib/etcd/default.etcd&quot;</div><div class="line">#ETCD_WAL_DIR=&quot;&quot;</div><div class="line">#ETCD_SNAPSHOT_COUNT=&quot;10000&quot;</div><div class="line">#ETCD_HEARTBEAT_INTERVAL=&quot;100&quot;</div><div class="line">#ETCD_ELECTION_TIMEOUT=&quot;1000&quot;</div><div class="line">ETCD_LISTEN_PEER_URLS=&quot;http://0.0.0.0:2380&quot;</div><div class="line">ETCD_LISTEN_CLIENT_URLS=&quot;http://0.0.0.0:2379&quot;</div><div class="line">#ETCD_MAX_SNAPSHOTS=&quot;5&quot;</div><div class="line">#ETCD_MAX_WALS=&quot;5&quot;</div><div class="line">#ETCD_CORS=&quot;&quot;</div><div class="line">#</div><div class="line">#[cluster]</div><div class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=&quot;http://10.10.1.231:2380&quot;</div><div class="line"># if you use different ETCD_NAME (e.g. test), set ETCD_INITIAL_CLUSTER value for this name, i.e. &quot;test=http://...&quot;</div><div class="line">ETCD_INITIAL_CLUSTER=&quot;vm-h1=http://vm-h1:2380,vm-h2=http://vm-h2:2380,vm-h3=http://vm-h3:2380&quot;</div><div class="line">ETCD_INITIAL_CLUSTER_STATE=&quot;new&quot;</div><div class="line">ETCD_INITIAL_CLUSTER_TOKEN=&quot;etcd-cluster-1&quot;</div><div class="line">ETCD_ADVERTISE_CLIENT_URLS=&quot;http://10.10.1.231:2379&quot;</div></pre></td></tr></table></figure></p>
-<p>对应的个改里面的 ETCD_INITIAL_ADVERTISE_PEER_URLS，ETCD_ADVERTISE_CLIENT_URLS<br>用systemdctl start etcd.<br>如果要因为ETCD_DATA_DIR权限错误，可是以前运行过，可以先停止三个机器，然后把 ETCD_DATA_DIR 目录里内空全删除，再重启机器。</p>
+<p>对应的个改里面的 ETCD_INITIAL_ADVERTISE_PEER_URLS，ETCD_ADVERTISE_CLIENT_URLS<br>用systemdctl start etcd.<br>如果要因为ETCD_DATA_DIR权限错误，也可能以前运行过，可以先停止三个机器，然后把 ETCD_DATA_DIR 目录里内空全删除，再重启机器。</p>
 <p>C 检查：<br>etcdctl cluster-health<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">member 28253e92e46b635b is healthy: got healthy result from http://10.10.1.232:2379</div><div class="line">member 481331b384513d9e is healthy: got healthy result from http://10.10.1.231:2379</div><div class="line">member cbeefbc57f0e8ab9 is healthy: got healthy result from http://10.10.1.233:2379</div></pre></td></tr></table></figure></p>
   
 	</div>
@@ -208,11 +208,11 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
+			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>4</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>4</sup></a></li>
+			<li><a href="/categories/收集/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
 		  
 		
 		  
@@ -228,11 +228,11 @@
 		  
 		
 		  
-			<li><a href="/categories/ectd/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/收集/" title="收集">收集<sup>17</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>17</sup></a></li>
+			<li><a href="/categories/ectd/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -281,15 +281,15 @@
 			
 		
 			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/vpn/" title="vpn">vpn<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
 			
 		
 			
@@ -301,7 +301,11 @@
 			
 		
 			
-				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
+				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
 			
 		
 			
@@ -309,11 +313,7 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
+				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
 			
 		
 			
