@@ -78,6 +78,67 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/02/18/centos-samba匿名共享/" title="centos samba匿名共享" itemprop="url">centos samba匿名共享</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-18T12:46:56.000Z" itemprop="datePublished"> 发表于 2017-02-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>家里 centos做共享，为了方便都是匿名，以下配置即可实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">[global]  </div><div class="line"># 与主机名有关的设定信息  </div><div class="line">workgroup     = home     </div><div class="line"># 与登录文件有关的设定项目，注意变量 (%m)  </div><div class="line">log file = /var/log/samba/log.%m  </div><div class="line">max log size = 50  </div><div class="line"># 这里才是与密码有关的设定项目！  </div><div class="line">security = share  </div><div class="line">  </div><div class="line"># 分享的资源设定方面：  </div><div class="line">[temp]                           </div><div class="line">  #分享资源名称  </div><div class="line">comment    = Temporary file space </div><div class="line"> #简单的解释此资源  </div><div class="line">path       = /tmp                 </div><div class="line"> #实际 Linux 分享的目录  </div><div class="line">writable   = yes                  </div><div class="line"> #是否可写入？在此例为是的  </div><div class="line">browseable = yes                 </div><div class="line">  #能不能被浏览到资源名称  </div><div class="line">guest ok   = yes</div></pre></td></tr></table></figure></p>
+<p>其中security = share  是关键，注意原配置中多个地方出现，<br>可能生效值不是这个，需要注意<br>同时需要关闭selinux和防水墙。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/linux/">linux</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/02/18/CentOS-命令行下连接加密模式为-WPA-WPA2-PSK-的无线网络/" title="CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络" itemprop="url">CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络</a>
   </h1>
   <p class="article-author">By
@@ -654,68 +715,6 @@ private Date birthday;
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/03/30/hexo源文件备份/" title="hexo源文件备份" itemprop="url">hexo源文件备份</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-29T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-30</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>hexo发布的文件都是以.md文件格式放在source目录，<br>每次生成时，需要读取文件分析 分类，目录等信息<br>所以需要备份，才可以在不同的电脑上操作。<br>最简单的就是直接备份到git.把文件目录复制到 public 目录一起发布即可备份了。<br> 一条命令搞定。</p>
-<pre><code>cp -rf source public &amp;&amp; hexo g &amp;&amp;  hexo d
-</code></pre><p> 同理，想备样式也可以搞定到这这个目录。    </p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/blog/">blog</a>►<a class="article-category-link" href="/categories/blog/软件/">软件</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/hexo/">hexo</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
@@ -741,11 +740,19 @@ private Date birthday;
 		  
 		
 		  
+			<li><a href="/categories/ectd/" title="ectd">ectd<sup>1</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/node/excel/" title="excel">excel<sup>1</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/ice/" title="ice">ice<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -781,6 +788,10 @@ private Date birthday;
 		  
 		
 		  
+			<li><a href="/categories/ectd/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/收集/" title="收集">收集<sup>17</sup></a></li>
 		  
 		
@@ -806,7 +817,19 @@ private Date birthday;
 			
 		
 			
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/thrift/" title="thrift">thrift<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
 			
 		
 			
@@ -818,19 +841,11 @@ private Date birthday;
 			
 		
 			
-				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/thrift/" title="thrift">thrift<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
 			
 		
 			
@@ -838,7 +853,7 @@ private Date birthday;
 			
 		
 			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
 			
 		
 			
@@ -850,7 +865,7 @@ private Date birthday;
 			
 		
 			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -858,7 +873,11 @@ private Date birthday;
 			
 		
 			
-				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			
@@ -866,19 +885,11 @@ private Date birthday;
 			
 		
 			
-				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 		</ul>

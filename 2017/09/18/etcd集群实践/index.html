@@ -5,24 +5,24 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>ice起步(二)_IceBox | 有药就给你</title>
+    <title>etcd集群实践 | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="IceBox 可以代替通常的server,方便进行很多ice服务管理，可以理解成一个类似tomcat的容器，  里面可以有很多服务。服务器 接口方法实现接上一篇。步骤，1，实现com.zeroc.IceBox.Service，完成方法。123456789101112131415161718192021222324package com.feng.ice.server.icebox;import c">
-<meta name="keywords" content="ice">
+    <meta name="description" content="这两天要搞kubernetes ,提及etcd，etcd具体介绍自己百度一下，我们现在实践的etcd集群的建立。环境：vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233都是centos7  没有装防火墙A ,三台机器使用 yum install etcd修改  /usr/lib/systemd/system/etcd.service1234567">
+<meta name="keywords" content="etcd">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ice起步(二)_IceBox">
-<meta property="og:url" content="http://yoursite.com/2017/09/01/ice起步(二)IceBox/index.html">
+<meta property="og:title" content="etcd集群实践">
+<meta property="og:url" content="http://yoursite.com/2017/09/18/etcd集群实践/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="IceBox 可以代替通常的server,方便进行很多ice服务管理，可以理解成一个类似tomcat的容器，  里面可以有很多服务。服务器 接口方法实现接上一篇。步骤，1，实现com.zeroc.IceBox.Service，完成方法。123456789101112131415161718192021222324package com.feng.ice.server.icebox;import c">
-<meta property="og:updated_time" content="2017-09-01T07:21:42.000Z">
+<meta property="og:description" content="这两天要搞kubernetes ,提及etcd，etcd具体介绍自己百度一下，我们现在实践的etcd集群的建立。环境：vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233都是centos7  没有装防火墙A ,三台机器使用 yum install etcd修改  /usr/lib/systemd/system/etcd.service1234567">
+<meta property="og:updated_time" content="2017-09-18T07:15:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ice起步(二)_IceBox">
-<meta name="twitter:description" content="IceBox 可以代替通常的server,方便进行很多ice服务管理，可以理解成一个类似tomcat的容器，  里面可以有很多服务。服务器 接口方法实现接上一篇。步骤，1，实现com.zeroc.IceBox.Service，完成方法。123456789101112131415161718192021222324package com.feng.ice.server.icebox;import c">
+<meta name="twitter:title" content="etcd集群实践">
+<meta name="twitter:description" content="这两天要搞kubernetes ,提及etcd，etcd具体介绍自己百度一下，我们现在实践的etcd集群的建立。环境：vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233都是centos7  没有装防火墙A ,三台机器使用 yum install etcd修改  /usr/lib/systemd/system/etcd.service1234567">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/09/01/ice起步(二)IceBox/" title="ice起步(二)_IceBox" itemprop="url">ice起步(二)_IceBox</a>
+      <a href="/2017/09/18/etcd集群实践/" title="etcd集群实践" itemprop="url">etcd集群实践</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2017-09-01T06:52:11.000Z" itemprop="datePublished"> 发表于 2017-09-01</time>
+    <time datetime="2017-09-18T06:54:09.000Z" itemprop="datePublished"> 发表于 2017-09-18</time>
     
   </p>
 </header>
@@ -101,9 +101,10 @@
 		
 		</div>
 		
-		<p>IceBox 可以代替通常的server,方便进行很多ice服务管理，<br>可以理解成一个类似tomcat的容器，  里面可以有很多服务。<br>服务器 接口方法实现接上一篇。<br>步骤，<br>1，实现com.zeroc.IceBox.Service，完成方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">package com.feng.ice.server.icebox;</div><div class="line"></div><div class="line">import com.feng.ice.server.impl.PrinterI;</div><div class="line">import com.zeroc.Ice.Communicator;</div><div class="line">import com.zeroc.IceBox.Service;</div><div class="line">public class IceBoxPrinter  implements  Service &#123;</div><div class="line">	private com.zeroc.Ice.ObjectAdapter _adapter;</div><div class="line">	public void start(String name,  Communicator communicator, String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(  &quot;name:&quot; + name);</div><div class="line">		for(String s:args)</div><div class="line">		System.out.println(  &quot;args:&quot; + s);</div><div class="line">		_adapter = communicator.createObjectAdapter(name);</div><div class="line">		com.zeroc.Ice.Object object =   new PrinterI();</div><div class="line">		//_adapter.add(object, com.zeroc.Ice.Util.stringToIdentity(&quot;SimplePrinter&quot;));</div><div class="line">		_adapter.add(object, com.zeroc.Ice.Util.stringToIdentity(&quot;SimplePrinter&quot;));</div><div class="line">		_adapter.activate();</div><div class="line">	&#125;</div><div class="line">	public void stop() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		 _adapter.deactivate();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>2 配置文件 config.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">IceBox.InheritProperties=1</div><div class="line">Ice.Trace.Network=1</div><div class="line">Ice.Trace.ThreadPool=1 </div><div class="line">#所有服务初始化完成之后打印 xxx ready</div><div class="line">IceBox.PrintServicesReady=SimplePrinterBox  ready.....</div><div class="line">#SimplePrinter配置</div><div class="line">IceBox.Service.SimplePrinter=com.feng.ice.server.icebox.IceBoxPrinter 100 101 102</div><div class="line">SimplePrinter.Endpoints=tcp -p 10000</div><div class="line">#SendMSM配置</div><div class="line">#IceBox.Service.SendMessage=com.feng.ice.server.icebox.IceBoxSendMSM  200 201 202</div><div class="line">#SendMessage.Endpoints=tcp -p 10001</div></pre></td></tr></table></figure></p>
-<p>可以一个配置文件里配置多个服务，如上面的最后三句。<br>3 启动：main class com.zeroc.IceBox.Server  添加参数：<br>–Ice.Config=/路径/config.properties<br>4 客户端访问无变化。<br>5 更多参数参照官网说明。</p>
+		<p>这两天要搞kubernetes ,提及etcd，etcd具体介绍自己百度一下，我们现在实践的etcd集群的建立。<br>环境：<br>vm-h1 10.10.1.231<br>vm-h2 10.10.1.232<br>vm-h3 10.10.1.233<br>都是centos7  没有装防火墙<br>A ,三台机器使用 yum install etcd<br>修改  /usr/lib/systemd/system/etcd.service<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">[Unit]</div><div class="line">Description=Etcd Server</div><div class="line">After=network.target</div><div class="line">After=network-online.target</div><div class="line">Wants=network-online.target</div><div class="line"></div><div class="line">[Service]</div><div class="line">Type=notify</div><div class="line">WorkingDirectory=/var/lib/etcd/</div><div class="line">EnvironmentFile=-/etc/etcd/etcd.conf</div><div class="line">User=etcd</div><div class="line"># set GOMAXPROCS to number of processors</div><div class="line">ExecStart=/bin/bash -c &quot;GOMAXPROCS=$(nproc) /usr/bin/etcd --name=\&quot;$&#123;ETCD_NAME&#125;\&quot; \</div><div class="line">  --initial-advertise-peer-urls=\&quot;$&#123;ETCD_INITIAL_ADVERTISE_PEER_URLS&#125;\&quot; \</div><div class="line">  --listen-peer-urls=\&quot;$&#123;ETCD_LISTEN_PEER_URLS&#125;\&quot; \</div><div class="line">  --listen-client-urls=\&quot;$&#123;ETCD_LISTEN_CLIENT_URLS&#125;\&quot; \</div><div class="line">  --advertise-client-urls=\&quot;$&#123;ETCD_ADVERTISE_CLIENT_URLS&#125;\&quot; \</div><div class="line">  --initial-cluster-token=\&quot;$&#123;ETCD_INITIAL_CLUSTER_TOKEN&#125;\&quot; \</div><div class="line">  --initial-cluster=\&quot;$&#123;ETCD_INITIAL_CLUSTER&#125;\&quot; \</div><div class="line">  --initial-cluster-state=\&quot;$&#123;ETCD_INITIAL_CLUSTER_STATE&#125;\&quot; \</div><div class="line">  --data-dir=\&quot;$&#123;ETCD_DATA_DIR&#125;\&quot; &quot;</div><div class="line"></div><div class="line">Restart=on-failure</div><div class="line">LimitNOFILE=65536</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=multi-user.target</div></pre></td></tr></table></figure></p>
+<p>原始内容里没有开启集群的代码，折腾好久<br>B 修改 /etc/etcd/etcd.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># [member]</div><div class="line">ETCD_NAME=&quot;vm-h1&quot;</div><div class="line">ETCD_DATA_DIR=&quot;/var/lib/etcd/default.etcd&quot;</div><div class="line">#ETCD_WAL_DIR=&quot;&quot;</div><div class="line">#ETCD_SNAPSHOT_COUNT=&quot;10000&quot;</div><div class="line">#ETCD_HEARTBEAT_INTERVAL=&quot;100&quot;</div><div class="line">#ETCD_ELECTION_TIMEOUT=&quot;1000&quot;</div><div class="line">ETCD_LISTEN_PEER_URLS=&quot;http://0.0.0.0:2380&quot;</div><div class="line">ETCD_LISTEN_CLIENT_URLS=&quot;http://0.0.0.0:2379&quot;</div><div class="line">#ETCD_MAX_SNAPSHOTS=&quot;5&quot;</div><div class="line">#ETCD_MAX_WALS=&quot;5&quot;</div><div class="line">#ETCD_CORS=&quot;&quot;</div><div class="line">#</div><div class="line">#[cluster]</div><div class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=&quot;http://10.10.1.231:2380&quot;</div><div class="line"># if you use different ETCD_NAME (e.g. test), set ETCD_INITIAL_CLUSTER value for this name, i.e. &quot;test=http://...&quot;</div><div class="line">ETCD_INITIAL_CLUSTER=&quot;vm-h1=http://vm-h1:2380,vm-h2=http://vm-h2:2380,vm-h3=http://vm-h3:2380&quot;</div><div class="line">ETCD_INITIAL_CLUSTER_STATE=&quot;new&quot;</div><div class="line">ETCD_INITIAL_CLUSTER_TOKEN=&quot;etcd-cluster-1&quot;</div><div class="line">ETCD_ADVERTISE_CLIENT_URLS=&quot;http://10.10.1.231:2379&quot;</div></pre></td></tr></table></figure></p>
+<p>对应的个改里面的 ETCD_INITIAL_ADVERTISE_PEER_URLS，ETCD_ADVERTISE_CLIENT_URLS<br>用systemdctl start etcd.<br>如果要因为ETCD_DATA_DIR权限错误，可是以前运行过，可以先停止三个机器，然后把 ETCD_DATA_DIR 目录里内空全删除，再重启机器。</p>
+<p>C 检查：<br>etcdctl cluster-health<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">member 28253e92e46b635b is healthy: got healthy result from http://10.10.1.232:2379</div><div class="line">member 481331b384513d9e is healthy: got healthy result from http://10.10.1.231:2379</div><div class="line">member cbeefbc57f0e8ab9 is healthy: got healthy result from http://10.10.1.233:2379</div></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -111,13 +112,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/ice/">ice</a>►<a class="article-category-link" href="/categories/ice/收集/">收集</a>
+  <a class="article-category-link" href="/categories/ectd/">ectd</a>►<a class="article-category-link" href="/categories/ectd/linux/">linux</a>►<a class="article-category-link" href="/categories/ectd/linux/收集/">收集</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/ice/">ice</a>
+  <span></span> <a href="/tags/etcd/">etcd</a>
   </div>
 
 </div>
@@ -126,7 +127,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/09/01/ice起步(二)IceBox/" data-title="ice起步(二)_IceBox | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/09/18/etcd集群实践/" data-title="etcd集群实践 | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -139,19 +140,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/09/01/ice起步-三-IceGrid/" title="ice起步(三)_IceGrid">
-  <strong>上一篇：</strong><br/>
-  <span>
-  ice起步(三)_IceGrid</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/09/01/ice起步-一/"  title="ice起步(一)">
+<a href="/2017/09/13/vpn-跳板设置/"  title="vpn 跳板设置">
  <strong>下一篇：</strong><br/> 
- <span>ice起步(一)
+ <span>vpn 跳板设置
 </span>
 </a>
 </div>
