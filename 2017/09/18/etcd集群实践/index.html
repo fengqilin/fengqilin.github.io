@@ -19,7 +19,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/09/18/etcd集群实践/index.html">
 <meta property="og:site_name" content="有药就给你">
 <meta property="og:description" content="这两天要搞kubernetes ,提及etcd，etcd具体介绍自己百度一下，我们现在实践的etcd集群的建立。环境：vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233都是centos7  没有装防火墙A ,三台机器使用 yum install etcd修改  /usr/lib/systemd/system/etcd.service1234567">
-<meta property="og:updated_time" content="2017-09-23T08:40:54.000Z">
+<meta property="og:updated_time" content="2017-09-23T08:57:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="etcd集群实践">
 <meta name="twitter:description" content="这两天要搞kubernetes ,提及etcd，etcd具体介绍自己百度一下，我们现在实践的etcd集群的建立。环境：vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233都是centos7  没有装防火墙A ,三台机器使用 yum install etcd修改  /usr/lib/systemd/system/etcd.service1234567">
@@ -112,7 +112,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/ectd/">ectd</a>►<a class="article-category-link" href="/categories/ectd/linux/">linux</a>►<a class="article-category-link" href="/categories/ectd/linux/收集/">收集</a>
+  <a class="article-category-link" href="/categories/ectd/">ectd</a>►<a class="article-category-link" href="/categories/ectd/kubernetes/">kubernetes</a>►<a class="article-category-link" href="/categories/ectd/kubernetes/linux/">linux</a>►<a class="article-category-link" href="/categories/ectd/kubernetes/linux/收集/">收集</a>
 </div>
 
 
@@ -140,6 +140,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2017/09/23/kubernetes-master节点配置/" title="kubernetes master节点配置">
+  <strong>上一篇：</strong><br/>
+  <span>
+  kubernetes master节点配置</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2017/09/13/vpn-跳板设置/"  title="vpn 跳板设置">
@@ -192,11 +200,23 @@
 		  
 		
 		  
-			<li><a href="/categories/ectd/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -224,11 +244,15 @@
 		  
 		
 		  
-			<li><a href="/categories/ectd/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>2</sup></a></li>
 		  
 		
 		  
@@ -273,11 +297,19 @@
 			
 		
 			
+				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
 			
 		
 			
@@ -289,11 +321,7 @@
 			
 		
 			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			
@@ -301,7 +329,7 @@
 			
 		
 			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
+				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
 			
 		
 			
@@ -309,7 +337,7 @@
 			
 		
 			
-				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
+				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
 			
 		
 			
@@ -317,19 +345,15 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
 			
 		
 		</ul>

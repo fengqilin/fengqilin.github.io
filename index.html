@@ -78,6 +78,155 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/09/23/kubernetes-node节点注册/" title="kubernetes node节点注册" itemprop="url">kubernetes node节点注册</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-09-23T09:18:11.000Z" itemprop="datePublished"> 发表于 2017-09-23</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>接前面，准备节点直接使用 etcd集群所在机器<br>vm-h1 10.10.1.231<br>vm-h2 10.10.1.232<br>vm-h3 10.10.1.233<br>后期增加<br>vm-h4<br>vm-h5<br>节点需要启动：<br>Node上面运行三个模块：kubelet、kube-proxy、runtime(docker)。<br>Node自己向服务器注册，所以服务器是不用知道节点的，只需要节点做好配置文件，启动对应的服务程序即可。<br>以下 操作在 vm-h1  10.10.1.231 这台机器。<br>A 安装 yum install kubernetes  docker也会动装上。<br>同样/etc/kubernetes/config 是一些公有配置参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># kubernetes system config</div><div class="line">#</div><div class="line"># The following values are used to configure various aspects of all</div><div class="line"># kubernetes services, including</div><div class="line">#</div><div class="line">#   kube-apiserver.service</div><div class="line">#   kube-controller-manager.service</div><div class="line">#   kube-scheduler.service</div><div class="line">#   kubelet.service</div><div class="line">#   kube-proxy.service</div><div class="line"># logging to stderr means we get it in the systemd journal</div><div class="line">KUBE_LOGTOSTDERR=&quot;--logtostderr=true&quot;</div><div class="line"></div><div class="line"># journal message level, 0 is debug</div><div class="line">KUBE_LOG_LEVEL=&quot;--v=2&quot;</div><div class="line"></div><div class="line"># Should this cluster be allowed to run privileged docker containers</div><div class="line">KUBE_ALLOW_PRIV=&quot;--allow-privileged=false&quot;</div><div class="line"></div><div class="line"># How the controller-manager, scheduler, and proxy find the apiserver</div><div class="line">KUBE_MASTER=&quot;--master=http://10.10.1.241:8080&quot;</div></pre></td></tr></table></figure></p>
+<p>KUBE_MASTER= 需要指定到master机器及端口</p>
+<p>启动文件：<br> /usr/lib/systemd/system/kubelet.service<br> /usr/lib/systemd/system/kube-proxy.service<br> /usr/lib/systemd/system/docker.service  </p>
+<p>B docker先运行起来<br>   systemctl  start  docker<br>   systemctl  enable  docker 随机启动<br>C 编辑配置文件 vi  /etc/kubernetes/kubelet</p>
+<pre><code>##
+# kubernetes kubelet (minion) config
+
+# The address for the info server to serve on (set to 0.0.0.0 or &quot;&quot; for all interfaces)
+KUBELET_ADDRESS=&quot;--address=0.0.0.0&quot;
+
+# The port for the info server to serve on
+KUBELET_PORT=&quot;--port=10250&quot;
+
+# You may leave this blank to use the actual hostname
+KUBELET_HOSTNAME=&quot;--hostname-override=vm-h1&quot;
+
+# location of the api-server 
+KUBELET_API_SERVER=&quot;--api-servers=http://10.10.1.241:8080&quot;
+
+# pod infrastructure container
+KUBELET_POD_INFRA_CONTAINER=&quot;--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest&quot;
+
+# Add your own!
+KUBELET_ARGS=&quot;&quot;
+</code></pre><p>KUBELET_HOSTNAME=”–hostname-override=vm-h1” 设置唯一名，这就以主机名配置的</p>
+<p>D kube-proxy配置文件，无须特别配置  /etc/kubernetes/proxy，因为一些参数从通用配置文件里加载了<br>E systemctl restart docker kubelet  kube-proxy<br>查看状态及到 master 机器执行  kubectl get node<br>NAME      STATUS    AGE<br>vm-h1     Ready     5d<br>同理，在其他机器执行同样的配置操作。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/kubernetes/">kubernetes</a>►<a class="article-category-link" href="/categories/kubernetes/linux/">linux</a>►<a class="article-category-link" href="/categories/kubernetes/linux/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/kubernetes/">kubernetes</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/09/23/kubernetes-master节点配置/" title="kubernetes master节点配置" itemprop="url">kubernetes master节点配置</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-09-23T08:56:01.000Z" itemprop="datePublished"> 发表于 2017-09-23</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>环境接上etcd集群<br>10.10.1.241  vm-manager<br>系统 centos7<br>master 节点需要启动<br> apiserver<br> controller-manager<br> scheduler  三个服务</p>
+<p>A 安装  yum install kubernetes 会把所有文件都装上，<br>但我作为master节点只启动相应的服务，只作相应的配置<br>B 修改通用配置文件<br>vi /etc/kubernetes/config<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"> ###</div><div class="line"># kubernetes system config</div><div class="line">#</div><div class="line"># The following values are used to configure various aspects of all</div><div class="line"># kubernetes services, including</div><div class="line">#</div><div class="line">#   kube-apiserver.service</div><div class="line">#   kube-controller-manager.service</div><div class="line">#   kube-scheduler.service</div><div class="line">#   kubelet.service</div><div class="line">#   kube-proxy.service</div><div class="line"># logging to stderr means we get it in the systemd journal</div><div class="line">KUBE_LOGTOSTDERR=&quot;--logtostderr=true&quot;</div><div class="line"></div><div class="line"># journal message level, 0 is debug</div><div class="line">KUBE_LOG_LEVEL=&quot;--v=2&quot;</div><div class="line"></div><div class="line"># Should this cluster be allowed to run privileged docker containers</div><div class="line">KUBE_ALLOW_PRIV=&quot;--allow-privileged=false&quot;</div><div class="line"></div><div class="line"># How the controller-manager, scheduler, and proxy find the apiserver</div><div class="line">KUBE_MASTER=&quot;--master=http://127.0.0.1:8080&quot;</div></pre></td></tr></table></figure></p>
+<p>查看对应的 server 启动脚本，会加载这个配置文件<br>如vi /usr/lib/systemd/system/kube-apiserver.service<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">EnvironmentFile=-/etc/kubernetes/config</div><div class="line">EnvironmentFile=-/etc/kubernetes/apiserver</div></pre></td></tr></table></figure></p>
+<p>C 修改apiserver配置件 vi /etc/kubernetes/apiserver<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#指定etcd集群，默认是127.0.0.1，现指定成上一篇所建etcd集群</div><div class="line">KUBE_ETCD_SERVERS=&quot;--etcd-servers=http://10.10.1.231:2379,http://10.10.1.232:2379,http://10.10.1.233:2379&quot;</div><div class="line">##如果要远程访问，修改下面这句，默认是127.0.0.1</div><div class="line">KUBE_SERVICE_ADDRESSES=&quot;--service-cluster-ip-range=10.254.0.0/16&quot;</div></pre></td></tr></table></figure></p>
+<p>D controller-manager 配置，因为有公有配置文件，无须特别配置<br> vi /etc/kubernetes/controller-manager<br>E scheduler配置，因为有公有配置文件，无须特别配置<br> vi /etc/kubernetes/scheduler<br> F 启动，查看状态<br>  systemctl restart kube-apiserver kube-controller-manager kube-scheduler<br>    systemctl status kube-apiserver kube-controller-manager kube-scheduler<br>  随机启动<br>  systemctl enable kube-apiserver kube-controller-manager kube-scheduler<br>  查看是否在监听8080端口</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/kubernetes/">kubernetes</a>►<a class="article-category-link" href="/categories/kubernetes/linux/">linux</a>►<a class="article-category-link" href="/categories/kubernetes/linux/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/kubernetes/">kubernetes</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/09/18/etcd集群实践/" title="etcd集群实践" itemprop="url">etcd集群实践</a>
   </h1>
   <p class="article-author">By
@@ -107,7 +256,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/ectd/">ectd</a>►<a class="article-category-link" href="/categories/ectd/linux/">linux</a>►<a class="article-category-link" href="/categories/ectd/linux/收集/">收集</a>
+  <a class="article-category-link" href="/categories/ectd/">ectd</a>►<a class="article-category-link" href="/categories/ectd/kubernetes/">kubernetes</a>►<a class="article-category-link" href="/categories/ectd/kubernetes/linux/">linux</a>►<a class="article-category-link" href="/categories/ectd/kubernetes/linux/收集/">收集</a>
 </div>
 
 
@@ -572,126 +721,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/06/22/centos7-ss5安装配置/" title="centos7 ss5安装配置" itemprop="url">centos7 ss5安装配置</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-06-22T06:17:00.000Z" itemprop="datePublished"> 发表于 2017-06-22</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">yum -y install gcc automake make</div><div class="line">yum -y install pam-devel openldap-devel cyrus-sasl-devel openssl-devel</div><div class="line"></div><div class="line"></div><div class="line">wget http://jaist.dl.sourceforge.net/sourceforge/ss5/ss5-3.6.1-1.tar.gz</div><div class="line">tar zxvf ss5-3.6.1-1.tar.gz</div><div class="line">cd ss5-3.6.1</div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div><div class="line"></div><div class="line">#启动ss5服务</div><div class="line">/etc/init.d/ss5 start</div><div class="line"></div><div class="line">注意，ss5可能没有x权限，需要手动加上</div><div class="line">配黑点文件：   </div><div class="line"> /etc/opt/ss5/ss5.conf</div><div class="line"> 默认端口1080 </div><div class="line"> 默认是无权限验证  </div><div class="line"> </div><div class="line"> #       SHost           SPort           Authentication</div><div class="line">#</div><div class="line">auth    0.0.0.0/0               -              -</div><div class="line">但这样可能还是代理上不了的</div><div class="line">需要更改   为可用（去掉注释）</div><div class="line">permit -        0.0.0.0/0       -       0.0.0.0/0       -       -       -       -       -</div><div class="line"> 如果不记录日志：</div><div class="line"> /etc/init.d/ss5 添加 -m</div><div class="line"> # Start daemon.</div><div class="line">echo -n &quot;Starting ss5... &quot;</div><div class="line">if [ $OS = &quot;Linux&quot; ]; then</div><div class="line">daemon /usr/sbin/ss5 -m -t $SS5_OPTS</div><div class="line">touch /var/lock/subsys/ss5</div><div class="line">if [ $OS = &quot;SunOS&quot; ]; then</div><div class="line">/usr/sbin/ss5 -m -t</div><div class="line">touch /var/lock/subsys/ss5</div><div class="line">else</div><div class="line">/usr/local/sbin/ss5 -m -t</div><div class="line">fi</div><div class="line">echo &quot;done&quot;</div><div class="line">fi</div><div class="line"></div><div class="line">其它：建立定时自动重启ss5的脚本ss5restart.sh （解决ss5断断续续出现1080端口不通的问题）</div><div class="line"></div><div class="line">*/10 * * * *  /etc/init.d/ss5 restart</div></pre></td></tr></table></figure>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/linux/">linux</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/06/05/Mac-linux环境tess4j使用/" title="Mac,linux环境tess4j使用" itemprop="url">Mac,linux环境tess4j使用</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-06-05T00:55:24.000Z" itemprop="datePublished"> 发表于 2017-06-05</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">tess4j是一个java环境的图形识别软件，它是通过JNA调用dll或so达到识别图片的功能。</div><div class="line">在window环境，JAR包中已包含dll,不用处理即可。简单几行代码即可</div><div class="line">File imageFile = new File(&quot;/Users/feng/Documents/workspace/rand-code-imgage.jpg&quot;);  </div><div class="line">        ITesseract instance = new Tesseract();  // JNA Interface Mapping  </div><div class="line">        instance.setDatapath(&quot;/Users/feng/Downloads/Tess4J3.3.1/tessdata&quot;);</div><div class="line">         </div><div class="line">          String result = instance.doOCR(imageFile);  </div><div class="line">          System.out.println(result);  </div><div class="line">setDatapath 需要下载最新的tessdata。可去官网下载。</div><div class="line"></div><div class="line">在Mac环境，需要自己安装 tesseract </div><div class="line">brew install tesseract --all-languages   </div><div class="line">在linux (centos)安装：</div><div class="line">在安装了epel后，</div><div class="line">yum install tesseract 即可</div></pre></td></tr></table></figure>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/tess4j/">tess4j</a><a href="/tags/开发/">开发</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -729,11 +758,23 @@
 		  
 		
 		  
-			<li><a href="/categories/ectd/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -761,11 +802,15 @@
 		  
 		
 		  
-			<li><a href="/categories/ectd/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>2</sup></a></li>
 		  
 		
 		  
@@ -810,11 +855,19 @@
 			
 		
 			
+				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
 			
 		
 			
@@ -826,11 +879,7 @@
 			
 		
 			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			
@@ -838,7 +887,7 @@
 			
 		
 			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
+				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
 			
 		
 			
@@ -846,7 +895,7 @@
 			
 		
 			
-				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
+				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
 			
 		
 			
@@ -854,19 +903,15 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
 			
 		
 		</ul>

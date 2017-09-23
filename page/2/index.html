@@ -78,6 +78,126 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/06/22/centos7-ss5安装配置/" title="centos7 ss5安装配置" itemprop="url">centos7 ss5安装配置</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-06-22T06:17:00.000Z" itemprop="datePublished"> 发表于 2017-06-22</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">yum -y install gcc automake make</div><div class="line">yum -y install pam-devel openldap-devel cyrus-sasl-devel openssl-devel</div><div class="line"></div><div class="line"></div><div class="line">wget http://jaist.dl.sourceforge.net/sourceforge/ss5/ss5-3.6.1-1.tar.gz</div><div class="line">tar zxvf ss5-3.6.1-1.tar.gz</div><div class="line">cd ss5-3.6.1</div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div><div class="line"></div><div class="line">#启动ss5服务</div><div class="line">/etc/init.d/ss5 start</div><div class="line"></div><div class="line">注意，ss5可能没有x权限，需要手动加上</div><div class="line">配黑点文件：   </div><div class="line"> /etc/opt/ss5/ss5.conf</div><div class="line"> 默认端口1080 </div><div class="line"> 默认是无权限验证  </div><div class="line"> </div><div class="line"> #       SHost           SPort           Authentication</div><div class="line">#</div><div class="line">auth    0.0.0.0/0               -              -</div><div class="line">但这样可能还是代理上不了的</div><div class="line">需要更改   为可用（去掉注释）</div><div class="line">permit -        0.0.0.0/0       -       0.0.0.0/0       -       -       -       -       -</div><div class="line"> 如果不记录日志：</div><div class="line"> /etc/init.d/ss5 添加 -m</div><div class="line"> # Start daemon.</div><div class="line">echo -n &quot;Starting ss5... &quot;</div><div class="line">if [ $OS = &quot;Linux&quot; ]; then</div><div class="line">daemon /usr/sbin/ss5 -m -t $SS5_OPTS</div><div class="line">touch /var/lock/subsys/ss5</div><div class="line">if [ $OS = &quot;SunOS&quot; ]; then</div><div class="line">/usr/sbin/ss5 -m -t</div><div class="line">touch /var/lock/subsys/ss5</div><div class="line">else</div><div class="line">/usr/local/sbin/ss5 -m -t</div><div class="line">fi</div><div class="line">echo &quot;done&quot;</div><div class="line">fi</div><div class="line"></div><div class="line">其它：建立定时自动重启ss5的脚本ss5restart.sh （解决ss5断断续续出现1080端口不通的问题）</div><div class="line"></div><div class="line">*/10 * * * *  /etc/init.d/ss5 restart</div></pre></td></tr></table></figure>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/linux/">linux</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/06/05/Mac-linux环境tess4j使用/" title="Mac,linux环境tess4j使用" itemprop="url">Mac,linux环境tess4j使用</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-06-05T00:55:24.000Z" itemprop="datePublished"> 发表于 2017-06-05</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">tess4j是一个java环境的图形识别软件，它是通过JNA调用dll或so达到识别图片的功能。</div><div class="line">在window环境，JAR包中已包含dll,不用处理即可。简单几行代码即可</div><div class="line">File imageFile = new File(&quot;/Users/feng/Documents/workspace/rand-code-imgage.jpg&quot;);  </div><div class="line">        ITesseract instance = new Tesseract();  // JNA Interface Mapping  </div><div class="line">        instance.setDatapath(&quot;/Users/feng/Downloads/Tess4J3.3.1/tessdata&quot;);</div><div class="line">         </div><div class="line">          String result = instance.doOCR(imageFile);  </div><div class="line">          System.out.println(result);  </div><div class="line">setDatapath 需要下载最新的tessdata。可去官网下载。</div><div class="line"></div><div class="line">在Mac环境，需要自己安装 tesseract </div><div class="line">brew install tesseract --all-languages   </div><div class="line">在linux (centos)安装：</div><div class="line">在安装了epel后，</div><div class="line">yum install tesseract 即可</div></pre></td></tr></table></figure>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/tess4j/">tess4j</a><a href="/tags/开发/">开发</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/06/05/mongorestore出现错认证不能过/" title="mongorestore出现错认证不能过" itemprop="url">mongorestore出现错认证不能过</a>
   </h1>
   <p class="article-author">By
@@ -551,128 +671,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/02/23/COMODO证书申请安装/" title="COMODO证书申请安装" itemprop="url">COMODO证书申请安装</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-02-23T01:18:25.000Z" itemprop="datePublished"> 发表于 2017-02-23</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>在<a href="https://cheapsslsecurity.com/申请了通配符的证书，" target="_blank" rel="external">https://cheapsslsecurity.com/申请了通配符的证书，</a><br>也就是Wildcard，如查DV验证，比较容易，可以不用知道域名持有者的邮箱，<br>在网站上下载一个文件放在根目录即可。<br>申请之后，发给一个私钥文件，还可以在网站上下载一个压缩包，<br>有四个文件<br>1,AddTrustExternalCARoot.crt<br>2,COMODORSAAddTrustCA.crt<br>3,COMODORSADomainValidationSecureServerCA.crt<br>4,STAR_bofide_cn.crt<br>最后一个文件是自己申请网站的证书书。<br>把四个证书按<br>4、3，2，1顺序合在一起，就是自己网站的证书，加上收到的key(或是自己保留的key)<br>这两个文件就是所需要的。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">       # listen       80;</div><div class="line">        listen 80 default;</div><div class="line">        listen 443 ssl;</div><div class="line">       # ssl_certificate  /usr/local/nginx/conf/cert/bofide_ov.crt;</div><div class="line">       # ssl_certificate_key /usr/local/nginx/conf/cert/ov.key;</div><div class="line">         ssl_certificate  /usr/local/nginx/conf/cert/bofide2year.cn;</div><div class="line">        ssl_certificate_key /usr/local/nginx/conf/cert/private2year.key;</div><div class="line"></div><div class="line">        ssl_session_cache    shared:SSL:50m;</div><div class="line">        ssl_session_timeout  5m;</div><div class="line">        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</div><div class="line"> .....</div></pre></td></tr></table></figure></p>
-<p> 今天看了一文说1是可以不要的，因为如果信任的不用发送，不信任的，发送了同样不信任，没意义，这样还可以减小传输量。我原来安装别的证书就没合并，理论上说其实就自己证书就可以了。<br> 没试，以后试下</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/linux/">linux</a><a href="/tags/https/">https</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/02/18/udev自动挂载移动硬盘到固定位置/" title="udev自动挂载移动硬盘到固定位置" itemprop="url">udev自动挂载移动硬盘到固定位置</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-02-18T12:50:48.000Z" itemprop="datePublished"> 发表于 2017-02-18</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>1，首先需要安装支持格式ntfs-3g<br>2，vi /etc/udev/rules.d/10-usbstorage.rules<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">KERNEL!=&quot;sd*&quot;, GOTO=&quot;media_by_label_auto_mount_end&quot;  </div><div class="line">SUBSYSTEM!=&quot;block&quot;,GOTO=&quot;media_by_label_auto_mount_end&quot;  </div><div class="line">IMPORT&#123;program&#125;=&quot;/sbin/blkid -o udev -p %N&quot;  </div><div class="line">ENV&#123;ID_FS_TYPE&#125;==&quot;&quot;, GOTO=&quot;media_by_label_auto_mount_end&quot;  </div><div class="line">ENV&#123;ID_FS_LABEL&#125;!=&quot;&quot;, ENV&#123;dir_name&#125;=&quot;%E&#123;ID_FS_LABEL&#125;&quot;  </div><div class="line">ENV&#123;ID_FS_LABEL&#125;==&quot;&quot;, ENV&#123;dir_name&#125;=&quot;Untitled-%k&quot;  </div><div class="line">ACTION==&quot;add&quot;, ENV&#123;mount_options&#125;=&quot;relatime,sync&quot;  </div><div class="line">ACTION==&quot;add&quot;, ENV&#123;ID_FS_TYPE&#125;==&quot;vfat&quot;, ENV&#123;mount_options&#125;=&quot;iocharset=utf8,umask=000&quot;  </div><div class="line">ACTION==&quot;add&quot;, ENV&#123;ID_FS_TYPE&#125;==&quot;ntfs&quot;, ENV&#123;mount_options&#125;=&quot;iocharset=utf8,umask=000&quot;  </div><div class="line">ACTION==&quot;add&quot;, RUN+=&quot;/bin/mkdir -p /media/%E&#123;dir_name&#125;&quot;, RUN+=&quot;/bin/mount -o $env&#123;mount_options&#125; /dev/%k /media/%E&#123;dir_name&#125;&quot;  </div><div class="line">   </div><div class="line">ACTION==&quot;remove&quot;, ENV&#123;dir_name&#125;!=&quot;&quot;, RUN+=&quot;/bin/umount -l /media/%E&#123;dir_name&#125;&quot;, RUN+=&quot;/bin/rmdir /media/%E&#123;dir_name&#125;&quot;  </div><div class="line">LABEL=&quot;media_by_label_auto_mount_end&quot;</div></pre></td></tr></table></figure></p>
-<p>如果有卷标名，会按卷标名挂载在/media下面</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/linux/">linux</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
@@ -710,11 +708,23 @@
 		  
 		
 		  
-			<li><a href="/categories/ectd/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -742,11 +752,15 @@
 		  
 		
 		  
-			<li><a href="/categories/ectd/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>2</sup></a></li>
 		  
 		
 		  
@@ -791,11 +805,19 @@
 			
 		
 			
+				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
 			
 		
 			
@@ -807,11 +829,7 @@
 			
 		
 			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			
@@ -819,7 +837,7 @@
 			
 		
 			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
+				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
 			
 		
 			
@@ -827,7 +845,7 @@
 			
 		
 			
-				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
+				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
 			
 		
 			
@@ -835,19 +853,15 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
 			
 		
 		</ul>

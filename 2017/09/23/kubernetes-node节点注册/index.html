@@ -1,0 +1,631 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu-site-verification" content="k49IAqAJW3" />
+  
+    <title>kubernetes node节点注册 | 有药就给你</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="feng">
+    
+
+    
+    <meta name="description" content="接前面，准备节点直接使用 etcd集群所在机器vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233后期增加vm-h4vm-h5节点需要启动：Node上面运行三个模块：kubelet、kube-proxy、runtime(docker)。Node自己向服务器注册，所以服务器是不用知道节点的，只需要节点做好配置文件，启动对应的服务程序即可。以下 操作在">
+<meta name="keywords" content="kubernetes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kubernetes node节点注册">
+<meta property="og:url" content="http://yoursite.com/2017/09/23/kubernetes-node节点注册/index.html">
+<meta property="og:site_name" content="有药就给你">
+<meta property="og:description" content="接前面，准备节点直接使用 etcd集群所在机器vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233后期增加vm-h4vm-h5节点需要启动：Node上面运行三个模块：kubelet、kube-proxy、runtime(docker)。Node自己向服务器注册，所以服务器是不用知道节点的，只需要节点做好配置文件，启动对应的服务程序即可。以下 操作在">
+<meta property="og:updated_time" content="2017-09-23T09:48:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kubernetes node节点注册">
+<meta name="twitter:description" content="接前面，准备节点直接使用 etcd集群所在机器vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233后期增加vm-h4vm-h5节点需要启动：Node上面运行三个模块：kubelet、kube-proxy、runtime(docker)。Node自己向服务器注册，所以服务器是不用知道节点的，只需要节点做好配置文件，启动对应的服务程序即可。以下 操作在">
+
+    
+    <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="有药就给你" title="有药就给你"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="有药就给你">有药就给你</a></h1>
+				<h2 class="blog-motto">我是一个慷慨的人，有药都会给你的</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+						<form class="search" action="http://zhannei.baidu.com/cse/search" target="_blank">
+							<label>Search</label>
+						<input name="s" type="hidden" value= null ><input type="text" name="q" size="30" placeholder="搜索"><br>
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/09/23/kubernetes-node节点注册/" title="kubernetes node节点注册" itemprop="url">kubernetes node节点注册</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-09-23T09:18:11.000Z" itemprop="datePublished"> 发表于 2017-09-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			
+		
+		</div>
+		
+		<p>接前面，准备节点直接使用 etcd集群所在机器<br>vm-h1 10.10.1.231<br>vm-h2 10.10.1.232<br>vm-h3 10.10.1.233<br>后期增加<br>vm-h4<br>vm-h5<br>节点需要启动：<br>Node上面运行三个模块：kubelet、kube-proxy、runtime(docker)。<br>Node自己向服务器注册，所以服务器是不用知道节点的，只需要节点做好配置文件，启动对应的服务程序即可。<br>以下 操作在 vm-h1  10.10.1.231 这台机器。<br>A 安装 yum install kubernetes  docker也会动装上。<br>同样/etc/kubernetes/config 是一些公有配置参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># kubernetes system config</div><div class="line">#</div><div class="line"># The following values are used to configure various aspects of all</div><div class="line"># kubernetes services, including</div><div class="line">#</div><div class="line">#   kube-apiserver.service</div><div class="line">#   kube-controller-manager.service</div><div class="line">#   kube-scheduler.service</div><div class="line">#   kubelet.service</div><div class="line">#   kube-proxy.service</div><div class="line"># logging to stderr means we get it in the systemd journal</div><div class="line">KUBE_LOGTOSTDERR=&quot;--logtostderr=true&quot;</div><div class="line"></div><div class="line"># journal message level, 0 is debug</div><div class="line">KUBE_LOG_LEVEL=&quot;--v=2&quot;</div><div class="line"></div><div class="line"># Should this cluster be allowed to run privileged docker containers</div><div class="line">KUBE_ALLOW_PRIV=&quot;--allow-privileged=false&quot;</div><div class="line"></div><div class="line"># How the controller-manager, scheduler, and proxy find the apiserver</div><div class="line">KUBE_MASTER=&quot;--master=http://10.10.1.241:8080&quot;</div></pre></td></tr></table></figure></p>
+<p>KUBE_MASTER= 需要指定到master机器及端口</p>
+<p>启动文件：<br> /usr/lib/systemd/system/kubelet.service<br> /usr/lib/systemd/system/kube-proxy.service<br> /usr/lib/systemd/system/docker.service  </p>
+<p>B docker先运行起来<br>   systemctl  start  docker<br>   systemctl  enable  docker 随机启动<br>C 编辑配置文件 vi  /etc/kubernetes/kubelet</p>
+<pre><code>##
+# kubernetes kubelet (minion) config
+
+# The address for the info server to serve on (set to 0.0.0.0 or &quot;&quot; for all interfaces)
+KUBELET_ADDRESS=&quot;--address=0.0.0.0&quot;
+
+# The port for the info server to serve on
+KUBELET_PORT=&quot;--port=10250&quot;
+
+# You may leave this blank to use the actual hostname
+KUBELET_HOSTNAME=&quot;--hostname-override=vm-h1&quot;
+
+# location of the api-server 
+KUBELET_API_SERVER=&quot;--api-servers=http://10.10.1.241:8080&quot;
+
+# pod infrastructure container
+KUBELET_POD_INFRA_CONTAINER=&quot;--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest&quot;
+
+# Add your own!
+KUBELET_ARGS=&quot;&quot;
+</code></pre><p>KUBELET_HOSTNAME=”–hostname-override=vm-h1” 设置唯一名，这就以主机名配置的</p>
+<p>D kube-proxy配置文件，无须特别配置  /etc/kubernetes/proxy，因为一些参数从通用配置文件里加载了<br>E systemctl restart docker kubelet  kube-proxy<br>查看状态及到 master 机器执行  kubectl get node<br>NAME      STATUS    AGE<br>vm-h1     Ready     5d<br>同理，在其他机器执行同样的配置操作。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/kubernetes/">kubernetes</a>►<a class="article-category-link" href="/categories/kubernetes/linux/">linux</a>►<a class="article-category-link" href="/categories/kubernetes/linux/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/kubernetes/">kubernetes</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2017/09/23/kubernetes-node节点注册/" data-title="kubernetes node节点注册 | 有药就给你" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/09/23/kubernetes-master节点配置/"  title="kubernetes master节点配置">
+ <strong>下一篇：</strong><br/> 
+ <span>kubernetes master节点配置
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ 
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/blog/" title="blog">blog<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/" title="ectd">ectd<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/node/excel/" title="excel">excel<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/" title="ice">ice<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/node/" title="node">node<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/" title="vpn">vpn<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/开发/" title="开发">开发<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/总结/" title="总结">总结<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>17</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/blog/软件/" title="软件">软件<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/thrift/" title="thrift">thrift<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vpn/" title="vpn">vpn<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 世界上只有一种英雄主义,就是看清生活的真相之后依然热爱生活。 <br/>
+			</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="feng">feng</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
+

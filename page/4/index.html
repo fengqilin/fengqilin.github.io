@@ -78,6 +78,151 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/01/16/node处理excel/" title="node js处理excel能添加样式的插件" itemprop="url">node js处理excel能添加样式的插件</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-01-16T08:07:02.000Z" itemprop="datePublished"> 发表于 2017-01-16</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>工作需要node生成excel，并且能设置表头，用<br>gg大神找了两个能实现些功的插件，记录一下。</p>
+<pre><code>https://github.com/extrabacon/pyspreadsheet
+https://github.com/chuanyi/msexcel-builder
+</code></pre><p>不得不感叹node社区真的是很繁荣啊。    </p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/node/">node</a>►<a class="article-category-link" href="/categories/node/excel/">excel</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/收集/">收集</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/03/31/hibernate自动长主键简单测试结论/" title="关于hibernate自增长键的解释" itemprop="url">关于hibernate自增长键的解释</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2016-03-30T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-31</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>工作之初，遇到一个问题是，在集群中，多个hibnate对一个数据库操作的主键重复问题<br>大家都认为采有自增长会产生重复主键。事实情况是怎么样的呢？<br>让我们真实情部下了解一下。<br>测试环境：spring+hibernate5,数据库主键字段设置为自增长。<br>打开hibernate的sql输出，开始mysql的binlog日志。<br>比如我的测试环境中，</p>
+<pre><code>@Id
+@GenericGenerator(name = &quot;generatorId&quot;, strategy = &quot;native&quot;)
+// @GeneratedValue(generator = &quot;generatorId&quot;) //和生成策略名一样 或者
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+// 根据底层数据库自动选择方式，需要底层数据库的设置 如MySQL，会使用自增字段，需要将主键设置成auto_increment。
+@Column(name = &quot;id&quot;)
+@Type(type = &quot;int&quot;)
+private int id;
+
+@Column(name = &quot;name&quot;, length = 200)
+private String name;
+
+@Column(name = &quot;password&quot;, length = 200 )
+private String passowrd;
+
+@Column(name = &quot;birthday&quot;, columnDefinition = &quot;timestamp&quot;)
+private Date birthday;
+
+省略getter/setter等
+</code></pre><p>在这样的配置下，会观察到输出为：<br>    DEBUG SQL:92 - insert into user (birthday, name, password) values (?, ?, ?)</p>
+<p>hibernate根本就没有设置id，id是数据库自动生成的，数据库会保证id唯一。<br>我们再观查 binlog日志，<br>    SET TIMESTAMP=1459431449/<em>!</em>/;<br>    SET @@session.time_zone=’SYSTEM’/<em>!</em>/;<br>    insert into user (birthday, name, password) values (‘2016-03-31 21:37:29’, ‘feng’, null)    </p>
+<p>所以id也正如解释的那样，和hibernate一点关系也没有，集群操作中，这个id都是由数据库来保证唯一的，<br>hibernate不是很多人认为的那样，先一个获取了一个count（）的值来维持 自增长。        </p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/hibernate/">hibernate</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2016/03/30/hexo源文件备份/" title="hexo源文件备份" itemprop="url">hexo源文件备份</a>
   </h1>
   <p class="article-author">By
@@ -249,11 +394,23 @@ type: categories
 		  
 		
 		  
-			<li><a href="/categories/ectd/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -281,11 +438,15 @@ type: categories
 		  
 		
 		  
-			<li><a href="/categories/ectd/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>2</sup></a></li>
 		  
 		
 		  
@@ -330,11 +491,19 @@ type: categories
 			
 		
 			
+				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
 			
 		
 			
@@ -346,11 +515,7 @@ type: categories
 			
 		
 			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			
@@ -358,7 +523,7 @@ type: categories
 			
 		
 			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
+				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
 			
 		
 			
@@ -366,7 +531,7 @@ type: categories
 			
 		
 			
-				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
+				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
 			
 		
 			
@@ -374,19 +539,15 @@ type: categories
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
 			
 		
 		</ul>
