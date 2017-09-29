@@ -78,6 +78,135 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/09/29/kubernetes发布docker私服/" title="kubernetes发布docker私服" itemprop="url">kubernetes发布docker私服</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-09-29T08:13:24.000Z" itemprop="datePublished"> 发表于 2017-09-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>现在需要建一个docker私服，网上教程大部分都是直接运行docker私服镜像，<br>但我们即然弄kubernetes，就kubernetes来管理吧。<br>前期建了一个单节点的集群，就是master ,node都在本机的一个集群。<br>想着在上面发布一个docker私服，用于另一个集群的测试等工作，<br>当然也可以在另一个多节点的集群上发布，那就是需要把镜像存放目录用NFS或别的方式共享持载。除了镜像存储不同，别的都一样。<br>因为docker 私服访问需要https，原本计划参照网上启用http方案，便试了添加各种参数无效，正好手里有公司的一个泛域名的证书，当然也可能自签证书。<br>主机地址： 10.10.1.201<br>为避免一些麻烦，通过hosts或自建dns把 docker.bofide.cn<br>指向  10.10.1.201,在集域网内可以通过docker.bofide.cn进行访问。<br>公钥： bofide2year.cn ,私钥  private2year.key<br>参照文档：<br><a href="https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/registry/tls" target="_blank" rel="external">https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/registry/tls</a><br>步骤：<br>1 create secret<br>进入这两个文件所在目录，可以少输路径~~<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">kubectl --namespace=default create secret generic registry-tls-secret --from-file=docker.bofide.cn.crt=bofide2year.cn --from-file=docker.bofide.cn.key=private2year.key</div></pre></td></tr></table></figure></p>
+<p>我是放在 namespace=default，要放别的空间，就改空间名再接着建<br>查看一下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">kubectl describe secret</div><div class="line">Name:           registry-tls-secret</div><div class="line">Namespace:      default</div><div class="line">Labels:         &lt;none&gt;</div><div class="line">Annotations:    &lt;none&gt;</div><div class="line"></div><div class="line">Type:   Opaque</div><div class="line"></div><div class="line">Data</div><div class="line">====</div><div class="line">docker.bofide.cn.crt:   7519 bytes</div><div class="line">docker.bofide.cn.key:   1707 bytes</div></pre></td></tr></table></figure></p>
+<p>2  编写docker-registry-rc.yaml 文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line">apiVersion: v1</div><div class="line">kind: ReplicationController</div><div class="line">metadata:</div><div class="line">  name: kube-registry-v0</div><div class="line">  namespace: default</div><div class="line">  labels:</div><div class="line">    k8s-app: kube-registry</div><div class="line">    version: v0</div><div class="line">#    kubernetes.io/cluster-service: &quot;true&quot;</div><div class="line">spec:</div><div class="line">  replicas: 1</div><div class="line">  selector:</div><div class="line">    k8s-app: kube-registry</div><div class="line">    version: v0</div><div class="line">  template:</div><div class="line">    metadata:</div><div class="line">      labels:</div><div class="line">        k8s-app: kube-registry</div><div class="line">        version: v0</div><div class="line">#        kubernetes.io/cluster-service: &quot;true&quot;</div><div class="line">    spec:</div><div class="line">      containers:</div><div class="line">      - name: registry</div><div class="line">        image: registry:2</div><div class="line">        resources:</div><div class="line">          # keep request = limit to keep this container in guaranteed class</div><div class="line">          limits:</div><div class="line">            cpu: 100m</div><div class="line">            memory: 100Mi</div><div class="line">          requests:</div><div class="line">            cpu: 100m</div><div class="line">            memory: 100Mi</div><div class="line">        env:</div><div class="line">        - name: REGISTRY_HTTP_ADDR</div><div class="line">          value: :5000</div><div class="line">        - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY</div><div class="line">          value: /var/lib/registry</div><div class="line">        # 这个value 和上一步查看对的名定对应起来，注意不是自己的证书名字</div><div class="line">        #也不是自己证书所在目录。</div><div class="line">        # /certs/是下面指定的挂载目录</div><div class="line">        - name: REGISTRY_HTTP_TLS_CERTIFICATE</div><div class="line">          value: /certs/docker.bofide.cn.crt</div><div class="line">        - name: REGISTRY_HTTP_TLS_KEY</div><div class="line">          value: /certs/docker.bofide.cn.key</div><div class="line">        volumeMounts:</div><div class="line">        # 镜像存放地挂载点</div><div class="line">        - name: image-store</div><div class="line">          mountPath: /var/lib/registry</div><div class="line">        #证书存放挂载点</div><div class="line">        #通过后面配置加载系统中保存的证书</div><div class="line">        - name: cert-dir</div><div class="line">          mountPath: /certs</div><div class="line">        ports:</div><div class="line">        - containerPort: 5000</div><div class="line">          name: registry</div><div class="line">          protocol: TCP</div><div class="line">      volumes:</div><div class="line">      # 镜像存放地方， 挂载 host 文件夹  </div><div class="line">      #如果要高可用，可挂载NFS,分布式方件等系统，</div><div class="line">      #name image-store和上面对应，在主机目录/share/registry保存镜像。</div><div class="line">      - name: image-store</div><div class="line">        hostPath: </div><div class="line">          path: /share/registry</div><div class="line">      #name 和上面对应，挂载 和 和一步创建的secret 对应    </div><div class="line">      - name: cert-dir</div><div class="line">        secret:</div><div class="line">          secretName: registry-tls-secret</div></pre></td></tr></table></figure></p>
+<p>kubectl create -f  docker-registry-rc.yaml </p>
+<p>查看有没有问题  ,如果有问题查看日志解决，一般情况下只要几个路径对得上就没问题  </p>
+<p>3 编写发布 service  docker-registry-service.yaml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">apiVersion: v1</div><div class="line">kind: Service</div><div class="line">metadata:</div><div class="line">  name: kube-registry</div><div class="line">  labels:</div><div class="line">    k8s-app: kube-registry</div><div class="line">    kubernetes.io/name: &quot;KubeRegistry&quot;</div><div class="line">spec:</div><div class="line">  selector:</div><div class="line">    k8s-app: kube-registry</div><div class="line">  type: NodePort</div><div class="line">  ports:</div><div class="line">  - name: registry</div><div class="line">  # 在IP:30500可访问</div><div class="line">  # 但会有一些提示，我们用docker.bofide.cn:30500访问就没问题。</div><div class="line">    nodePort: 30500</div><div class="line">    port: 5000</div><div class="line">    protocol: TCP</div></pre></td></tr></table></figure></p>
+<p>kubectl create -f  docker-registry-service.yaml<br>网上有都程说还需要把<br>还需要将bofide2year.cn证书拷贝到集群每个node的<br>/etc/docker/certs.d/docker.bofide.cn/ 目录下。但我测试不需要，按道理也是不需要的。<br>测试一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">docker pull busybox</div><div class="line">docker tag busybox docker.bofide.cn:30500/busybox</div><div class="line">docker push docker.bofide.cn:30500/busybox</div></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/kubernetes/">kubernetes</a>►<a class="article-category-link" href="/categories/kubernetes/linux/">linux</a>►<a class="article-category-link" href="/categories/kubernetes/linux/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/kubernetes/">kubernetes</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/09/29/kube-proxy-iptable转发问题/" title="kube-proxy iptable转发问题" itemprop="url">kube-proxy iptable转发问题</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-09-29T07:57:50.000Z" itemprop="datePublished"> 发表于 2017-09-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>接前面，建好一个master ,三个节点，发布了一个副本为2的nginx服务，<br>发现运行在其中两台机器上。按理在三个节点上都可以用serviceIP:port进行访问。<br>但实际情况是在没有运行的那台机器上是访问不了的，<br>在运行的机器上访问，随机会出现连接超时，进入一个docker修改文件后，发现访问转到本机时都很快，只要不是本机就会出现连接超时。<br>为了这个问题，还重建了一个集群，但问题一样，各种网上查找，总算找到答案<br><a href="http://blog.opsnull.com/post/golang/%E5%AE%89%E8%A3%85k8s/" target="_blank" rel="external">http://blog.opsnull.com/post/golang/%E5%AE%89%E8%A3%85k8s/</a><br><a href="http://blog.clanzx.net/2013/08/22/rp_filter.html" target="_blank" rel="external">http://blog.clanzx.net/2013/08/22/rp_filter.html</a></p>
+<p>原因参照资料说明；<br>解决方案:<br>A 各节点 sysctl -w net.ipv4.conf.all.rp_filter=2;<br>这个重启会失效，写入syscty文件最好</p>
+<p>B 或者为kube-proxy指定–masquerade-all=true参数，</p>
+<p>C 或者为kube-proxy指定–cluster-cidr参数<br>特此记录一下。好大一个坑，网上教程都说就可以访问了，也不知道究竟有没有试过。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/ectd/">ectd</a>►<a class="article-category-link" href="/categories/ectd/kubernetes/">kubernetes</a>►<a class="article-category-link" href="/categories/ectd/kubernetes/linux/">linux</a>►<a class="article-category-link" href="/categories/ectd/kubernetes/linux/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/etcd/">etcd</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/09/23/kubernetes-node节点注册/" title="kubernetes node节点注册" itemprop="url">kubernetes node节点注册</a>
   </h1>
   <p class="article-author">By
@@ -91,7 +220,7 @@
 </header>
     <div class="article-content">
         
-        <p>接前面，准备节点直接使用 etcd集群所在机器<br>vm-h1 10.10.1.231<br>vm-h2 10.10.1.232<br>vm-h3 10.10.1.233<br>后期增加<br>vm-h4<br>vm-h5<br>节点需要启动：<br>Node上面运行三个模块：kubelet、kube-proxy、runtime(docker)。<br>Node自己向服务器注册，所以服务器是不用知道节点的，只需要节点做好配置文件，启动对应的服务程序即可。<br>以下 操作在 vm-h1  10.10.1.231 这台机器。<br>A 安装 yum install kubernetes  docker也会动装上。<br>同样/etc/kubernetes/config 是一些公有配置参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># kubernetes system config</div><div class="line">#</div><div class="line"># The following values are used to configure various aspects of all</div><div class="line"># kubernetes services, including</div><div class="line">#</div><div class="line">#   kube-apiserver.service</div><div class="line">#   kube-controller-manager.service</div><div class="line">#   kube-scheduler.service</div><div class="line">#   kubelet.service</div><div class="line">#   kube-proxy.service</div><div class="line"># logging to stderr means we get it in the systemd journal</div><div class="line">KUBE_LOGTOSTDERR=&quot;--logtostderr=true&quot;</div><div class="line"></div><div class="line"># journal message level, 0 is debug</div><div class="line">KUBE_LOG_LEVEL=&quot;--v=2&quot;</div><div class="line"></div><div class="line"># Should this cluster be allowed to run privileged docker containers</div><div class="line">KUBE_ALLOW_PRIV=&quot;--allow-privileged=false&quot;</div><div class="line"></div><div class="line"># How the controller-manager, scheduler, and proxy find the apiserver</div><div class="line">KUBE_MASTER=&quot;--master=http://10.10.1.241:8080&quot;</div></pre></td></tr></table></figure></p>
+        <p>接前面，准备节点直接使用 etcd集群所在机器<br>vm-h1 10.10.1.231<br>vm-h2 10.10.1.232<br>vm-h3 10.10.1.233<br>后期增加<br>10.10.1.234  vm-h4<br>10.10.1.235  vm-h5<br>节点需要启动：<br>Node上面运行三个模块：kubelet、kube-proxy、runtime(docker)。<br>Node自己向服务器注册，所以服务器是不用知道节点的，只需要节点做好配置文件，启动对应的服务程序即可。<br>以下 操作在 vm-h1  10.10.1.231 这台机器。<br>A 安装 yum install kubernetes  docker也会动装上。<br>同样/etc/kubernetes/config 是一些公有配置参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># kubernetes system config</div><div class="line">#</div><div class="line"># The following values are used to configure various aspects of all</div><div class="line"># kubernetes services, including</div><div class="line">#</div><div class="line">#   kube-apiserver.service</div><div class="line">#   kube-controller-manager.service</div><div class="line">#   kube-scheduler.service</div><div class="line">#   kubelet.service</div><div class="line">#   kube-proxy.service</div><div class="line"># logging to stderr means we get it in the systemd journal</div><div class="line">KUBE_LOGTOSTDERR=&quot;--logtostderr=true&quot;</div><div class="line"></div><div class="line"># journal message level, 0 is debug</div><div class="line">KUBE_LOG_LEVEL=&quot;--v=2&quot;</div><div class="line"></div><div class="line"># Should this cluster be allowed to run privileged docker containers</div><div class="line">KUBE_ALLOW_PRIV=&quot;--allow-privileged=false&quot;</div><div class="line"></div><div class="line"># How the controller-manager, scheduler, and proxy find the apiserver</div><div class="line">KUBE_MASTER=&quot;--master=http://10.10.1.241:8080&quot;</div></pre></td></tr></table></figure></p>
 <p>KUBE_MASTER= 需要指定到master机器及端口</p>
 <p>启动文件：<br> /usr/lib/systemd/system/kubelet.service<br> /usr/lib/systemd/system/kube-proxy.service<br> /usr/lib/systemd/system/docker.service  </p>
 <p>B docker先运行起来<br>   systemctl  start  docker<br>   systemctl  enable  docker 随机启动<br>C 编辑配置文件 vi  /etc/kubernetes/kubelet</p>
@@ -601,126 +730,6 @@ KUBELET_ARGS=&quot;&quot;
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/08/09/docker-管理工具nsenter/" title="docker 管理工具nsenter" itemprop="url">docker 管理工具nsenter</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-08-09T02:09:05.000Z" itemprop="datePublished"> 发表于 2017-08-09</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">docker 是不提倡在image里安装sshd用于管理，当然非要这1么干也不是不行。现在说说 nsenter 工具使用</div><div class="line">1 安装，安装很容易，以下会把命令会把运行镜像，把nsenter复制到 /usr/local/bin</div><div class="line">docker run -v /usr/local/bin:/target jpetazzo/nsenter    </div><div class="line">运行完了image都可以不要了，过河折桥  </div><div class="line">2 进入docker</div><div class="line">先获取docker PID</div><div class="line">docker inspect --format &#123;&#123;.State.Pid&#125;&#125; &lt;container_name_or_ID&gt;</div><div class="line">例如：</div><div class="line">ocker inspect --format &#123;&#123;.State.Pid&#125;&#125; 2c72a3017a25  </div><div class="line">29226</div><div class="line">然后，</div><div class="line">nsenter --target 29226 --mount --uts --ipc --net --pid</div><div class="line">29226就是一上步获取到的PID</div><div class="line">为了操作简单，可以写个脚本， 列出当前运行的容器，然后选择一个，直接登录 ，核心就两句</div><div class="line"></div><div class="line">PID=`docker inspect --format &#123;&#123;.State.Pid&#125;&#125;  2c72a3017a25&lt;这个是容器ID&gt;`</div><div class="line">nsenter --target $PID --mount --uts --ipc --net --pid  </div><div class="line">等我写好了贴上做记录。</div></pre></td></tr></table></figure>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/docker/">docker</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/08/08/jenkins-Wrong-volume-permissions/" title="jenkins  Wrong volume permissions" itemprop="url">jenkins  Wrong volume permissions</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-08-08T09:37:24.000Z" itemprop="datePublished"> 发表于 2017-08-08</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Linux 主机， root账号运行 docker运行 jenkins 一切正常，</div><div class="line">当挂载主机目录时，则出现   </div><div class="line"></div><div class="line">touch: cannot touch ‘/var/jenkins_home/copy_reference_file.log’: Permission denied</div><div class="line">Can not write to /var/jenkins_home/copy_reference_file.log. Wrong volume permissions?</div><div class="line"></div><div class="line">解决步骤：   </div><div class="line">1，确认目录权限  </div><div class="line"> docker run -ti --rm --entrypoint=&quot;/bin/bash&quot; jenkins -c &quot;whoami &amp;&amp; id&quot;</div><div class="line"> jenkins</div><div class="line"> uid=1000(jenkins) gid=1000(jenkins) groups=1000(jenkins) </div><div class="line"> 而本地的 /var/jenkins_home 是root用户创建， </div><div class="line"> </div><div class="line"> uid=0(root) gid=0(root) 组=0(root) 环境=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023</div><div class="line">2，/var/jenkins_home </div><div class="line">chown -R 1000 /var/jenkins_home  </div><div class="line">注意，可能本地没有1000的用户，如果没有需要创建，但用户名不必为jenkins</div><div class="line">如果有则可不必计较，虽然用户名可能不一是jenkins</div><div class="line">3,再启动试试，可能还是有问题</div><div class="line">这时查看 SELinux状态  /usr/sbin/sestatus -v    </div><div class="line">如果没有关闭，需要关闭</div><div class="line">关闭SELinux：</div><div class="line">1、临时关闭（不用重启机器）：</div><div class="line">setenforce 0                  ##设置SELinux 成为permissive模式</div><div class="line">                              ##setenforce 1 设置SELinux 成为enforcing模式</div><div class="line">2、修改配置文件需要重启机器：</div><div class="line">修改/etc/selinux/config 文件</div><div class="line">将SELINUX=enforcing改为SELINUX=disabled</div><div class="line">重启机器即可</div></pre></td></tr></table></figure>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>►<a class="article-category-link" href="/categories/收集/各种坑/">各种坑</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/docker/">docker</a><a href="/tags/jenkins/">jenkins</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -746,7 +755,7 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/ectd/" title="ectd">ectd<sup>1</sup></a></li>
+			<li><a href="/categories/ectd/" title="ectd">ectd<sup>2</sup></a></li>
 		  
 		
 		  
@@ -758,11 +767,11 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>1</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
+			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>3</sup></a></li>
 		  
 		
 		  
@@ -770,11 +779,11 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>2</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>2</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>3</sup></a></li>
 		  
 		
 		  
@@ -806,15 +815,15 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>2</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>2</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/收集/" title="收集">收集<sup>17</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -855,6 +864,10 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
 			
 		
@@ -867,7 +880,11 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/etcd/" title="etcd">etcd<sup>2</sup></a></li>
 			
 		
 			
@@ -875,11 +892,7 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -887,7 +900,7 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
+				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
 			
 		
 			
@@ -895,11 +908,7 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
 			
 		
 			
@@ -907,11 +916,11 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 		</ul>

@@ -5,24 +5,24 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>thrift IDL文件 | 有药就给你</title>
+    <title>kube-proxy iptable转发问题 | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="thrift开发中，第一步就是IDL文件定义常见数据类型什么的，就不说了12345namespace java com.bofide.thriftservice HelloWorldService&amp;#123;  string sayHello(1:string name),  string nextStatus(1:string currStatus)&amp;#125; namespace 不是必须的，">
-<meta name="keywords" content="thrift">
+    <meta name="description" content="接前面，建好一个master ,三个节点，发布了一个副本为2的nginx服务，发现运行在其中两台机器上。按理在三个节点上都可以用serviceIP:port进行访问。但实际情况是在没有运行的那台机器上是访问不了的，在运行的机器上访问，随机会出现连接超时，进入一个docker修改文件后，发现访问转到本机时都很快，只要不是本机就会出现连接超时。为了这个问题，还重建了一个集群，但问题一样，各种网上查找，">
+<meta name="keywords" content="etcd">
 <meta property="og:type" content="article">
-<meta property="og:title" content="thrift IDL文件">
-<meta property="og:url" content="http://yoursite.com/2017/02/28/thrift-IDL文件/index.html">
+<meta property="og:title" content="kube-proxy iptable转发问题">
+<meta property="og:url" content="http://yoursite.com/2017/09/29/kube-proxy-iptable转发问题/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="thrift开发中，第一步就是IDL文件定义常见数据类型什么的，就不说了12345namespace java com.bofide.thriftservice HelloWorldService&amp;#123;  string sayHello(1:string name),  string nextStatus(1:string currStatus)&amp;#125; namespace 不是必须的，">
-<meta property="og:updated_time" content="2017-02-28T09:32:46.000Z">
+<meta property="og:description" content="接前面，建好一个master ,三个节点，发布了一个副本为2的nginx服务，发现运行在其中两台机器上。按理在三个节点上都可以用serviceIP:port进行访问。但实际情况是在没有运行的那台机器上是访问不了的，在运行的机器上访问，随机会出现连接超时，进入一个docker修改文件后，发现访问转到本机时都很快，只要不是本机就会出现连接超时。为了这个问题，还重建了一个集群，但问题一样，各种网上查找，">
+<meta property="og:updated_time" content="2017-09-29T08:09:09.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="thrift IDL文件">
-<meta name="twitter:description" content="thrift开发中，第一步就是IDL文件定义常见数据类型什么的，就不说了12345namespace java com.bofide.thriftservice HelloWorldService&amp;#123;  string sayHello(1:string name),  string nextStatus(1:string currStatus)&amp;#125; namespace 不是必须的，">
+<meta name="twitter:title" content="kube-proxy iptable转发问题">
+<meta name="twitter:description" content="接前面，建好一个master ,三个节点，发布了一个副本为2的nginx服务，发现运行在其中两台机器上。按理在三个节点上都可以用serviceIP:port进行访问。但实际情况是在没有运行的那台机器上是访问不了的，在运行的机器上访问，随机会出现连接超时，进入一个docker修改文件后，发现访问转到本机时都很快，只要不是本机就会出现连接超时。为了这个问题，还重建了一个集群，但问题一样，各种网上查找，">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/28/thrift-IDL文件/" title="thrift IDL文件" itemprop="url">thrift IDL文件</a>
+      <a href="/2017/09/29/kube-proxy-iptable转发问题/" title="kube-proxy iptable转发问题" itemprop="url">kube-proxy iptable转发问题</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2017-02-28T09:23:11.000Z" itemprop="datePublished"> 发表于 2017-02-28</time>
+    <time datetime="2017-09-29T07:57:50.000Z" itemprop="datePublished"> 发表于 2017-09-29</time>
     
   </p>
 </header>
@@ -101,8 +101,10 @@
 		
 		</div>
 		
-		<p>thrift开发中，第一步就是IDL文件定义<br>常见数据类型什么的，就不说了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">namespace java com.bofide.thrift</div><div class="line">service HelloWorldService&#123;</div><div class="line">  string sayHello(1:string name),</div><div class="line">  string nextStatus(1:string currStatus)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>namespace 不是必须的，如果生成node基本没什么用的<br>上面定义是按java的格式生成包名<br>参数前面一定要用编号，不然就等着错吧<br>一般步骤，先安装thrift<br><a href="http://thrift.apache.org/download" target="_blank" rel="external">http://thrift.apache.org/download</a><br>现在不搞Java和Node，先记录这个两个常用命令<br>thrift –gen js:node  idl文件<br>thrift –gen java  idl文件  </p>
+		<p>接前面，建好一个master ,三个节点，发布了一个副本为2的nginx服务，<br>发现运行在其中两台机器上。按理在三个节点上都可以用serviceIP:port进行访问。<br>但实际情况是在没有运行的那台机器上是访问不了的，<br>在运行的机器上访问，随机会出现连接超时，进入一个docker修改文件后，发现访问转到本机时都很快，只要不是本机就会出现连接超时。<br>为了这个问题，还重建了一个集群，但问题一样，各种网上查找，总算找到答案<br><a href="http://blog.opsnull.com/post/golang/%E5%AE%89%E8%A3%85k8s/" target="_blank" rel="external">http://blog.opsnull.com/post/golang/%E5%AE%89%E8%A3%85k8s/</a><br><a href="http://blog.clanzx.net/2013/08/22/rp_filter.html" target="_blank" rel="external">http://blog.clanzx.net/2013/08/22/rp_filter.html</a></p>
+<p>原因参照资料说明；<br>解决方案:<br>A 各节点 sysctl -w net.ipv4.conf.all.rp_filter=2;<br>这个重启会失效，写入syscty文件最好</p>
+<p>B 或者为kube-proxy指定–masquerade-all=true参数，</p>
+<p>C 或者为kube-proxy指定–cluster-cidr参数<br>特此记录一下。好大一个坑，网上教程都说就可以访问了，也不知道究竟有没有试过。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -110,13 +112,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/总结/">总结</a>
+  <a class="article-category-link" href="/categories/ectd/">ectd</a>►<a class="article-category-link" href="/categories/ectd/kubernetes/">kubernetes</a>►<a class="article-category-link" href="/categories/ectd/kubernetes/linux/">linux</a>►<a class="article-category-link" href="/categories/ectd/kubernetes/linux/收集/">收集</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/thrift/">thrift</a>
+  <span></span> <a href="/tags/etcd/">etcd</a>
   </div>
 
 </div>
@@ -125,7 +127,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/02/28/thrift-IDL文件/" data-title="thrift IDL文件 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/09/29/kube-proxy-iptable转发问题/" data-title="kube-proxy iptable转发问题 | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -139,18 +141,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2017/02/28/thrift-node单接口服务端和客户端实现/" title="thrift node单接口服务端和客户端实现">
+ <a href="/2017/09/29/kubernetes发布docker私服/" title="kubernetes发布docker私服">
   <strong>上一篇：</strong><br/>
   <span>
-  thrift node单接口服务端和客户端实现</span>
+  kubernetes发布docker私服</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2017/02/23/nginx-thrift均衡配置/"  title="nginx thrift负载均衡配置">
+<a href="/2017/09/23/kubernetes-node节点注册/"  title="kubernetes node节点注册">
  <strong>下一篇：</strong><br/> 
- <span>nginx thrift负载均衡配置
+ <span>kubernetes node节点注册
 </span>
 </a>
 </div>

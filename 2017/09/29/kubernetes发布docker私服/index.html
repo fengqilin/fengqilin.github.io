@@ -5,24 +5,24 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>thrift IDL文件 | 有药就给你</title>
+    <title>kubernetes发布docker私服 | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="thrift开发中，第一步就是IDL文件定义常见数据类型什么的，就不说了12345namespace java com.bofide.thriftservice HelloWorldService&amp;#123;  string sayHello(1:string name),  string nextStatus(1:string currStatus)&amp;#125; namespace 不是必须的，">
-<meta name="keywords" content="thrift">
+    <meta name="description" content="现在需要建一个docker私服，网上教程大部分都是直接运行docker私服镜像，但我们即然弄kubernetes，就kubernetes来管理吧。前期建了一个单节点的集群，就是master ,node都在本机的一个集群。想着在上面发布一个docker私服，用于另一个集群的测试等工作，当然也可以在另一个多节点的集群上发布，那就是需要把镜像存放目录用NFS或别的方式共享持载。除了镜像存储不同，别的都一">
+<meta name="keywords" content="kubernetes">
 <meta property="og:type" content="article">
-<meta property="og:title" content="thrift IDL文件">
-<meta property="og:url" content="http://yoursite.com/2017/02/28/thrift-IDL文件/index.html">
+<meta property="og:title" content="kubernetes发布docker私服">
+<meta property="og:url" content="http://yoursite.com/2017/09/29/kubernetes发布docker私服/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="thrift开发中，第一步就是IDL文件定义常见数据类型什么的，就不说了12345namespace java com.bofide.thriftservice HelloWorldService&amp;#123;  string sayHello(1:string name),  string nextStatus(1:string currStatus)&amp;#125; namespace 不是必须的，">
-<meta property="og:updated_time" content="2017-02-28T09:32:46.000Z">
+<meta property="og:description" content="现在需要建一个docker私服，网上教程大部分都是直接运行docker私服镜像，但我们即然弄kubernetes，就kubernetes来管理吧。前期建了一个单节点的集群，就是master ,node都在本机的一个集群。想着在上面发布一个docker私服，用于另一个集群的测试等工作，当然也可以在另一个多节点的集群上发布，那就是需要把镜像存放目录用NFS或别的方式共享持载。除了镜像存储不同，别的都一">
+<meta property="og:updated_time" content="2017-09-29T08:57:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="thrift IDL文件">
-<meta name="twitter:description" content="thrift开发中，第一步就是IDL文件定义常见数据类型什么的，就不说了12345namespace java com.bofide.thriftservice HelloWorldService&amp;#123;  string sayHello(1:string name),  string nextStatus(1:string currStatus)&amp;#125; namespace 不是必须的，">
+<meta name="twitter:title" content="kubernetes发布docker私服">
+<meta name="twitter:description" content="现在需要建一个docker私服，网上教程大部分都是直接运行docker私服镜像，但我们即然弄kubernetes，就kubernetes来管理吧。前期建了一个单节点的集群，就是master ,node都在本机的一个集群。想着在上面发布一个docker私服，用于另一个集群的测试等工作，当然也可以在另一个多节点的集群上发布，那就是需要把镜像存放目录用NFS或别的方式共享持载。除了镜像存储不同，别的都一">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/28/thrift-IDL文件/" title="thrift IDL文件" itemprop="url">thrift IDL文件</a>
+      <a href="/2017/09/29/kubernetes发布docker私服/" title="kubernetes发布docker私服" itemprop="url">kubernetes发布docker私服</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2017-02-28T09:23:11.000Z" itemprop="datePublished"> 发表于 2017-02-28</time>
+    <time datetime="2017-09-29T08:13:24.000Z" itemprop="datePublished"> 发表于 2017-09-29</time>
     
   </p>
 </header>
@@ -101,8 +101,13 @@
 		
 		</div>
 		
-		<p>thrift开发中，第一步就是IDL文件定义<br>常见数据类型什么的，就不说了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">namespace java com.bofide.thrift</div><div class="line">service HelloWorldService&#123;</div><div class="line">  string sayHello(1:string name),</div><div class="line">  string nextStatus(1:string currStatus)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>namespace 不是必须的，如果生成node基本没什么用的<br>上面定义是按java的格式生成包名<br>参数前面一定要用编号，不然就等着错吧<br>一般步骤，先安装thrift<br><a href="http://thrift.apache.org/download" target="_blank" rel="external">http://thrift.apache.org/download</a><br>现在不搞Java和Node，先记录这个两个常用命令<br>thrift –gen js:node  idl文件<br>thrift –gen java  idl文件  </p>
+		<p>现在需要建一个docker私服，网上教程大部分都是直接运行docker私服镜像，<br>但我们即然弄kubernetes，就kubernetes来管理吧。<br>前期建了一个单节点的集群，就是master ,node都在本机的一个集群。<br>想着在上面发布一个docker私服，用于另一个集群的测试等工作，<br>当然也可以在另一个多节点的集群上发布，那就是需要把镜像存放目录用NFS或别的方式共享持载。除了镜像存储不同，别的都一样。<br>因为docker 私服访问需要https，原本计划参照网上启用http方案，便试了添加各种参数无效，正好手里有公司的一个泛域名的证书，当然也可能自签证书。<br>主机地址： 10.10.1.201<br>为避免一些麻烦，通过hosts或自建dns把 docker.bofide.cn<br>指向  10.10.1.201,在集域网内可以通过docker.bofide.cn进行访问。<br>公钥： bofide2year.cn ,私钥  private2year.key<br>参照文档：<br><a href="https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/registry/tls" target="_blank" rel="external">https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/registry/tls</a><br>步骤：<br>1 create secret<br>进入这两个文件所在目录，可以少输路径~~<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">kubectl --namespace=default create secret generic registry-tls-secret --from-file=docker.bofide.cn.crt=bofide2year.cn --from-file=docker.bofide.cn.key=private2year.key</div></pre></td></tr></table></figure></p>
+<p>我是放在 namespace=default，要放别的空间，就改空间名再接着建<br>查看一下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">kubectl describe secret</div><div class="line">Name:           registry-tls-secret</div><div class="line">Namespace:      default</div><div class="line">Labels:         &lt;none&gt;</div><div class="line">Annotations:    &lt;none&gt;</div><div class="line"></div><div class="line">Type:   Opaque</div><div class="line"></div><div class="line">Data</div><div class="line">====</div><div class="line">docker.bofide.cn.crt:   7519 bytes</div><div class="line">docker.bofide.cn.key:   1707 bytes</div></pre></td></tr></table></figure></p>
+<p>2  编写docker-registry-rc.yaml 文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line">apiVersion: v1</div><div class="line">kind: ReplicationController</div><div class="line">metadata:</div><div class="line">  name: kube-registry-v0</div><div class="line">  namespace: default</div><div class="line">  labels:</div><div class="line">    k8s-app: kube-registry</div><div class="line">    version: v0</div><div class="line">#    kubernetes.io/cluster-service: &quot;true&quot;</div><div class="line">spec:</div><div class="line">  replicas: 1</div><div class="line">  selector:</div><div class="line">    k8s-app: kube-registry</div><div class="line">    version: v0</div><div class="line">  template:</div><div class="line">    metadata:</div><div class="line">      labels:</div><div class="line">        k8s-app: kube-registry</div><div class="line">        version: v0</div><div class="line">#        kubernetes.io/cluster-service: &quot;true&quot;</div><div class="line">    spec:</div><div class="line">      containers:</div><div class="line">      - name: registry</div><div class="line">        image: registry:2</div><div class="line">        resources:</div><div class="line">          # keep request = limit to keep this container in guaranteed class</div><div class="line">          limits:</div><div class="line">            cpu: 100m</div><div class="line">            memory: 100Mi</div><div class="line">          requests:</div><div class="line">            cpu: 100m</div><div class="line">            memory: 100Mi</div><div class="line">        env:</div><div class="line">        - name: REGISTRY_HTTP_ADDR</div><div class="line">          value: :5000</div><div class="line">        - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY</div><div class="line">          value: /var/lib/registry</div><div class="line">        # 这个value 和上一步查看对的名定对应起来，注意不是自己的证书名字</div><div class="line">        #也不是自己证书所在目录。</div><div class="line">        # /certs/是下面指定的挂载目录</div><div class="line">        - name: REGISTRY_HTTP_TLS_CERTIFICATE</div><div class="line">          value: /certs/docker.bofide.cn.crt</div><div class="line">        - name: REGISTRY_HTTP_TLS_KEY</div><div class="line">          value: /certs/docker.bofide.cn.key</div><div class="line">        volumeMounts:</div><div class="line">        # 镜像存放地挂载点</div><div class="line">        - name: image-store</div><div class="line">          mountPath: /var/lib/registry</div><div class="line">        #证书存放挂载点</div><div class="line">        #通过后面配置加载系统中保存的证书</div><div class="line">        - name: cert-dir</div><div class="line">          mountPath: /certs</div><div class="line">        ports:</div><div class="line">        - containerPort: 5000</div><div class="line">          name: registry</div><div class="line">          protocol: TCP</div><div class="line">      volumes:</div><div class="line">      # 镜像存放地方， 挂载 host 文件夹  </div><div class="line">      #如果要高可用，可挂载NFS,分布式方件等系统，</div><div class="line">      #name image-store和上面对应，在主机目录/share/registry保存镜像。</div><div class="line">      - name: image-store</div><div class="line">        hostPath: </div><div class="line">          path: /share/registry</div><div class="line">      #name 和上面对应，挂载 和 和一步创建的secret 对应    </div><div class="line">      - name: cert-dir</div><div class="line">        secret:</div><div class="line">          secretName: registry-tls-secret</div></pre></td></tr></table></figure></p>
+<p>kubectl create -f  docker-registry-rc.yaml </p>
+<p>查看有没有问题  ,如果有问题查看日志解决，一般情况下只要几个路径对得上就没问题  </p>
+<p>3 编写发布 service  docker-registry-service.yaml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">apiVersion: v1</div><div class="line">kind: Service</div><div class="line">metadata:</div><div class="line">  name: kube-registry</div><div class="line">  labels:</div><div class="line">    k8s-app: kube-registry</div><div class="line">    kubernetes.io/name: &quot;KubeRegistry&quot;</div><div class="line">spec:</div><div class="line">  selector:</div><div class="line">    k8s-app: kube-registry</div><div class="line">  type: NodePort</div><div class="line">  ports:</div><div class="line">  - name: registry</div><div class="line">  # 在IP:30500可访问</div><div class="line">  # 但会有一些提示，我们用docker.bofide.cn:30500访问就没问题。</div><div class="line">    nodePort: 30500</div><div class="line">    port: 5000</div><div class="line">    protocol: TCP</div></pre></td></tr></table></figure></p>
+<p>kubectl create -f  docker-registry-service.yaml<br>网上有都程说还需要把<br>还需要将bofide2year.cn证书拷贝到集群每个node的<br>/etc/docker/certs.d/docker.bofide.cn/ 目录下。但我测试不需要，按道理也是不需要的。<br>测试一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">docker pull busybox</div><div class="line">docker tag busybox docker.bofide.cn:30500/busybox</div><div class="line">docker push docker.bofide.cn:30500/busybox</div></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -110,13 +115,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/总结/">总结</a>
+  <a class="article-category-link" href="/categories/kubernetes/">kubernetes</a>►<a class="article-category-link" href="/categories/kubernetes/linux/">linux</a>►<a class="article-category-link" href="/categories/kubernetes/linux/收集/">收集</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/thrift/">thrift</a>
+  <span></span> <a href="/tags/kubernetes/">kubernetes</a>
   </div>
 
 </div>
@@ -125,7 +130,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/02/28/thrift-IDL文件/" data-title="thrift IDL文件 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/09/29/kubernetes发布docker私服/" data-title="kubernetes发布docker私服 | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -138,19 +143,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/02/28/thrift-node单接口服务端和客户端实现/" title="thrift node单接口服务端和客户端实现">
-  <strong>上一篇：</strong><br/>
-  <span>
-  thrift node单接口服务端和客户端实现</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/02/23/nginx-thrift均衡配置/"  title="nginx thrift负载均衡配置">
+<a href="/2017/09/29/kube-proxy-iptable转发问题/"  title="kube-proxy iptable转发问题">
  <strong>下一篇：</strong><br/> 
- <span>nginx thrift负载均衡配置
+ <span>kube-proxy iptable转发问题
 </span>
 </a>
 </div>

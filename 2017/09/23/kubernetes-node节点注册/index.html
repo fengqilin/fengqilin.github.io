@@ -12,17 +12,17 @@
     
 
     
-    <meta name="description" content="接前面，准备节点直接使用 etcd集群所在机器vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233后期增加vm-h4vm-h5节点需要启动：Node上面运行三个模块：kubelet、kube-proxy、runtime(docker)。Node自己向服务器注册，所以服务器是不用知道节点的，只需要节点做好配置文件，启动对应的服务程序即可。以下 操作在">
+    <meta name="description" content="接前面，准备节点直接使用 etcd集群所在机器vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233后期增加10.10.1.234  vm-h410.10.1.235  vm-h5节点需要启动：Node上面运行三个模块：kubelet、kube-proxy、runtime(docker)。Node自己向服务器注册，所以服务器是不用知道节点的，只需要节">
 <meta name="keywords" content="kubernetes">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kubernetes node节点注册">
 <meta property="og:url" content="http://yoursite.com/2017/09/23/kubernetes-node节点注册/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="接前面，准备节点直接使用 etcd集群所在机器vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233后期增加vm-h4vm-h5节点需要启动：Node上面运行三个模块：kubelet、kube-proxy、runtime(docker)。Node自己向服务器注册，所以服务器是不用知道节点的，只需要节点做好配置文件，启动对应的服务程序即可。以下 操作在">
-<meta property="og:updated_time" content="2017-09-23T09:48:13.000Z">
+<meta property="og:description" content="接前面，准备节点直接使用 etcd集群所在机器vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233后期增加10.10.1.234  vm-h410.10.1.235  vm-h5节点需要启动：Node上面运行三个模块：kubelet、kube-proxy、runtime(docker)。Node自己向服务器注册，所以服务器是不用知道节点的，只需要节">
+<meta property="og:updated_time" content="2017-09-23T10:41:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kubernetes node节点注册">
-<meta name="twitter:description" content="接前面，准备节点直接使用 etcd集群所在机器vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233后期增加vm-h4vm-h5节点需要启动：Node上面运行三个模块：kubelet、kube-proxy、runtime(docker)。Node自己向服务器注册，所以服务器是不用知道节点的，只需要节点做好配置文件，启动对应的服务程序即可。以下 操作在">
+<meta name="twitter:description" content="接前面，准备节点直接使用 etcd集群所在机器vm-h1 10.10.1.231vm-h2 10.10.1.232vm-h3 10.10.1.233后期增加10.10.1.234  vm-h410.10.1.235  vm-h5节点需要启动：Node上面运行三个模块：kubelet、kube-proxy、runtime(docker)。Node自己向服务器注册，所以服务器是不用知道节点的，只需要节">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -101,7 +101,7 @@
 		
 		</div>
 		
-		<p>接前面，准备节点直接使用 etcd集群所在机器<br>vm-h1 10.10.1.231<br>vm-h2 10.10.1.232<br>vm-h3 10.10.1.233<br>后期增加<br>vm-h4<br>vm-h5<br>节点需要启动：<br>Node上面运行三个模块：kubelet、kube-proxy、runtime(docker)。<br>Node自己向服务器注册，所以服务器是不用知道节点的，只需要节点做好配置文件，启动对应的服务程序即可。<br>以下 操作在 vm-h1  10.10.1.231 这台机器。<br>A 安装 yum install kubernetes  docker也会动装上。<br>同样/etc/kubernetes/config 是一些公有配置参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># kubernetes system config</div><div class="line">#</div><div class="line"># The following values are used to configure various aspects of all</div><div class="line"># kubernetes services, including</div><div class="line">#</div><div class="line">#   kube-apiserver.service</div><div class="line">#   kube-controller-manager.service</div><div class="line">#   kube-scheduler.service</div><div class="line">#   kubelet.service</div><div class="line">#   kube-proxy.service</div><div class="line"># logging to stderr means we get it in the systemd journal</div><div class="line">KUBE_LOGTOSTDERR=&quot;--logtostderr=true&quot;</div><div class="line"></div><div class="line"># journal message level, 0 is debug</div><div class="line">KUBE_LOG_LEVEL=&quot;--v=2&quot;</div><div class="line"></div><div class="line"># Should this cluster be allowed to run privileged docker containers</div><div class="line">KUBE_ALLOW_PRIV=&quot;--allow-privileged=false&quot;</div><div class="line"></div><div class="line"># How the controller-manager, scheduler, and proxy find the apiserver</div><div class="line">KUBE_MASTER=&quot;--master=http://10.10.1.241:8080&quot;</div></pre></td></tr></table></figure></p>
+		<p>接前面，准备节点直接使用 etcd集群所在机器<br>vm-h1 10.10.1.231<br>vm-h2 10.10.1.232<br>vm-h3 10.10.1.233<br>后期增加<br>10.10.1.234  vm-h4<br>10.10.1.235  vm-h5<br>节点需要启动：<br>Node上面运行三个模块：kubelet、kube-proxy、runtime(docker)。<br>Node自己向服务器注册，所以服务器是不用知道节点的，只需要节点做好配置文件，启动对应的服务程序即可。<br>以下 操作在 vm-h1  10.10.1.231 这台机器。<br>A 安装 yum install kubernetes  docker也会动装上。<br>同样/etc/kubernetes/config 是一些公有配置参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">###</div><div class="line"># kubernetes system config</div><div class="line">#</div><div class="line"># The following values are used to configure various aspects of all</div><div class="line"># kubernetes services, including</div><div class="line">#</div><div class="line">#   kube-apiserver.service</div><div class="line">#   kube-controller-manager.service</div><div class="line">#   kube-scheduler.service</div><div class="line">#   kubelet.service</div><div class="line">#   kube-proxy.service</div><div class="line"># logging to stderr means we get it in the systemd journal</div><div class="line">KUBE_LOGTOSTDERR=&quot;--logtostderr=true&quot;</div><div class="line"></div><div class="line"># journal message level, 0 is debug</div><div class="line">KUBE_LOG_LEVEL=&quot;--v=2&quot;</div><div class="line"></div><div class="line"># Should this cluster be allowed to run privileged docker containers</div><div class="line">KUBE_ALLOW_PRIV=&quot;--allow-privileged=false&quot;</div><div class="line"></div><div class="line"># How the controller-manager, scheduler, and proxy find the apiserver</div><div class="line">KUBE_MASTER=&quot;--master=http://10.10.1.241:8080&quot;</div></pre></td></tr></table></figure></p>
 <p>KUBE_MASTER= 需要指定到master机器及端口</p>
 <p>启动文件：<br> /usr/lib/systemd/system/kubelet.service<br> /usr/lib/systemd/system/kube-proxy.service<br> /usr/lib/systemd/system/docker.service  </p>
 <p>B docker先运行起来<br>   systemctl  start  docker<br>   systemctl  enable  docker 随机启动<br>C 编辑配置文件 vi  /etc/kubernetes/kubelet</p>
@@ -162,6 +162,14 @@ KUBELET_ARGS=&quot;&quot;
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2017/09/29/kube-proxy-iptable转发问题/" title="kube-proxy iptable转发问题">
+  <strong>上一篇：</strong><br/>
+  <span>
+  kube-proxy iptable转发问题</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2017/09/23/kubernetes-master节点配置/"  title="kubernetes master节点配置">
@@ -202,7 +210,7 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/ectd/" title="ectd">ectd<sup>1</sup></a></li>
+			<li><a href="/categories/ectd/" title="ectd">ectd<sup>2</sup></a></li>
 		  
 		
 		  
@@ -214,11 +222,11 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>1</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
+			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>3</sup></a></li>
 		  
 		
 		  
@@ -226,11 +234,11 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>2</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>2</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>3</sup></a></li>
 		  
 		
 		  
@@ -262,15 +270,15 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>2</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>2</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/收集/" title="收集">收集<sup>17</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -311,6 +319,10 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
 			
 		
@@ -323,7 +335,11 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/etcd/" title="etcd">etcd<sup>2</sup></a></li>
 			
 		
 			
@@ -331,11 +347,7 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -343,7 +355,7 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
+				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
 			
 		
 			
@@ -351,11 +363,7 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
 			
 		
 			
@@ -363,11 +371,11 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 		</ul>
