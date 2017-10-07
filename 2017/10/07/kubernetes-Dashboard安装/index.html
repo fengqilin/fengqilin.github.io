@@ -5,24 +5,24 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>nginx错误ERR_CONTENT_LENGTH_MISMATCH | 有药就给你</title>
+    <title>kubernetes Dashboard安装 | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="Ngnix 反向代理 错误：ERR_CONTENT_LENGTH_MISMATCH环境ngnix 代理多台tomcat查文档，因为tomca动态输出的内空和缓存内容不一致处理方法，关闭代理缓存参考文档http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering 或是确保内容一致。">
-<meta name="keywords" content="nginx">
+    <meta name="description" content="安装很容易，但需要注意的是docker镜像可能下载不回来，所以需要找一个可用的docker 镜像地址namespace需要指定为 kube-system，不然会报 endpoints “kubernetes-dashboard” not found按这提示，service名字也不能乱取，只能是 kubernetes-dashboard   下需是 rc 和 service 定义文件12345678">
+<meta name="keywords" content="kubernetes">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nginx错误ERR_CONTENT_LENGTH_MISMATCH">
-<meta property="og:url" content="http://yoursite.com/2017/02/04/nginx错误ERR-CONTENT-LENGTH-MISMATCH/index.html">
+<meta property="og:title" content="kubernetes Dashboard安装">
+<meta property="og:url" content="http://yoursite.com/2017/10/07/kubernetes-Dashboard安装/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="Ngnix 反向代理 错误：ERR_CONTENT_LENGTH_MISMATCH环境ngnix 代理多台tomcat查文档，因为tomca动态输出的内空和缓存内容不一致处理方法，关闭代理缓存参考文档http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering 或是确保内容一致。">
-<meta property="og:updated_time" content="2017-02-04T06:59:43.000Z">
+<meta property="og:description" content="安装很容易，但需要注意的是docker镜像可能下载不回来，所以需要找一个可用的docker 镜像地址namespace需要指定为 kube-system，不然会报 endpoints “kubernetes-dashboard” not found按这提示，service名字也不能乱取，只能是 kubernetes-dashboard   下需是 rc 和 service 定义文件12345678">
+<meta property="og:updated_time" content="2017-10-07T10:16:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nginx错误ERR_CONTENT_LENGTH_MISMATCH">
-<meta name="twitter:description" content="Ngnix 反向代理 错误：ERR_CONTENT_LENGTH_MISMATCH环境ngnix 代理多台tomcat查文档，因为tomca动态输出的内空和缓存内容不一致处理方法，关闭代理缓存参考文档http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering 或是确保内容一致。">
+<meta name="twitter:title" content="kubernetes Dashboard安装">
+<meta name="twitter:description" content="安装很容易，但需要注意的是docker镜像可能下载不回来，所以需要找一个可用的docker 镜像地址namespace需要指定为 kube-system，不然会报 endpoints “kubernetes-dashboard” not found按这提示，service名字也不能乱取，只能是 kubernetes-dashboard   下需是 rc 和 service 定义文件12345678">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/04/nginx错误ERR-CONTENT-LENGTH-MISMATCH/" title="nginx错误ERR_CONTENT_LENGTH_MISMATCH" itemprop="url">nginx错误ERR_CONTENT_LENGTH_MISMATCH</a>
+      <a href="/2017/10/07/kubernetes-Dashboard安装/" title="kubernetes Dashboard安装" itemprop="url">kubernetes Dashboard安装</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2017-02-04T06:55:52.000Z" itemprop="datePublished"> 发表于 2017-02-04</time>
+    <time datetime="2017-10-07T10:10:21.000Z" itemprop="datePublished"> 发表于 2017-10-07</time>
     
   </p>
 </header>
@@ -101,8 +101,11 @@
 		
 		</div>
 		
-		<p>Ngnix 反向代理 错误：<br>ERR_CONTENT_LENGTH_MISMATCH<br>环境ngnix 代理多台tomcat<br>查文档，因为tomca动态输出的内空和缓存内容不一致<br>处理方法，关闭代理缓存<br>参考文档<br><a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering" target="_blank" rel="external">http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering</a></p>
-<p>或是确保内容一致。</p>
+		<p>安装很容易，但需要注意的是docker镜像可能下载不回来，所以需要找一个可用的docker 镜像地址<br>namespace需要指定为 kube-system，不然会报 endpoints “kubernetes-dashboard” not found<br>按这提示，service名字也不能乱取，只能是 kubernetes-dashboard  </p>
+<p>下需是 rc 和 service 定义文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">apiVersion: v1</div><div class="line">kind: ReplicationController</div><div class="line">metadata:</div><div class="line"> name: kubernetes-dashboard</div><div class="line"> namespace: kube-system</div><div class="line"> labels:</div><div class="line">   name: kubernetes-dashboard</div><div class="line">spec:</div><div class="line"> replicas: 1</div><div class="line"> selector:</div><div class="line">   name: kubernetes-dashboard</div><div class="line"> template:</div><div class="line">   metadata:</div><div class="line">     name: kubernetes-dashboard</div><div class="line">     labels:</div><div class="line">       name: kubernetes-dashboard</div><div class="line">   spec:</div><div class="line">     containers:</div><div class="line">     - name: kubernetes-dashboard</div><div class="line">       image: docker.io/mritd/kubernetes-dashboard-amd64</div><div class="line">       ports:</div><div class="line">       - containerPort: 9090</div><div class="line">       args:</div><div class="line">       - --apiserver-host=http://10.10.1.201:8080</div></pre></td></tr></table></figure></p>
+<p>apiserver-host 需要指定为master地址及端口号</p>
+<p>service yaml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">apiVersion: v1</div><div class="line">kind: Service</div><div class="line">metadata:</div><div class="line"> name: kubernetes-dashboard</div><div class="line"> namespace: kube-system</div><div class="line"> labels:</div><div class="line">   name: kubernetes-dashboard</div><div class="line">spec:</div><div class="line"> ports:</div><div class="line"> - port: 9090</div><div class="line">   targetPort: 9090</div><div class="line"> selector:</div><div class="line">   name: kubernetes-dashboard</div></pre></td></tr></table></figure></p>
+<p>访问  10.10.1.201:8080/ui。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -110,13 +113,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/各种坑/">各种坑</a>
+  <a class="article-category-link" href="/categories/kubernetes/">kubernetes</a>►<a class="article-category-link" href="/categories/kubernetes/linux/">linux</a>►<a class="article-category-link" href="/categories/kubernetes/linux/收集/">收集</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/nginx/">nginx</a>
+  <span></span> <a href="/tags/kubernetes/">kubernetes</a>
   </div>
 
 </div>
@@ -125,7 +128,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/02/04/nginx错误ERR-CONTENT-LENGTH-MISMATCH/" data-title="nginx错误ERR_CONTENT_LENGTH_MISMATCH | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/10/07/kubernetes-Dashboard安装/" data-title="kubernetes Dashboard安装 | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -138,19 +141,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/02/04/jquery-ajax跨域请求附带请求头等参数/" title="jquery.ajax跨域请求附带请求头等参数">
-  <strong>上一篇：</strong><br/>
-  <span>
-  jquery.ajax跨域请求附带请求头等参数</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/01/25/spring加载多个属性文件（以及环境变量）/"  title="spring加载多个属性文件（以及环境变量）">
+<a href="/2017/09/29/kubernetes发布docker私服/"  title="kubernetes发布docker私服">
  <strong>下一篇：</strong><br/> 
- <span>spring加载多个属性文件（以及环境变量）
+ <span>kubernetes发布docker私服
 </span>
 </a>
 </div>

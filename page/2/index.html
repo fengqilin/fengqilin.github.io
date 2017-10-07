@@ -78,6 +78,66 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/08/29/selenium-简单应用所踩过的坑/" title="selenium 简单应用所踩过的坑" itemprop="url">selenium 简单应用所踩过的坑</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-08-29T08:20:14.000Z" itemprop="datePublished"> 发表于 2017-08-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line">Selenium 是个很神奇的工具，可以直接把各种浏览器启动起来，然后在里面执行各种操作。</div><div class="line">主要还是结合编程用于自动测试。可以直持 .net ,java,python等语言。但我这次使不是用于</div><div class="line">测试。这次是为了代理机器上vpn自动拨号，代理机器上的vpn是通过网页输入用户名密码进行登录，</div><div class="line">正好符合Selenium场景。</div><div class="line">环境:vs2015  </div><div class="line">下载： CodedUITestCrossBrowserSetup.msi  </div><div class="line">IEDriverServer_Win32_3.5.0.zip/IEDriverServer_x64_3.5.0.zip             selenium-dotnet-3.5.1.zip</div><div class="line">   </div><div class="line">1，安装   CodedUITestCrossBrowserSetup.msi,解压IEDriverServer_Win32_3.5.0.zip把.exe放入系统路径或是当前执行环境中</div><div class="line">  解压 selenium-dotnet-3.5.1.zip得到.net引用包。</div><div class="line">2 建立项目，在引用中加上 selenium-dotnet-3.5.1 的 dll</div><div class="line"></div><div class="line">开发中的问题：</div><div class="line">1.    &#123;&quot;Unexpected error launching Internet Explorer.</div><div class="line"> Browser zoom level was set to 84%. It should be set to 100%&quot;&#125;</div><div class="line"> 解决：</div><div class="line"> InternetExplorerOptions options = new InternetExplorerOptions();</div><div class="line"> options.IgnoreZoomLevel = true;</div><div class="line"> var  driver  =   new InternetExplorerDriver(options);</div><div class="line">2 解决非信任证书的提示问题：</div><div class="line">    driver.Navigate().GoToUrl(&quot;javascript:document.getElementById(&apos;overridelink&apos;).click()&quot;);</div><div class="line">3，window mode窗口的关闭</div><div class="line">   这个没有找到好的办法，通过执行js解决</div><div class="line">  首先切换到mode窗口，执行js  window.opener = null; window.close() </div><div class="line">4，提交按钮不响应，</div><div class="line">   简单粗暴，使用js 搞定 document.getElementById(&apos;submit_1&apos;).click()  </div><div class="line">5 confirm的确认</div><div class="line"> 这个没啥难点，关键是需要一点延时，不然报找不到</div><div class="line"> </div><div class="line"> 下面是全部代码</div><div class="line"></div><div class="line"> </div><div class="line">using OpenQA.Selenium.IE;</div><div class="line">using OpenQA.Selenium.Support.UI;</div><div class="line">using System;</div><div class="line">using System.Collections.Generic;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">namespace LanchIE</div><div class="line">&#123;</div><div class="line">    class Program</div><div class="line">    &#123;</div><div class="line">        static void Main(string[] args)</div><div class="line">        &#123;</div><div class="line">            InternetExplorerOptions options = new InternetExplorerOptions();</div><div class="line">            options.IgnoreZoomLevel = true;</div><div class="line">            var  driver  =   new InternetExplorerDriver(options);</div><div class="line">            driver.Url = &quot;https://xx.xxx.xxx.xx/&quot;;    </div><div class="line">            Console.WriteLine(&quot;start ie ok.....&quot;);</div><div class="line">            driver.Navigate().GoToUrl(&quot;javascript:document.getElementById(&apos;overridelink&apos;).click()&quot;);</div><div class="line">            //</div><div class="line">            String currWindow =  driver.CurrentWindowHandle;</div><div class="line">             ICollection&lt;String&gt; windows =  driver.WindowHandles;</div><div class="line">                 foreach(String s in  windows )&#123;</div><div class="line">                    if (s.Equals(currWindow))</div><div class="line">                    &#123;</div><div class="line">                    &#125;</div><div class="line">                    else &#123;</div><div class="line">                        var popup = driver.SwitchTo().Window(s);</div><div class="line">                        driver.ExecuteScript(&quot; window.opener = null; window.close()&quot;);</div><div class="line">                       // Console.WriteLine(s + popup.Url);</div><div class="line">                       // popup.Close();</div><div class="line">                    &#125;   </div><div class="line">                 &#125;</div><div class="line">            driver.SwitchTo().Window(currWindow);</div><div class="line">            driver.FindElementById(&quot;name_1&quot;).SendKeys(&quot;guangfengtongtian1_cb&quot;);</div><div class="line">            driver.FindElementById(&quot;pwd_1&quot;).SendKeys(&quot;picc@bj&quot;);</div><div class="line">           Console.WriteLine( driver.FindElementById(&quot;submit_1&quot;).GetAttribute(&quot;value&quot;));</div><div class="line">           // driver.FindElementById(&quot;submit_1&quot;).Click();</div><div class="line">            var js = &quot;document.getElementById(&apos;submit_1&apos;).click()&quot;;</div><div class="line">            driver.ExecuteScript(js);</div><div class="line">            //wait 100 uMs *  1000000</div><div class="line">            WebDriverWait wait = new WebDriverWait(driver,new  TimeSpan(100000000));</div><div class="line">            wait.Until(ExpectedConditions.AlertIsPresent());</div><div class="line">             </div><div class="line">            var alt = driver.SwitchTo().Alert();</div><div class="line">            if (alt != null) &#123;</div><div class="line">                alt.Accept();</div><div class="line">            &#125;</div><div class="line">            driver.SwitchTo().Window(currWindow);</div><div class="line"></div><div class="line"></div><div class="line">            // driver.FindElementByClassName(&quot;btn_login&quot;).Click();</div><div class="line">            //driver.FindElementById</div><div class="line">            //  driver.Quit();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/selenium/">selenium</a><a href="/tags/测试/">测试</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/08/09/docker-管理工具nsenter/" title="docker 管理工具nsenter" itemprop="url">docker 管理工具nsenter</a>
   </h1>
   <p class="article-author">By
@@ -604,69 +664,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/02/28/thrift-node单接口服务端和客户端实现/" title="thrift node单接口服务端和客户端实现" itemprop="url">thrift node单接口服务端和客户端实现</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-02-28T09:40:54.000Z" itemprop="datePublished"> 发表于 2017-02-28</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>按上一遍文章定义的idl生成node的接口文件<br>生成文件名为两个: HelloWord_types.js  HelloWorldService.js</p>
-<p>第一步  npm install thrift<br>第二步  服务器端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">var thrift = require(&quot;thrift&quot;);</div><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line">var ttypes = require(&apos;../thriftIDL/gen-nodejs/HelloWord_types&apos;);</div><div class="line"></div><div class="line">var server = thrift.createServer(helloService,</div><div class="line">    &#123;</div><div class="line">        sayHello:function (name ,callBack) &#123;</div><div class="line">            console.log(port+&quot;sayHello:&quot; + name);</div><div class="line">            callBack();</div><div class="line">        &#125;,</div><div class="line">        nextStatus:function (name ,callBack) &#123;</div><div class="line">            console.log(port +  &quot;next ......&quot;);</div><div class="line">            callBack(null,&quot;下一步是.....&quot;)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">);</div><div class="line">server.listen(9000);</div><div class="line">console.log(&quot;server start&quot;);</div><div class="line">server.on(&quot;error&quot;,function(e)&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>第三步 客服端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line"></div><div class="line">var connection = thrift.createConnection(&apos;127.0.0.1&apos;, 9000);</div><div class="line">var client = thrift.createClient(helloService, connection);</div><div class="line">connection.on(&quot;error&quot;,function(e)</div><div class="line">&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div><div class="line">client.sayHello(&quot;什么么玩意儿啊&quot;,function (err,res) &#123;</div><div class="line">     console.log(&quot;----无返回值&quot;)</div><div class="line">&#125;);</div><div class="line"></div><div class="line">client.nextStatus(&quot;有遥遥摇摇&quot;,function (err,res) &#123;</div><div class="line">    console.log(&quot;----&quot; + res)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<p>先运行服务器端，再运行客户端，应该就可行了。<br>单接口还是很简单的，一个端口绑定着一个服务，一个服务对应着一个接口文件，<br>如果要提供N多个服务就得N多个接口，是不有点怪异？  接下来讲多接口的支持 。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/thrift/">thrift</a><a href="/tags/node/">node</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
@@ -704,11 +701,15 @@
 		  
 		
 		  
+			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>4</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>2</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>3</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>4</sup></a></li>
 		  
 		
 		  
@@ -720,10 +721,6 @@
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>3</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/node/" title="node">node<sup>1</sup></a></li>
 		  
 		
@@ -732,11 +729,11 @@
 		  
 		
 		  
-			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>4</sup></a></li>
+			<li><a href="/categories/收集/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/收集/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
+			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>4</sup></a></li>
 		  
 		
 		  
@@ -752,15 +749,15 @@
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>2</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/收集/" title="收集">收集<sup>17</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>4</sup></a></li>
 		  
 		
 		  
@@ -785,11 +782,19 @@
 			
 		
 			
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>4</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/thrift/" title="thrift">thrift<sup>3</sup></a></li>
+				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
 			
 		
 			
@@ -801,23 +806,11 @@
 			
 		
 			
-				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
+				<li><a href="/tags/thrift/" title="thrift">thrift<sup>3</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
 			
 		
 			
@@ -829,15 +822,15 @@
 			
 		
 			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
 			
 		
 			
@@ -845,11 +838,7 @@
 			
 		
 			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
 			
 		
 			
@@ -858,6 +847,14 @@
 		
 			
 				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 			
 		
 		</ul>
