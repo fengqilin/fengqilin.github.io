@@ -5,24 +5,24 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>sublime go开发 | 有药就给你</title>
+    <title>docker 扩容 | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="开发环境，Mac前期用手动方式下载go SDK放在/usr/local/go目录sublime 装好gosublime 各种配置，提示什么的能正常运行。后期因为各种依赖，改用brew安装go,go自动加入环境路径，把原来go移动到别路径，但是sublime自动提示不好用了经仔细检查，查看提示，需要Preferences -&amp;gt; package settings -&amp;gt; GoSublime">
-<meta name="keywords" content="go">
+    <meta name="description" content="某日，在kubernetes准备创建一个应用，起不来，查日志1Failed to create docker container &amp;quot;gitlab-ce&amp;quot; of pod &amp;quot;gitlab-ce-j0q9c_default(d98296e6-b7a6-11e7-a9c9-000c29a8dbfc)&amp;quot; with error: Error response from">
+<meta name="keywords" content="kubernetes">
 <meta property="og:type" content="article">
-<meta property="og:title" content="sublime go开发">
-<meta property="og:url" content="http://yoursite.com/2017/02/12/sublime-go开发/index.html">
+<meta property="og:title" content="docker 扩容">
+<meta property="og:url" content="http://yoursite.com/2017/10/30/docker-扩容/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="开发环境，Mac前期用手动方式下载go SDK放在/usr/local/go目录sublime 装好gosublime 各种配置，提示什么的能正常运行。后期因为各种依赖，改用brew安装go,go自动加入环境路径，把原来go移动到别路径，但是sublime自动提示不好用了经仔细检查，查看提示，需要Preferences -&amp;gt; package settings -&amp;gt; GoSublime">
-<meta property="og:updated_time" content="2017-02-12T03:11:46.000Z">
+<meta property="og:description" content="某日，在kubernetes准备创建一个应用，起不来，查日志1Failed to create docker container &amp;quot;gitlab-ce&amp;quot; of pod &amp;quot;gitlab-ce-j0q9c_default(d98296e6-b7a6-11e7-a9c9-000c29a8dbfc)&amp;quot; with error: Error response from">
+<meta property="og:updated_time" content="2017-10-30T07:14:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="sublime go开发">
-<meta name="twitter:description" content="开发环境，Mac前期用手动方式下载go SDK放在/usr/local/go目录sublime 装好gosublime 各种配置，提示什么的能正常运行。后期因为各种依赖，改用brew安装go,go自动加入环境路径，把原来go移动到别路径，但是sublime自动提示不好用了经仔细检查，查看提示，需要Preferences -&amp;gt; package settings -&amp;gt; GoSublime">
+<meta name="twitter:title" content="docker 扩容">
+<meta name="twitter:description" content="某日，在kubernetes准备创建一个应用，起不来，查日志1Failed to create docker container &amp;quot;gitlab-ce&amp;quot; of pod &amp;quot;gitlab-ce-j0q9c_default(d98296e6-b7a6-11e7-a9c9-000c29a8dbfc)&amp;quot; with error: Error response from">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/12/sublime-go开发/" title="sublime go开发" itemprop="url">sublime go开发</a>
+      <a href="/2017/10/30/docker-扩容/" title="docker 扩容" itemprop="url">docker 扩容</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2017-02-12T02:55:57.000Z" itemprop="datePublished"> 发表于 2017-02-12</time>
+    <time datetime="2017-10-30T06:58:24.000Z" itemprop="datePublished"> 发表于 2017-10-30</time>
     
   </p>
 </header>
@@ -101,10 +101,15 @@
 		
 		</div>
 		
-		<p>开发环境，Mac<br>前期用手动方式下载go SDK放在/usr/local/go目录<br>sublime 装好gosublime 各种配置，提示什么的能正常运行。<br>后期因为各种依赖，改用brew安装go,go自动加入环境路径，<br>把原来go移动到别路径，<br>但是sublime自动提示不好用了<br>经仔细检查，查看提示，<br>需要<br>Preferences -&gt; package settings -&gt; GoSublime -&gt; Settings - Uesrs需要重新配置下GOPATH，GOROOT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &#123;</div><div class="line">   &quot;env&quot;: &#123;</div><div class="line">       &quot;GOPATH&quot;: &quot;/Users/feng/Documents/workspace/code/go&quot;, </div><div class="line">       &quot;GOROOT&quot;: &quot;/usr/local/Cellar/go/1.7.4_2/libexec/&quot; //新的go目录，</div><div class="line">       该目录下有src目录，引入系统包时，会到该目录查找。</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这样才能正常运行，<br>同时，如果要使Command + B就能运行，tools –&gt;build System – &gt; new Systen<br>添加内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;shell_cmd&quot;: &quot;go run $file&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>如果go没有在环境变量中，则需要全路径。</p>
-<p>同时，如果一些别的开发工具（如vscode），无法提示系统的包方法等，需要检查GOROOT环境变量是下是否有src目录，因为提示会从该路径查找。</p>
+		<p>某日，在kubernetes准备创建一个应用，起不来，查日志<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Failed to create docker container &quot;gitlab-ce&quot; of pod &quot;gitlab-ce-j0q9c_default(d98296e6-b7a6-11e7-a9c9-000c29a8dbfc)&quot; with error: Error response from daemon: &#123;&quot;message&quot;:&quot;devmapper: Thin Pool has 548 free data blocks which is less than minimum required 1324 free data blocks. Create more free space in thin pool or use dm.min_free_space option to change behavior&quot;&#125;</div></pre></td></tr></table></figure></p>
+<p>大意是空间不够了，网上查查资料， docker默认为10G, 扩容，记录如下<br>环境 centos 7 lvm<br>查看信息如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@vm-dbs ~]#  pvs -o+pv_used</div><div class="line">  PV         VG     Fmt  Attr PSize   PFree  Used   </div><div class="line">  /dev/sda2  centos lvm2 a--   49.51g     0   49.51g</div><div class="line">  /dev/sdb1  centos lvm2 a--  150.00g     0  150.00g</div></pre></td></tr></table></figure></p>
+<p>已无可用空间</p>
+<p>查看卷组信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">[root@vm-dbs ~]# vgdisplay</div><div class="line">  --- Volume group ---</div><div class="line">  VG Name               centos</div><div class="line">  System ID             </div><div class="line">  Format                lvm2</div><div class="line">  Metadata Areas        3</div><div class="line">  Metadata Sequence No  41</div><div class="line">  VG Access             read/write</div><div class="line">  VG Status             resizable</div><div class="line">  MAX LV                0</div><div class="line">  Cur LV                3</div><div class="line">  Open LV               3</div><div class="line">  Max PV                0</div><div class="line">  Cur PV                3</div><div class="line">  Act PV                3</div><div class="line">  VG Size               249.50 GiB</div><div class="line">  PE Size               4.00 MiB</div><div class="line">  Total PE              63872</div><div class="line">  Alloc PE / Size       61151 / 238.87 GiB</div><div class="line">  Free  PE / Size       2721 / 10.63 GiB</div><div class="line">  VG UUID               2j27R3-pIms-CB8S-kfvI-HiZM-Hfj9-s6knTE</div></pre></td></tr></table></figure></p>
+<p>系统中存在一下叫centos的卷。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">[root@vm-dbs ~]# lvdisplay</div><div class="line">  --- Logical volume ---</div><div class="line">  LV Path                /dev/centos/swap</div><div class="line">  LV Name                swap</div><div class="line">  VG Name                centos</div><div class="line">  LV UUID                s2edjL-aaJi-rber-GQiQ-DCXs-CTYW-5Y0OhV</div><div class="line">  LV Write Access        read/write</div><div class="line">  LV Creation host, time localhost, 2016-10-10 09:31:59 +0800</div><div class="line">  LV Status              available</div><div class="line">  # open                 2</div><div class="line">  LV Size                2.00 GiB</div><div class="line">  Current LE             512</div><div class="line">  Segments               1</div><div class="line">  Allocation             inherit</div><div class="line">  Read ahead sectors     auto</div><div class="line">  - currently set to     8192</div><div class="line">  Block device           253:1</div><div class="line">   </div><div class="line">  --- Logical volume ---</div><div class="line">  LV Path                /dev/centos/root</div><div class="line">  LV Name                root</div><div class="line">  VG Name                centos</div><div class="line">  LV UUID                a4itXN-t1Xl-2Rnc-Wb3X-v6GA-3qNb-Vnlwxz</div><div class="line">  LV Write Access        read/write</div><div class="line">  LV Creation host, time localhost, 2016-10-10 09:31:59 +0800</div><div class="line">  LV Status              available</div><div class="line">  # open                 1</div><div class="line">  LV Size                190.00 GiB</div><div class="line">  Current LE             48640</div><div class="line">  Segments               2</div><div class="line">  Allocation             inherit</div><div class="line">  Read ahead sectors     auto</div><div class="line">  - currently set to     8192</div><div class="line">  Block device           253:0</div><div class="line">   </div><div class="line">  --- Logical volume ---</div><div class="line">  LV Name                docker-pool</div><div class="line">  VG Name                centos</div><div class="line">  LV UUID                nakG1M-XrgD-snIJ-c3FH-P9Zp-DYQi-0gADOt</div><div class="line">  LV Write Access        read/write</div><div class="line">  LV Creation host, time vm-dbs, 2017-08-07 17:32:13 +0800</div><div class="line">  LV Pool metadata       docker-pool_tmeta</div><div class="line">  LV Pool data           docker-pool_tdata</div><div class="line">  LV Status              available</div><div class="line">  # open                 10</div><div class="line">  LV Size                46.46 GiB</div><div class="line">  Allocated pool data    19.99%</div><div class="line">  Allocated metadata     1.34%</div><div class="line">  Current LE             11895</div><div class="line">  Segments               1</div><div class="line">  Allocation             inherit</div><div class="line">  Read ahead sectors     auto</div><div class="line">  - currently set to     8192</div><div class="line">  Block device           253:4</div></pre></td></tr></table></figure></p>
+<p>docker 的Lv name  docker-pool ,也是存在于卷 centos，这是我扩容后的空间。</p>
+<p>所以我们第一步加入新分区到  centos 卷中，然后给  docker-pool 分配空间</p>
+<p>1，添加一块新盘。<br>2，添加后，在我的秕统里出现 /dev/sdc<br>用fdisk格式化 主分区，扩展分区都可以<br>格式化后，系统出现 /dev/sdc1<br>3 创建物理卷<br>pvcreate /dev/sdc1<br>4，扩展  centos 卷<br>vgextend centos /dev/sdc1<br>5,为docker-pool增加空间<br> lvextend -L +40G   /dev/centos/docker-pool<br>6，正常扩展分区是<br> resize2fs  /dev/centos/docker-pool<br> 但是会报错，直拉重启docker 或电脑即可。   </p>
+<p>7， 查看   lvdisplay  是否增加<br>8，又可以玩 kubernetes 了  </p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -112,13 +117,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/各种坑/">各种坑</a>
+  <a class="article-category-link" href="/categories/kubernetes/">kubernetes</a>►<a class="article-category-link" href="/categories/kubernetes/linux/">linux</a>►<a class="article-category-link" href="/categories/kubernetes/linux/收集/">收集</a>►<a class="article-category-link" href="/categories/kubernetes/linux/收集/docker/">docker</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/go/">go</a>
+  <span></span> <a href="/tags/kubernetes/">kubernetes</a>
   </div>
 
 </div>
@@ -127,7 +132,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/02/12/sublime-go开发/" data-title="sublime go开发 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/10/30/docker-扩容/" data-title="docker 扩容 | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -140,19 +145,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/02/12/vscode-debug模式/" title="vscode debug模式">
-  <strong>上一篇：</strong><br/>
-  <span>
-  vscode debug模式</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/02/04/jquery-ajax跨域请求附带请求头等参数/"  title="jquery.ajax跨域请求附带请求头等参数">
+<a href="/2017/10/07/kubernetes-jenkins部署/"  title="kubernetes  jenkins部署">
  <strong>下一篇：</strong><br/> 
- <span>jquery.ajax跨域请求附带请求头等参数
+ <span>kubernetes  jenkins部署
 </span>
 </a>
 </div>

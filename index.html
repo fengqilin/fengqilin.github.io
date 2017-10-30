@@ -78,6 +78,74 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/10/30/docker-扩容/" title="docker 扩容" itemprop="url">docker 扩容</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-10-30T06:58:24.000Z" itemprop="datePublished"> 发表于 2017-10-30</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>某日，在kubernetes准备创建一个应用，起不来，查日志<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Failed to create docker container &quot;gitlab-ce&quot; of pod &quot;gitlab-ce-j0q9c_default(d98296e6-b7a6-11e7-a9c9-000c29a8dbfc)&quot; with error: Error response from daemon: &#123;&quot;message&quot;:&quot;devmapper: Thin Pool has 548 free data blocks which is less than minimum required 1324 free data blocks. Create more free space in thin pool or use dm.min_free_space option to change behavior&quot;&#125;</div></pre></td></tr></table></figure></p>
+<p>大意是空间不够了，网上查查资料， docker默认为10G, 扩容，记录如下<br>环境 centos 7 lvm<br>查看信息如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@vm-dbs ~]#  pvs -o+pv_used</div><div class="line">  PV         VG     Fmt  Attr PSize   PFree  Used   </div><div class="line">  /dev/sda2  centos lvm2 a--   49.51g     0   49.51g</div><div class="line">  /dev/sdb1  centos lvm2 a--  150.00g     0  150.00g</div></pre></td></tr></table></figure></p>
+<p>已无可用空间</p>
+<p>查看卷组信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">[root@vm-dbs ~]# vgdisplay</div><div class="line">  --- Volume group ---</div><div class="line">  VG Name               centos</div><div class="line">  System ID             </div><div class="line">  Format                lvm2</div><div class="line">  Metadata Areas        3</div><div class="line">  Metadata Sequence No  41</div><div class="line">  VG Access             read/write</div><div class="line">  VG Status             resizable</div><div class="line">  MAX LV                0</div><div class="line">  Cur LV                3</div><div class="line">  Open LV               3</div><div class="line">  Max PV                0</div><div class="line">  Cur PV                3</div><div class="line">  Act PV                3</div><div class="line">  VG Size               249.50 GiB</div><div class="line">  PE Size               4.00 MiB</div><div class="line">  Total PE              63872</div><div class="line">  Alloc PE / Size       61151 / 238.87 GiB</div><div class="line">  Free  PE / Size       2721 / 10.63 GiB</div><div class="line">  VG UUID               2j27R3-pIms-CB8S-kfvI-HiZM-Hfj9-s6knTE</div></pre></td></tr></table></figure></p>
+<p>系统中存在一下叫centos的卷。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">[root@vm-dbs ~]# lvdisplay</div><div class="line">  --- Logical volume ---</div><div class="line">  LV Path                /dev/centos/swap</div><div class="line">  LV Name                swap</div><div class="line">  VG Name                centos</div><div class="line">  LV UUID                s2edjL-aaJi-rber-GQiQ-DCXs-CTYW-5Y0OhV</div><div class="line">  LV Write Access        read/write</div><div class="line">  LV Creation host, time localhost, 2016-10-10 09:31:59 +0800</div><div class="line">  LV Status              available</div><div class="line">  # open                 2</div><div class="line">  LV Size                2.00 GiB</div><div class="line">  Current LE             512</div><div class="line">  Segments               1</div><div class="line">  Allocation             inherit</div><div class="line">  Read ahead sectors     auto</div><div class="line">  - currently set to     8192</div><div class="line">  Block device           253:1</div><div class="line">   </div><div class="line">  --- Logical volume ---</div><div class="line">  LV Path                /dev/centos/root</div><div class="line">  LV Name                root</div><div class="line">  VG Name                centos</div><div class="line">  LV UUID                a4itXN-t1Xl-2Rnc-Wb3X-v6GA-3qNb-Vnlwxz</div><div class="line">  LV Write Access        read/write</div><div class="line">  LV Creation host, time localhost, 2016-10-10 09:31:59 +0800</div><div class="line">  LV Status              available</div><div class="line">  # open                 1</div><div class="line">  LV Size                190.00 GiB</div><div class="line">  Current LE             48640</div><div class="line">  Segments               2</div><div class="line">  Allocation             inherit</div><div class="line">  Read ahead sectors     auto</div><div class="line">  - currently set to     8192</div><div class="line">  Block device           253:0</div><div class="line">   </div><div class="line">  --- Logical volume ---</div><div class="line">  LV Name                docker-pool</div><div class="line">  VG Name                centos</div><div class="line">  LV UUID                nakG1M-XrgD-snIJ-c3FH-P9Zp-DYQi-0gADOt</div><div class="line">  LV Write Access        read/write</div><div class="line">  LV Creation host, time vm-dbs, 2017-08-07 17:32:13 +0800</div><div class="line">  LV Pool metadata       docker-pool_tmeta</div><div class="line">  LV Pool data           docker-pool_tdata</div><div class="line">  LV Status              available</div><div class="line">  # open                 10</div><div class="line">  LV Size                46.46 GiB</div><div class="line">  Allocated pool data    19.99%</div><div class="line">  Allocated metadata     1.34%</div><div class="line">  Current LE             11895</div><div class="line">  Segments               1</div><div class="line">  Allocation             inherit</div><div class="line">  Read ahead sectors     auto</div><div class="line">  - currently set to     8192</div><div class="line">  Block device           253:4</div></pre></td></tr></table></figure></p>
+<p>docker 的Lv name  docker-pool ,也是存在于卷 centos，这是我扩容后的空间。</p>
+<p>所以我们第一步加入新分区到  centos 卷中，然后给  docker-pool 分配空间</p>
+<p>1，添加一块新盘。<br>2，添加后，在我的秕统里出现 /dev/sdc<br>用fdisk格式化 主分区，扩展分区都可以<br>格式化后，系统出现 /dev/sdc1<br>3 创建物理卷<br>pvcreate /dev/sdc1<br>4，扩展  centos 卷<br>vgextend centos /dev/sdc1<br>5,为docker-pool增加空间<br> lvextend -L +40G   /dev/centos/docker-pool<br>6，正常扩展分区是<br> resize2fs  /dev/centos/docker-pool<br> 但是会报错，直拉重启docker 或电脑即可。   </p>
+<p>7， 查看   lvdisplay  是否增加<br>8，又可以玩 kubernetes 了  </p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/kubernetes/">kubernetes</a>►<a class="article-category-link" href="/categories/kubernetes/linux/">linux</a>►<a class="article-category-link" href="/categories/kubernetes/linux/收集/">收集</a>►<a class="article-category-link" href="/categories/kubernetes/linux/收集/docker/">docker</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/kubernetes/">kubernetes</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/10/07/kubernetes-jenkins部署/" title="kubernetes  jenkins部署" itemprop="url">kubernetes  jenkins部署</a>
   </h1>
   <p class="article-author">By
@@ -667,68 +735,6 @@ KUBELET_ARGS=&quot;&quot;
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/09/01/ice起步(二)IceBox/" title="ice起步(二)_IceBox" itemprop="url">ice起步(二)_IceBox</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-09-01T06:52:11.000Z" itemprop="datePublished"> 发表于 2017-09-01</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>IceBox 可以代替通常的server,方便进行很多ice服务管理，<br>可以理解成一个类似tomcat的容器，  里面可以有很多服务。<br>服务器 接口方法实现接上一篇。<br>步骤，<br>1，实现com.zeroc.IceBox.Service，完成方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">package com.feng.ice.server.icebox;</div><div class="line"></div><div class="line">import com.feng.ice.server.impl.PrinterI;</div><div class="line">import com.zeroc.Ice.Communicator;</div><div class="line">import com.zeroc.IceBox.Service;</div><div class="line">public class IceBoxPrinter  implements  Service &#123;</div><div class="line">	private com.zeroc.Ice.ObjectAdapter _adapter;</div><div class="line">	public void start(String name,  Communicator communicator, String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(  &quot;name:&quot; + name);</div><div class="line">		for(String s:args)</div><div class="line">		System.out.println(  &quot;args:&quot; + s);</div><div class="line">		_adapter = communicator.createObjectAdapter(name);</div><div class="line">		com.zeroc.Ice.Object object =   new PrinterI();</div><div class="line">		//_adapter.add(object, com.zeroc.Ice.Util.stringToIdentity(&quot;SimplePrinter&quot;));</div><div class="line">		_adapter.add(object, com.zeroc.Ice.Util.stringToIdentity(&quot;SimplePrinter&quot;));</div><div class="line">		_adapter.activate();</div><div class="line">	&#125;</div><div class="line">	public void stop() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		 _adapter.deactivate();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>2 配置文件 config.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">IceBox.InheritProperties=1</div><div class="line">Ice.Trace.Network=1</div><div class="line">Ice.Trace.ThreadPool=1 </div><div class="line">#所有服务初始化完成之后打印 xxx ready</div><div class="line">IceBox.PrintServicesReady=SimplePrinterBox  ready.....</div><div class="line">#SimplePrinter配置</div><div class="line">IceBox.Service.SimplePrinter=com.feng.ice.server.icebox.IceBoxPrinter 100 101 102</div><div class="line">SimplePrinter.Endpoints=tcp -p 10000</div><div class="line">#SendMSM配置</div><div class="line">#IceBox.Service.SendMessage=com.feng.ice.server.icebox.IceBoxSendMSM  200 201 202</div><div class="line">#SendMessage.Endpoints=tcp -p 10001</div></pre></td></tr></table></figure></p>
-<p>可以一个配置文件里配置多个服务，如上面的最后三句。<br>3 启动：main class com.zeroc.IceBox.Server  添加参数：<br>–Ice.Config=/路径/config.properties<br>4 客户端访问无变化。<br>5 更多参数参照官网说明。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/ice/">ice</a>►<a class="article-category-link" href="/categories/ice/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/ice/">ice</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -754,6 +760,10 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
+			<li><a href="/categories/kubernetes/linux/收集/docker/" title="docker">docker<sup>1</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/ectd/" title="ectd">ectd<sup>1</sup></a></li>
 		  
 		
@@ -770,23 +780,23 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>6</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>1</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>6</sup></a></li>
+			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>7</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -798,11 +808,11 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>4</sup></a></li>
+			<li><a href="/categories/收集/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/收集/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
+			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>4</sup></a></li>
 		  
 		
 		  
@@ -814,11 +824,19 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>6</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>5</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/jenkins/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>17</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -827,14 +845,6 @@ KUBELET_ARGS=&quot;&quot;
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>17</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/kubernetes/linux/jenkins/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -851,11 +861,11 @@ KUBELET_ARGS=&quot;&quot;
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/linux/" title="linux">linux<sup>6</sup></a></li>
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>7</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>6</sup></a></li>
+				<li><a href="/tags/linux/" title="linux">linux<sup>6</sup></a></li>
 			
 		
 			
@@ -867,15 +877,11 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
 			
 		
 			
@@ -883,11 +889,11 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/vpn/" title="vpn">vpn<sup>2</sup></a></li>
+				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+				<li><a href="/tags/vpn/" title="vpn">vpn<sup>2</sup></a></li>
 			
 		
 			
@@ -895,31 +901,7 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
 			
 		
 			
@@ -927,7 +909,35 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 			
 		
 		</ul>

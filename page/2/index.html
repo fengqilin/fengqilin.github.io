@@ -78,6 +78,68 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/09/01/ice起步(二)IceBox/" title="ice起步(二)_IceBox" itemprop="url">ice起步(二)_IceBox</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-09-01T06:52:11.000Z" itemprop="datePublished"> 发表于 2017-09-01</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>IceBox 可以代替通常的server,方便进行很多ice服务管理，<br>可以理解成一个类似tomcat的容器，  里面可以有很多服务。<br>服务器 接口方法实现接上一篇。<br>步骤，<br>1，实现com.zeroc.IceBox.Service，完成方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">package com.feng.ice.server.icebox;</div><div class="line"></div><div class="line">import com.feng.ice.server.impl.PrinterI;</div><div class="line">import com.zeroc.Ice.Communicator;</div><div class="line">import com.zeroc.IceBox.Service;</div><div class="line">public class IceBoxPrinter  implements  Service &#123;</div><div class="line">	private com.zeroc.Ice.ObjectAdapter _adapter;</div><div class="line">	public void start(String name,  Communicator communicator, String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		System.out.println(  &quot;name:&quot; + name);</div><div class="line">		for(String s:args)</div><div class="line">		System.out.println(  &quot;args:&quot; + s);</div><div class="line">		_adapter = communicator.createObjectAdapter(name);</div><div class="line">		com.zeroc.Ice.Object object =   new PrinterI();</div><div class="line">		//_adapter.add(object, com.zeroc.Ice.Util.stringToIdentity(&quot;SimplePrinter&quot;));</div><div class="line">		_adapter.add(object, com.zeroc.Ice.Util.stringToIdentity(&quot;SimplePrinter&quot;));</div><div class="line">		_adapter.activate();</div><div class="line">	&#125;</div><div class="line">	public void stop() &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">		 _adapter.deactivate();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2 配置文件 config.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">IceBox.InheritProperties=1</div><div class="line">Ice.Trace.Network=1</div><div class="line">Ice.Trace.ThreadPool=1 </div><div class="line">#所有服务初始化完成之后打印 xxx ready</div><div class="line">IceBox.PrintServicesReady=SimplePrinterBox  ready.....</div><div class="line">#SimplePrinter配置</div><div class="line">IceBox.Service.SimplePrinter=com.feng.ice.server.icebox.IceBoxPrinter 100 101 102</div><div class="line">SimplePrinter.Endpoints=tcp -p 10000</div><div class="line">#SendMSM配置</div><div class="line">#IceBox.Service.SendMessage=com.feng.ice.server.icebox.IceBoxSendMSM  200 201 202</div><div class="line">#SendMessage.Endpoints=tcp -p 10001</div></pre></td></tr></table></figure></p>
+<p>可以一个配置文件里配置多个服务，如上面的最后三句。<br>3 启动：main class com.zeroc.IceBox.Server  添加参数：<br>–Ice.Config=/路径/config.properties<br>4 客户端访问无变化。<br>5 更多参数参照官网说明。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/ice/">ice</a>►<a class="article-category-link" href="/categories/ice/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/ice/">ice</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/09/01/ice起步-一/" title="ice起步(一)" itemprop="url">ice起步(一)</a>
   </h1>
   <p class="article-author">By
@@ -619,55 +681,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/03/12/ndoe-thrift客户端重连/" title="ndoe thrift客户端重连" itemprop="url">ndoe thrift客户端重连</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-03-12T14:55:48.000Z" itemprop="datePublished"> 发表于 2017-03-12</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
@@ -693,6 +706,10 @@
 		  
 		
 		  
+			<li><a href="/categories/kubernetes/linux/收集/docker/" title="docker">docker<sup>1</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/ectd/" title="ectd">ectd<sup>1</sup></a></li>
 		  
 		
@@ -709,23 +726,23 @@
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>6</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>1</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>6</sup></a></li>
+			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>7</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -737,11 +754,11 @@
 		  
 		
 		  
-			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>4</sup></a></li>
+			<li><a href="/categories/收集/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/收集/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
+			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>4</sup></a></li>
 		  
 		
 		  
@@ -753,11 +770,19 @@
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>6</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>5</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/jenkins/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>17</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -766,14 +791,6 @@
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>17</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/kubernetes/linux/jenkins/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -790,11 +807,11 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/linux/" title="linux">linux<sup>6</sup></a></li>
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>7</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>6</sup></a></li>
+				<li><a href="/tags/linux/" title="linux">linux<sup>6</sup></a></li>
 			
 		
 			
@@ -806,15 +823,11 @@
 			
 		
 			
-				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
 			
 		
 			
@@ -822,11 +835,11 @@
 			
 		
 			
-				<li><a href="/tags/vpn/" title="vpn">vpn<sup>2</sup></a></li>
+				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+				<li><a href="/tags/vpn/" title="vpn">vpn<sup>2</sup></a></li>
 			
 		
 			
@@ -834,31 +847,7 @@
 			
 		
 			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
 			
 		
 			
@@ -866,7 +855,35 @@
 			
 		
 			
-				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 			
 		
 		</ul>
