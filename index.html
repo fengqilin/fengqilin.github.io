@@ -91,9 +91,9 @@
 </header>
     <div class="article-content">
         
-        <p>Centos7按默认模式装上docker，启动，会有一个警告，大意思是要使用什么存储才好<br>解决方案：<br>1，在root所在vg(无特别为centos) ,通过加pv或是缩减home,root,使用空用空间<br>2 export VG=”centos”   &amp;&amp; docker-storage-setup  可以看到创建成功<br>3,一般新建的docker-pool为20g,根据自己的需要扩容。即可。  </p>
+        <p>Centos7按默认模式装上docker，启动，会有一个警告，大意思是要使用什么存储才好<br>解决方案：<br>1，在root所在vg(无特别为centos) ,通过加pv或是缩减home,root,使用空用空间<br>2, export VG=”centos”   &amp;&amp; docker-storage-setup  可以看到创建成功<br>3,一般新建的docker-pool为20g,根据自己的需要扩容。即可。  </p>
 <hr>
-<p>可以新建vg,<br>第二步是指定 VG 为新建的VG,即可。</p>
+<p>可以新建vg,<br>第二步是指定 VG 为新建的VG,即可。<br>参考：  <a href="http://m635674608.iteye.com/blog/2357247" target="_blank" rel="external">http://m635674608.iteye.com/blog/2357247</a></p>
 
         
         
@@ -778,15 +778,15 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>8</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>1</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -794,7 +794,7 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -806,11 +806,11 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/收集/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
+			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>4</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>4</sup></a></li>
+			<li><a href="/categories/收集/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
 		  
 		
 		  
@@ -826,11 +826,7 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>17</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
@@ -838,11 +834,15 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
+			<li><a href="/categories/收集/" title="收集">收集<sup>17</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -891,11 +891,11 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
 			
 		
 			
@@ -903,11 +903,11 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
+				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
 			
 		
 			
@@ -919,11 +919,15 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 			
 		
 			
@@ -932,10 +936,6 @@ KUBELET_ARGS=&quot;&quot;
 		
 			
 				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 			
 		
 		</ul>
