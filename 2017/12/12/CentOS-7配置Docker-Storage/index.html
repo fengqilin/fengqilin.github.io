@@ -5,24 +5,24 @@
   <meta charset="UTF-8">
   <meta name="baidu-site-verification" content="k49IAqAJW3" />
   
-    <title>firewalld环境vpn的配置 | 有药就给你</title>
+    <title>CentOS 7配置Docker Storage | 有药就给你</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feng">
     
 
     
-    <meta name="description" content="123456789101112131415161718192021222324为了模拟一个 pc 对外提供代理，通过该pc上的vpn访问网络的一个环境。因此在一台外网linux 建立vpn环境。操作系统：centos 71,安装 pptpd ，直接yum pptpd就可以配置IP,用户等信息， 这一步网上资料都很多。2.如果没有开防火墙，这时都能连上此vpn了，但是是无法通过vpn ，经过vpn这">
-<meta name="keywords" content="linux,vpn">
+    <meta name="description" content="Centos7按默认模式装上docker，启动，会有一个警告，大意思是要使用什么存储才好解决方案：1，在root所在vg(无特别为centos) ,通过加pv或是缩减home,root,使用空用空间2 export VG=”centos”   &amp;amp;&amp;amp; docker-storage-setup  可以看到创建成功3,一般新建的docker-pool为20g,根据自己的需要扩容。即可。">
+<meta name="keywords" content="kubernetes">
 <meta property="og:type" content="article">
-<meta property="og:title" content="firewalld环境vpn的配置">
-<meta property="og:url" content="http://yoursite.com/2017/06/02/firewalld环境vpn的配置/index.html">
+<meta property="og:title" content="CentOS 7配置Docker Storage">
+<meta property="og:url" content="http://yoursite.com/2017/12/12/CentOS-7配置Docker-Storage/index.html">
 <meta property="og:site_name" content="有药就给你">
-<meta property="og:description" content="123456789101112131415161718192021222324为了模拟一个 pc 对外提供代理，通过该pc上的vpn访问网络的一个环境。因此在一台外网linux 建立vpn环境。操作系统：centos 71,安装 pptpd ，直接yum pptpd就可以配置IP,用户等信息， 这一步网上资料都很多。2.如果没有开防火墙，这时都能连上此vpn了，但是是无法通过vpn ，经过vpn这">
-<meta property="og:updated_time" content="2017-06-03T13:35:54.000Z">
+<meta property="og:description" content="Centos7按默认模式装上docker，启动，会有一个警告，大意思是要使用什么存储才好解决方案：1，在root所在vg(无特别为centos) ,通过加pv或是缩减home,root,使用空用空间2 export VG=”centos”   &amp;amp;&amp;amp; docker-storage-setup  可以看到创建成功3,一般新建的docker-pool为20g,根据自己的需要扩容。即可。">
+<meta property="og:updated_time" content="2017-12-12T06:56:35.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="firewalld环境vpn的配置">
-<meta name="twitter:description" content="123456789101112131415161718192021222324为了模拟一个 pc 对外提供代理，通过该pc上的vpn访问网络的一个环境。因此在一台外网linux 建立vpn环境。操作系统：centos 71,安装 pptpd ，直接yum pptpd就可以配置IP,用户等信息， 这一步网上资料都很多。2.如果没有开防火墙，这时都能连上此vpn了，但是是无法通过vpn ，经过vpn这">
+<meta name="twitter:title" content="CentOS 7配置Docker Storage">
+<meta name="twitter:description" content="Centos7按默认模式装上docker，启动，会有一个警告，大意思是要使用什么存储才好解决方案：1，在root所在vg(无特别为centos) ,通过加pv或是缩减home,root,使用空用空间2 export VG=”centos”   &amp;amp;&amp;amp; docker-storage-setup  可以看到创建成功3,一般新建的docker-pool为20g,根据自己的需要扩容。即可。">
 
     
     <link rel="alternative" href="/atom.xml" title="有药就给你" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/06/02/firewalld环境vpn的配置/" title="firewalld环境vpn的配置" itemprop="url">firewalld环境vpn的配置</a>
+      <a href="/2017/12/12/CentOS-7配置Docker-Storage/" title="CentOS 7配置Docker Storage" itemprop="url">CentOS 7配置Docker Storage</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
 		
   <p class="article-time">
-    <time datetime="2017-06-02T08:13:13.000Z" itemprop="datePublished"> 发表于 2017-06-02</time>
+    <time datetime="2017-12-12T06:50:36.000Z" itemprop="datePublished"> 发表于 2017-12-12</time>
     
   </p>
 </header>
@@ -101,7 +101,9 @@
 		
 		</div>
 		
-		<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">为了模拟一个 pc 对外提供代理，通过该pc上的vpn访问网络的一个环境。</div><div class="line">因此在一台外网linux 建立vpn环境。</div><div class="line">操作系统：centos 7</div><div class="line">1,安装 pptpd ，直接yum pptpd就可以</div><div class="line">配置IP,用户等信息， 这一步网上资料都很多。</div><div class="line">2.如果没有开防火墙，这时都能连上此vpn了，但是是无法通过vpn ，经过vpn这台主机</div><div class="line">访问网络的。</div><div class="line">3 需要用到防火墙伪装转发功能，所以需要开防火墙。</div><div class="line">centos7标配是 firewalld ,所以</div><div class="line">开放这个两个端口</div><div class="line">firewall-cmd --permanent --add-port=1723/tcp</div><div class="line">firewall-cmd --permanent --add-port=53/udp </div><div class="line">开放这个协议</div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p gre -j ACCEPT</div><div class="line"></div><div class="line">伪装  eth1是该主机的外网接口</div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter POSTROUTING 0 -t nat -o  eth1 -j MASQUERADE </div><div class="line"></div><div class="line">允许通过  ppp+表示这个开头的联结，当有联接时是这个开头的，比如 ppp0   eth1是该主机的外网接口</div><div class="line"></div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i ppp+ -o  eth1 -j ACCEPT</div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i  eth1  -o ppp+ -j ACCEPT</div><div class="line"></div><div class="line">OK，可以了</div></pre></td></tr></table></figure>
+		<p>Centos7按默认模式装上docker，启动，会有一个警告，大意思是要使用什么存储才好<br>解决方案：<br>1，在root所在vg(无特别为centos) ,通过加pv或是缩减home,root,使用空用空间<br>2 export VG=”centos”   &amp;&amp; docker-storage-setup  可以看到创建成功<br>3,一般新建的docker-pool为20g,根据自己的需要扩容。即可。  </p>
+<hr>
+<p>可以新建vg,<br>第二步是指定 VG 为新建的VG,即可。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -109,13 +111,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
+  <a class="article-category-link" href="/categories/kubernetes/">kubernetes</a>►<a class="article-category-link" href="/categories/kubernetes/linux/">linux</a>►<a class="article-category-link" href="/categories/kubernetes/linux/收集/">收集</a>►<a class="article-category-link" href="/categories/kubernetes/linux/收集/docker/">docker</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/linux/">linux</a><a href="/tags/vpn/">vpn</a>
+  <span></span> <a href="/tags/kubernetes/">kubernetes</a>
   </div>
 
 </div>
@@ -124,7 +126,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/06/02/firewalld环境vpn的配置/" data-title="firewalld环境vpn的配置 | 有药就给你" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/12/12/CentOS-7配置Docker-Storage/" data-title="CentOS 7配置Docker Storage | 有药就给你" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -137,19 +139,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/06/04/在Node环境下使用tinymce文件管理插件responsive-filemanager/" title="在Node环境下使用tinymce文件管理插件responsive filemanager">
-  <strong>上一篇：</strong><br/>
-  <span>
-  在Node环境下使用tinymce文件管理插件responsive filemanager</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/03/12/ndoe-thrift客户端重连/"  title="ndoe thrift客户端重连">
+<a href="/2017/10/30/docker-扩容/"  title="docker 扩容">
  <strong>下一篇：</strong><br/> 
- <span>ndoe thrift客户端重连
+ <span>docker 扩容
 </span>
 </a>
 </div>

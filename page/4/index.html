@@ -78,6 +78,70 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/02/12/go-mysql之联结字符串/" title="go-mysql之联结字符串" itemprop="url">go-mysql之联结字符串</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-12T09:13:15.000Z" itemprop="datePublished"> 发表于 2017-02-12</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>go-sql-driver<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db, err := sql.Open(&quot;mysql&quot;, &quot;bofide:123456@10.10.1.201:4006/authority_platform&quot;)</div></pre></td></tr></table></figure></p>
+<p>受别的语言的影响，以为联结就该是上面那样<br>但是这样一定会报错的，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">panic: default addr for network &apos;10.10.1.201:4006&apos; unknown</div></pre></td></tr></table></figure></p>
+<p>真实的应该是这样子的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db, err := sql.Open(&quot;mysql&quot;, &quot;bofide:123456@tcp(10.10.1.201:4006)/authority_platform&quot;)</div></pre></td></tr></table></figure></p>
+<p>官方例子是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">user@unix(/path/to/socket)/dbname</div><div class="line">root:pw@unix(/tmp/mysql.sock)/myDatabase?loc=Local</div><div class="line">user:password@tcp(localhost:5555)/dbname?tls=skip-verify&amp;autocommit=true</div></pre></td></tr></table></figure></p>
+<p>具体实例参照：<br><a href="https://github.com/go-sql-driver/mysql/wiki/Examples" target="_blank" rel="external">https://github.com/go-sql-driver/mysql/wiki/Examples</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/各种坑/">各种坑</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/go/">go</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/02/12/vscode-debug模式/" title="vscode debug模式" itemprop="url">vscode debug模式</a>
   </h1>
   <p class="article-author">By
@@ -689,7 +753,7 @@ type: categories
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/docker/" title="docker">docker<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/docker/" title="docker">docker<sup>2</sup></a></li>
 		  
 		
 		  
@@ -709,19 +773,19 @@ type: categories
 		  
 		
 		  
+			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>8</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>1</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>7</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>7</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>8</sup></a></li>
 		  
 		
 		  
@@ -753,11 +817,7 @@ type: categories
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>6</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/kubernetes/linux/jenkins/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -765,15 +825,19 @@ type: categories
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/jenkins/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
@@ -790,7 +854,7 @@ type: categories
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>7</sup></a></li>
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>8</sup></a></li>
 			
 		
 			
@@ -802,15 +866,15 @@ type: categories
 			
 		
 			
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/nginx/" title="nginx">nginx<sup>3</sup></a></li>
 			
 		
 			
@@ -822,10 +886,6 @@ type: categories
 			
 		
 			
-				<li><a href="/tags/vpn/" title="vpn">vpn<sup>2</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
 			
 		
@@ -834,15 +894,11 @@ type: categories
 			
 		
 			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
+				<li><a href="/tags/vpn/" title="vpn">vpn<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/https/" title="https">https<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
 			
 		
 			
@@ -850,11 +906,7 @@ type: categories
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -862,7 +914,19 @@ type: categories
 			
 		
 			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			
