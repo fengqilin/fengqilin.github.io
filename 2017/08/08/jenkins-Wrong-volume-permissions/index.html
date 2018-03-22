@@ -102,7 +102,7 @@
 		
 		</div>
 		
-		<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Linux 主机， root账号运行 docker运行 jenkins 一切正常，</div><div class="line">当挂载主机目录时，则出现   </div><div class="line"></div><div class="line">touch: cannot touch ‘/var/jenkins_home/copy_reference_file.log’: Permission denied</div><div class="line">Can not write to /var/jenkins_home/copy_reference_file.log. Wrong volume permissions?</div><div class="line"></div><div class="line">解决步骤：   </div><div class="line">1，确认目录权限  </div><div class="line"> docker run -ti --rm --entrypoint=&quot;/bin/bash&quot; jenkins -c &quot;whoami &amp;&amp; id&quot;</div><div class="line"> jenkins</div><div class="line"> uid=1000(jenkins) gid=1000(jenkins) groups=1000(jenkins) </div><div class="line"> 而本地的 /var/jenkins_home 是root用户创建， </div><div class="line"> </div><div class="line"> uid=0(root) gid=0(root) 组=0(root) 环境=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023</div><div class="line">2，/var/jenkins_home </div><div class="line">chown -R 1000 /var/jenkins_home  </div><div class="line">注意，可能本地没有1000的用户，如果没有需要创建，但用户名不必为jenkins</div><div class="line">如果有则可不必计较，虽然用户名可能不一是jenkins</div><div class="line">3,再启动试试，可能还是有问题</div><div class="line">这时查看 SELinux状态  /usr/sbin/sestatus -v    </div><div class="line">如果没有关闭，需要关闭</div><div class="line">关闭SELinux：</div><div class="line">1、临时关闭（不用重启机器）：</div><div class="line">setenforce 0                  ##设置SELinux 成为permissive模式</div><div class="line">                              ##setenforce 1 设置SELinux 成为enforcing模式</div><div class="line">2、修改配置文件需要重启机器：</div><div class="line">修改/etc/selinux/config 文件</div><div class="line">将SELINUX=enforcing改为SELINUX=disabled</div><div class="line">重启机器即可</div></pre></td></tr></table></figure>
+		<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Linux 主机， root账号运行 docker运行 jenkins 一切正常，</span><br><span class="line">当挂载主机目录时，则出现   </span><br><span class="line"></span><br><span class="line">touch: cannot touch ‘/var/jenkins_home/copy_reference_file.log’: Permission denied</span><br><span class="line">Can not write to /var/jenkins_home/copy_reference_file.log. Wrong volume permissions?</span><br><span class="line"></span><br><span class="line">解决步骤：   </span><br><span class="line">1，确认目录权限  </span><br><span class="line"> docker run -ti --rm --entrypoint=&quot;/bin/bash&quot; jenkins -c &quot;whoami &amp;&amp; id&quot;</span><br><span class="line"> jenkins</span><br><span class="line"> uid=1000(jenkins) gid=1000(jenkins) groups=1000(jenkins) </span><br><span class="line"> 而本地的 /var/jenkins_home 是root用户创建， </span><br><span class="line"> </span><br><span class="line"> uid=0(root) gid=0(root) 组=0(root) 环境=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023</span><br><span class="line">2，/var/jenkins_home </span><br><span class="line">chown -R 1000 /var/jenkins_home  </span><br><span class="line">注意，可能本地没有1000的用户，如果没有需要创建，但用户名不必为jenkins</span><br><span class="line">如果有则可不必计较，虽然用户名可能不一是jenkins</span><br><span class="line">3,再启动试试，可能还是有问题</span><br><span class="line">这时查看 SELinux状态  /usr/sbin/sestatus -v    </span><br><span class="line">如果没有关闭，需要关闭</span><br><span class="line">关闭SELinux：</span><br><span class="line">1、临时关闭（不用重启机器）：</span><br><span class="line">setenforce 0                  ##设置SELinux 成为permissive模式</span><br><span class="line">                              ##setenforce 1 设置SELinux 成为enforcing模式</span><br><span class="line">2、修改配置文件需要重启机器：</span><br><span class="line">修改/etc/selinux/config 文件</span><br><span class="line">将SELINUX=enforcing改为SELINUX=disabled</span><br><span class="line">重启机器即可</span><br></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -214,15 +214,15 @@
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>8</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -250,11 +250,7 @@
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -262,15 +258,19 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>18</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -295,6 +295,10 @@
 			
 		
 			
+				<li><a href="/tags/开发/" title="开发">开发<sup>4</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/nginx/" title="nginx">nginx<sup>4</sup></a></li>
 			
 		
@@ -303,7 +307,7 @@
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -311,23 +315,7 @@
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
 			
 		
 			
@@ -335,7 +323,23 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -343,7 +347,7 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -351,15 +355,11 @@
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			

@@ -102,7 +102,7 @@
 		
 		</div>
 		
-		<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line">开发环境为 node + mogone,前端使用到 TinyMCE  ，他有一个 文件管理插件叫做MoxieManager ，收费。    </div><div class="line">所以找了一个免费的  [responsive filemanager](http://www.responsivefilemanager.com/),</div><div class="line">功能非常强大，可以用于管理、上传、下载文件.有两个版本，.net和php版本。</div><div class="line">我们服务器为linux，所以选择php版本。</div><div class="line">1.服务器安装nginx , php环境。</div><div class="line">2，下载responsive filemanager插件，https://github.com/trippo/ResponsiveFilemanager</div><div class="line">解压后放后得到filemanager目录，把此目录放入 node静态目录，如我们的public</div><div class="line"></div><div class="line">3,将 将tinymce/plugins/responsivefilemanager文件夹拷贝到TinyMCE的插件路径中，例  如public/js/tinymce/plugins中。</div><div class="line">4， 修改配置文件。找到 filemanager/config/config.php文件，   </div><div class="line">  A,修改其中的</div><div class="line">上传文件夹目录(upload_dir)， 指定为Node的一静态目录。</div><div class="line">/*</div><div class="line">       |--------------------------------------------------------------------------</div><div class="line">       | path from base_url to base of upload folder</div><div class="line">       |--------------------------------------------------------------------------</div><div class="line">       |</div><div class="line">       | with start and final /</div><div class="line">       |</div><div class="line">       */</div><div class="line">       &apos;upload_dir&apos; =&gt; &apos;/uploads/&apos;,</div><div class="line"></div><div class="line">如上，访问uploads下下面的a.txt,路径为  xxx.com/uploads/a.txt.   </div><div class="line"></div><div class="line">B，当前目录(current_path),</div><div class="line">/*</div><div class="line">        |--------------------------------------------------------------------------</div><div class="line">        | relative path from filemanager folder to upload folder</div><div class="line">        |--------------------------------------------------------------------------</div><div class="line">        |</div><div class="line">        | with final /</div><div class="line">        |</div><div class="line">        */</div><div class="line">        &apos;current_path&apos; =&gt; &apos;../uploads/&apos;,  </div><div class="line">        </div><div class="line">C      似地修改缩略图路径(thumbs_base_path)为 </div><div class="line">/*</div><div class="line">       |--------------------------------------------------------------------------</div><div class="line">       | relative path from filemanager folder to thumbs folder</div><div class="line">       |--------------------------------------------------------------------------</div><div class="line">       |</div><div class="line">       | with final /</div><div class="line">       | DO NOT put inside upload folder</div><div class="line">       |</div><div class="line">       */</div><div class="line">       &apos;thumbs_base_path&apos; =&gt; &apos;../thumbs/&apos;,    </div><div class="line"> 6 设置中文     及上传大小限制</div><div class="line"> /*</div><div class="line">         |--------------------------------------------------------------------------</div><div class="line">         | default language file name</div><div class="line">         |--------------------------------------------------------------------------</div><div class="line">         */</div><div class="line">         &apos;default_language&apos; =&gt; &quot;zh_CN&quot;,  </div><div class="line">          </div><div class="line">     &apos;MaxSizeUpload&apos; =&gt; 50, //50M </div><div class="line"></div><div class="line">6 配轩nginx 进行转发  php文件全转发给php服务处理，其他的全交Node服务器处理。    </div><div class="line">7 有时上传成功，但是目录里没有文件，需要给对应的目录有写入权限。  同时php.ini里文件上传限制要比前面设置的大。 </div><div class="line">8，TinyMCE的初始化代码      </div><div class="line"> &lt;script type=&quot;text/javascript&quot;&gt;</div><div class="line">tinymce.init(&#123;</div><div class="line">    selector: &quot;textarea&quot;,</div><div class="line">    plugins: [</div><div class="line">        &quot;responsivefilemanager advlist autolink lists link image charmap print preview anchor&quot;,</div><div class="line">        &quot;searchreplace visualblocks code fullscreen&quot;, &quot;emoticons&quot;</div><div class="line">    ],</div><div class="line">    toolbar: &quot;insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | emoticons | link image | code&quot;,</div><div class="line">    autosave_ask_before_unload: false,</div><div class="line">    external_filemanager_path:&quot;/filemanager/&quot;,</div><div class="line">    filemanager_title:&quot;Responsive Filemanager&quot; ,</div><div class="line">    external_plugins: &#123; &quot;filemanager&quot; : &quot;/filemanager/plugin.min.js&quot;&#125;,</div><div class="line">    relative_urls : false</div><div class="line">&#125;);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+		<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">开发环境为 node + mogone,前端使用到 TinyMCE  ，他有一个 文件管理插件叫做MoxieManager ，收费。    </span><br><span class="line">所以找了一个免费的  [responsive filemanager](http://www.responsivefilemanager.com/),</span><br><span class="line">功能非常强大，可以用于管理、上传、下载文件.有两个版本，.net和php版本。</span><br><span class="line">我们服务器为linux，所以选择php版本。</span><br><span class="line">1.服务器安装nginx , php环境。</span><br><span class="line">2，下载responsive filemanager插件，https://github.com/trippo/ResponsiveFilemanager</span><br><span class="line">解压后放后得到filemanager目录，把此目录放入 node静态目录，如我们的public</span><br><span class="line"></span><br><span class="line">3,将 将tinymce/plugins/responsivefilemanager文件夹拷贝到TinyMCE的插件路径中，例  如public/js/tinymce/plugins中。</span><br><span class="line">4， 修改配置文件。找到 filemanager/config/config.php文件，   </span><br><span class="line">  A,修改其中的</span><br><span class="line">上传文件夹目录(upload_dir)， 指定为Node的一静态目录。</span><br><span class="line">/*</span><br><span class="line">       |--------------------------------------------------------------------------</span><br><span class="line">       | path from base_url to base of upload folder</span><br><span class="line">       |--------------------------------------------------------------------------</span><br><span class="line">       |</span><br><span class="line">       | with start and final /</span><br><span class="line">       |</span><br><span class="line">       */</span><br><span class="line">       &apos;upload_dir&apos; =&gt; &apos;/uploads/&apos;,</span><br><span class="line"></span><br><span class="line">如上，访问uploads下下面的a.txt,路径为  xxx.com/uploads/a.txt.   </span><br><span class="line"></span><br><span class="line">B，当前目录(current_path),</span><br><span class="line">/*</span><br><span class="line">        |--------------------------------------------------------------------------</span><br><span class="line">        | relative path from filemanager folder to upload folder</span><br><span class="line">        |--------------------------------------------------------------------------</span><br><span class="line">        |</span><br><span class="line">        | with final /</span><br><span class="line">        |</span><br><span class="line">        */</span><br><span class="line">        &apos;current_path&apos; =&gt; &apos;../uploads/&apos;,  </span><br><span class="line">        </span><br><span class="line">C      似地修改缩略图路径(thumbs_base_path)为 </span><br><span class="line">/*</span><br><span class="line">       |--------------------------------------------------------------------------</span><br><span class="line">       | relative path from filemanager folder to thumbs folder</span><br><span class="line">       |--------------------------------------------------------------------------</span><br><span class="line">       |</span><br><span class="line">       | with final /</span><br><span class="line">       | DO NOT put inside upload folder</span><br><span class="line">       |</span><br><span class="line">       */</span><br><span class="line">       &apos;thumbs_base_path&apos; =&gt; &apos;../thumbs/&apos;,    </span><br><span class="line"> 6 设置中文     及上传大小限制</span><br><span class="line"> /*</span><br><span class="line">         |--------------------------------------------------------------------------</span><br><span class="line">         | default language file name</span><br><span class="line">         |--------------------------------------------------------------------------</span><br><span class="line">         */</span><br><span class="line">         &apos;default_language&apos; =&gt; &quot;zh_CN&quot;,  </span><br><span class="line">          </span><br><span class="line">     &apos;MaxSizeUpload&apos; =&gt; 50, //50M </span><br><span class="line"></span><br><span class="line">6 配轩nginx 进行转发  php文件全转发给php服务处理，其他的全交Node服务器处理。    </span><br><span class="line">7 有时上传成功，但是目录里没有文件，需要给对应的目录有写入权限。  同时php.ini里文件上传限制要比前面设置的大。 </span><br><span class="line">8，TinyMCE的初始化代码      </span><br><span class="line"> &lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">tinymce.init(&#123;</span><br><span class="line">    selector: &quot;textarea&quot;,</span><br><span class="line">    plugins: [</span><br><span class="line">        &quot;responsivefilemanager advlist autolink lists link image charmap print preview anchor&quot;,</span><br><span class="line">        &quot;searchreplace visualblocks code fullscreen&quot;, &quot;emoticons&quot;</span><br><span class="line">    ],</span><br><span class="line">    toolbar: &quot;insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | emoticons | link image | code&quot;,</span><br><span class="line">    autosave_ask_before_unload: false,</span><br><span class="line">    external_filemanager_path:&quot;/filemanager/&quot;,</span><br><span class="line">    filemanager_title:&quot;Responsive Filemanager&quot; ,</span><br><span class="line">    external_plugins: &#123; &quot;filemanager&quot; : &quot;/filemanager/plugin.min.js&quot;&#125;,</span><br><span class="line">    relative_urls : false</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -214,15 +214,15 @@
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>8</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -250,11 +250,7 @@
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -262,15 +258,19 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>18</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -295,6 +295,10 @@
 			
 		
 			
+				<li><a href="/tags/开发/" title="开发">开发<sup>4</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/nginx/" title="nginx">nginx<sup>4</sup></a></li>
 			
 		
@@ -303,7 +307,7 @@
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -311,23 +315,7 @@
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
 			
 		
 			
@@ -335,7 +323,23 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -343,7 +347,7 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -351,15 +355,11 @@
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			

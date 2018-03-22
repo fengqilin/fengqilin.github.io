@@ -102,7 +102,7 @@
 		
 		</div>
 		
-		<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">docker 是不提倡在image里安装sshd用于管理，当然非要这1么干也不是不行。现在说说 nsenter 工具使用</div><div class="line">1 安装，安装很容易，以下会把命令会把运行镜像，把nsenter复制到 /usr/local/bin</div><div class="line">docker run -v /usr/local/bin:/target jpetazzo/nsenter    </div><div class="line">运行完了image都可以不要了，过河折桥  </div><div class="line">2 进入docker</div><div class="line">先获取docker PID</div><div class="line">docker inspect --format &#123;&#123;.State.Pid&#125;&#125; &lt;container_name_or_ID&gt;</div><div class="line">例如：</div><div class="line">ocker inspect --format &#123;&#123;.State.Pid&#125;&#125; 2c72a3017a25  </div><div class="line">29226</div><div class="line">然后，</div><div class="line">nsenter --target 29226 --mount --uts --ipc --net --pid</div><div class="line">29226就是一上步获取到的PID</div><div class="line">为了操作简单，可以写个脚本， 列出当前运行的容器，然后选择一个，直接登录 ，核心就两句</div><div class="line"></div><div class="line">PID=`docker inspect --format &#123;&#123;.State.Pid&#125;&#125;  2c72a3017a25&lt;这个是容器ID&gt;`</div><div class="line">nsenter --target $PID --mount --uts --ipc --net --pid  </div><div class="line">等我写好了贴上做记录。</div></pre></td></tr></table></figure>
+		<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">docker 是不提倡在image里安装sshd用于管理，当然非要这1么干也不是不行。现在说说 nsenter 工具使用</span><br><span class="line">1 安装，安装很容易，以下会把命令会把运行镜像，把nsenter复制到 /usr/local/bin</span><br><span class="line">docker run -v /usr/local/bin:/target jpetazzo/nsenter    </span><br><span class="line">运行完了image都可以不要了，过河折桥  </span><br><span class="line">2 进入docker</span><br><span class="line">先获取docker PID</span><br><span class="line">docker inspect --format &#123;&#123;.State.Pid&#125;&#125; &lt;container_name_or_ID&gt;</span><br><span class="line">例如：</span><br><span class="line">ocker inspect --format &#123;&#123;.State.Pid&#125;&#125; 2c72a3017a25  </span><br><span class="line">29226</span><br><span class="line">然后，</span><br><span class="line">nsenter --target 29226 --mount --uts --ipc --net --pid</span><br><span class="line">29226就是一上步获取到的PID</span><br><span class="line">为了操作简单，可以写个脚本， 列出当前运行的容器，然后选择一个，直接登录 ，核心就两句</span><br><span class="line"></span><br><span class="line">PID=`docker inspect --format &#123;&#123;.State.Pid&#125;&#125;  2c72a3017a25&lt;这个是容器ID&gt;`</span><br><span class="line">nsenter --target $PID --mount --uts --ipc --net --pid  </span><br><span class="line">等我写好了贴上做记录。</span><br></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -214,15 +214,15 @@
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>8</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -250,11 +250,7 @@
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -262,15 +258,19 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>18</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -295,6 +295,10 @@
 			
 		
 			
+				<li><a href="/tags/开发/" title="开发">开发<sup>4</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/nginx/" title="nginx">nginx<sup>4</sup></a></li>
 			
 		
@@ -303,7 +307,7 @@
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -311,23 +315,7 @@
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
 			
 		
 			
@@ -335,7 +323,23 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -343,7 +347,7 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -351,15 +355,11 @@
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			

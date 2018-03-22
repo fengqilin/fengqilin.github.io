@@ -102,7 +102,7 @@
 		
 		</div>
 		
-		<p>在<a href="https://cheapsslsecurity.com/申请了通配符的证书，" target="_blank" rel="external">https://cheapsslsecurity.com/申请了通配符的证书，</a><br>也就是Wildcard，如查DV验证，比较容易，可以不用知道域名持有者的邮箱，<br>在网站上下载一个文件放在根目录即可。<br>申请之后，发给一个私钥文件，还可以在网站上下载一个压缩包，<br>有四个文件<br>1,AddTrustExternalCARoot.crt<br>2,COMODORSAAddTrustCA.crt<br>3,COMODORSADomainValidationSecureServerCA.crt<br>4,STAR_bofide_cn.crt<br>最后一个文件是自己申请网站的证书书。<br>把四个证书按<br>4、3，2，1顺序合在一起，就是自己网站的证书，加上收到的key(或是自己保留的key)<br>这两个文件就是所需要的。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">       # listen       80;</div><div class="line">        listen 80 default;</div><div class="line">        listen 443 ssl;</div><div class="line">       # ssl_certificate  /usr/local/nginx/conf/cert/bofide_ov.crt;</div><div class="line">       # ssl_certificate_key /usr/local/nginx/conf/cert/ov.key;</div><div class="line">         ssl_certificate  /usr/local/nginx/conf/cert/bofide2year.cn;</div><div class="line">        ssl_certificate_key /usr/local/nginx/conf/cert/private2year.key;</div><div class="line"></div><div class="line">        ssl_session_cache    shared:SSL:50m;</div><div class="line">        ssl_session_timeout  5m;</div><div class="line">        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</div><div class="line"> .....</div></pre></td></tr></table></figure></p>
+		<p>在<a href="https://cheapsslsecurity.com/申请了通配符的证书，" target="_blank" rel="noopener">https://cheapsslsecurity.com/申请了通配符的证书，</a><br>也就是Wildcard，如查DV验证，比较容易，可以不用知道域名持有者的邮箱，<br>在网站上下载一个文件放在根目录即可。<br>申请之后，发给一个私钥文件，还可以在网站上下载一个压缩包，<br>有四个文件<br>1,AddTrustExternalCARoot.crt<br>2,COMODORSAAddTrustCA.crt<br>3,COMODORSADomainValidationSecureServerCA.crt<br>4,STAR_bofide_cn.crt<br>最后一个文件是自己申请网站的证书书。<br>把四个证书按<br>4、3，2，1顺序合在一起，就是自己网站的证书，加上收到的key(或是自己保留的key)<br>这两个文件就是所需要的。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">       # listen       80;</span><br><span class="line">        listen 80 default;</span><br><span class="line">        listen 443 ssl;</span><br><span class="line">       # ssl_certificate  /usr/local/nginx/conf/cert/bofide_ov.crt;</span><br><span class="line">       # ssl_certificate_key /usr/local/nginx/conf/cert/ov.key;</span><br><span class="line">         ssl_certificate  /usr/local/nginx/conf/cert/bofide2year.cn;</span><br><span class="line">        ssl_certificate_key /usr/local/nginx/conf/cert/private2year.key;</span><br><span class="line"></span><br><span class="line">        ssl_session_cache    shared:SSL:50m;</span><br><span class="line">        ssl_session_timeout  5m;</span><br><span class="line">        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</span><br><span class="line"> .....</span><br></pre></td></tr></table></figure></p>
 <p> 今天看了一文说1是可以不要的，因为如果信任的不用发送，不信任的，发送了同样不信任，没意义，这样还可以减小传输量。我原来安装别的证书就没合并，理论上说其实就自己证书就可以了。<br> 没试，以后试下</p>
   
 	</div>
@@ -215,15 +215,15 @@
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>8</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -251,11 +251,7 @@
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -263,15 +259,19 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>18</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -296,6 +296,10 @@
 			
 		
 			
+				<li><a href="/tags/开发/" title="开发">开发<sup>4</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/nginx/" title="nginx">nginx<sup>4</sup></a></li>
 			
 		
@@ -304,7 +308,7 @@
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -312,23 +316,7 @@
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
 			
 		
 			
@@ -336,7 +324,23 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -344,7 +348,7 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -352,15 +356,11 @@
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			

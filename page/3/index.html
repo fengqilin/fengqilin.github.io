@@ -79,6 +79,66 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/06/05/mongorestore出现错认证不能过/" title="mongorestore出现错认证不能过" itemprop="url">mongorestore出现错认证不能过</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-06-05T00:48:32.000Z" itemprop="datePublished"> 发表于 2017-06-05</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">在确保用户名和密码正的前题下， 调用 mongorestore  出现错误：  </span><br><span class="line">Failed: error connecting to db server: server returned error on SASL authentication step: Authentication failed.    </span><br><span class="line">解决方案是添加参数   </span><br><span class="line">--authenticationDatabase  参数制定认证数据库</span><br></pre></td></tr></table></figure>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/开发/">开发</a><a href="/tags/mongo/">mongo</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/06/04/在Node环境下使用tinymce文件管理插件responsive-filemanager/" title="在Node环境下使用tinymce文件管理插件responsive filemanager" itemprop="url">在Node环境下使用tinymce文件管理插件responsive filemanager</a>
   </h1>
   <p class="article-author">By
@@ -92,7 +152,7 @@
 </header>
     <div class="article-content">
         
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line">开发环境为 node + mogone,前端使用到 TinyMCE  ，他有一个 文件管理插件叫做MoxieManager ，收费。    </div><div class="line">所以找了一个免费的  [responsive filemanager](http://www.responsivefilemanager.com/),</div><div class="line">功能非常强大，可以用于管理、上传、下载文件.有两个版本，.net和php版本。</div><div class="line">我们服务器为linux，所以选择php版本。</div><div class="line">1.服务器安装nginx , php环境。</div><div class="line">2，下载responsive filemanager插件，https://github.com/trippo/ResponsiveFilemanager</div><div class="line">解压后放后得到filemanager目录，把此目录放入 node静态目录，如我们的public</div><div class="line"></div><div class="line">3,将 将tinymce/plugins/responsivefilemanager文件夹拷贝到TinyMCE的插件路径中，例  如public/js/tinymce/plugins中。</div><div class="line">4， 修改配置文件。找到 filemanager/config/config.php文件，   </div><div class="line">  A,修改其中的</div><div class="line">上传文件夹目录(upload_dir)， 指定为Node的一静态目录。</div><div class="line">/*</div><div class="line">       |--------------------------------------------------------------------------</div><div class="line">       | path from base_url to base of upload folder</div><div class="line">       |--------------------------------------------------------------------------</div><div class="line">       |</div><div class="line">       | with start and final /</div><div class="line">       |</div><div class="line">       */</div><div class="line">       &apos;upload_dir&apos; =&gt; &apos;/uploads/&apos;,</div><div class="line"></div><div class="line">如上，访问uploads下下面的a.txt,路径为  xxx.com/uploads/a.txt.   </div><div class="line"></div><div class="line">B，当前目录(current_path),</div><div class="line">/*</div><div class="line">        |--------------------------------------------------------------------------</div><div class="line">        | relative path from filemanager folder to upload folder</div><div class="line">        |--------------------------------------------------------------------------</div><div class="line">        |</div><div class="line">        | with final /</div><div class="line">        |</div><div class="line">        */</div><div class="line">        &apos;current_path&apos; =&gt; &apos;../uploads/&apos;,  </div><div class="line">        </div><div class="line">C      似地修改缩略图路径(thumbs_base_path)为 </div><div class="line">/*</div><div class="line">       |--------------------------------------------------------------------------</div><div class="line">       | relative path from filemanager folder to thumbs folder</div><div class="line">       |--------------------------------------------------------------------------</div><div class="line">       |</div><div class="line">       | with final /</div><div class="line">       | DO NOT put inside upload folder</div><div class="line">       |</div><div class="line">       */</div><div class="line">       &apos;thumbs_base_path&apos; =&gt; &apos;../thumbs/&apos;,    </div><div class="line"> 6 设置中文     及上传大小限制</div><div class="line"> /*</div><div class="line">         |--------------------------------------------------------------------------</div><div class="line">         | default language file name</div><div class="line">         |--------------------------------------------------------------------------</div><div class="line">         */</div><div class="line">         &apos;default_language&apos; =&gt; &quot;zh_CN&quot;,  </div><div class="line">          </div><div class="line">     &apos;MaxSizeUpload&apos; =&gt; 50, //50M </div><div class="line"></div><div class="line">6 配轩nginx 进行转发  php文件全转发给php服务处理，其他的全交Node服务器处理。    </div><div class="line">7 有时上传成功，但是目录里没有文件，需要给对应的目录有写入权限。  同时php.ini里文件上传限制要比前面设置的大。 </div><div class="line">8，TinyMCE的初始化代码      </div><div class="line"> &lt;script type=&quot;text/javascript&quot;&gt;</div><div class="line">tinymce.init(&#123;</div><div class="line">    selector: &quot;textarea&quot;,</div><div class="line">    plugins: [</div><div class="line">        &quot;responsivefilemanager advlist autolink lists link image charmap print preview anchor&quot;,</div><div class="line">        &quot;searchreplace visualblocks code fullscreen&quot;, &quot;emoticons&quot;</div><div class="line">    ],</div><div class="line">    toolbar: &quot;insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | emoticons | link image | code&quot;,</div><div class="line">    autosave_ask_before_unload: false,</div><div class="line">    external_filemanager_path:&quot;/filemanager/&quot;,</div><div class="line">    filemanager_title:&quot;Responsive Filemanager&quot; ,</div><div class="line">    external_plugins: &#123; &quot;filemanager&quot; : &quot;/filemanager/plugin.min.js&quot;&#125;,</div><div class="line">    relative_urls : false</div><div class="line">&#125;);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">开发环境为 node + mogone,前端使用到 TinyMCE  ，他有一个 文件管理插件叫做MoxieManager ，收费。    </span><br><span class="line">所以找了一个免费的  [responsive filemanager](http://www.responsivefilemanager.com/),</span><br><span class="line">功能非常强大，可以用于管理、上传、下载文件.有两个版本，.net和php版本。</span><br><span class="line">我们服务器为linux，所以选择php版本。</span><br><span class="line">1.服务器安装nginx , php环境。</span><br><span class="line">2，下载responsive filemanager插件，https://github.com/trippo/ResponsiveFilemanager</span><br><span class="line">解压后放后得到filemanager目录，把此目录放入 node静态目录，如我们的public</span><br><span class="line"></span><br><span class="line">3,将 将tinymce/plugins/responsivefilemanager文件夹拷贝到TinyMCE的插件路径中，例  如public/js/tinymce/plugins中。</span><br><span class="line">4， 修改配置文件。找到 filemanager/config/config.php文件，   </span><br><span class="line">  A,修改其中的</span><br><span class="line">上传文件夹目录(upload_dir)， 指定为Node的一静态目录。</span><br><span class="line">/*</span><br><span class="line">       |--------------------------------------------------------------------------</span><br><span class="line">       | path from base_url to base of upload folder</span><br><span class="line">       |--------------------------------------------------------------------------</span><br><span class="line">       |</span><br><span class="line">       | with start and final /</span><br><span class="line">       |</span><br><span class="line">       */</span><br><span class="line">       &apos;upload_dir&apos; =&gt; &apos;/uploads/&apos;,</span><br><span class="line"></span><br><span class="line">如上，访问uploads下下面的a.txt,路径为  xxx.com/uploads/a.txt.   </span><br><span class="line"></span><br><span class="line">B，当前目录(current_path),</span><br><span class="line">/*</span><br><span class="line">        |--------------------------------------------------------------------------</span><br><span class="line">        | relative path from filemanager folder to upload folder</span><br><span class="line">        |--------------------------------------------------------------------------</span><br><span class="line">        |</span><br><span class="line">        | with final /</span><br><span class="line">        |</span><br><span class="line">        */</span><br><span class="line">        &apos;current_path&apos; =&gt; &apos;../uploads/&apos;,  </span><br><span class="line">        </span><br><span class="line">C      似地修改缩略图路径(thumbs_base_path)为 </span><br><span class="line">/*</span><br><span class="line">       |--------------------------------------------------------------------------</span><br><span class="line">       | relative path from filemanager folder to thumbs folder</span><br><span class="line">       |--------------------------------------------------------------------------</span><br><span class="line">       |</span><br><span class="line">       | with final /</span><br><span class="line">       | DO NOT put inside upload folder</span><br><span class="line">       |</span><br><span class="line">       */</span><br><span class="line">       &apos;thumbs_base_path&apos; =&gt; &apos;../thumbs/&apos;,    </span><br><span class="line"> 6 设置中文     及上传大小限制</span><br><span class="line"> /*</span><br><span class="line">         |--------------------------------------------------------------------------</span><br><span class="line">         | default language file name</span><br><span class="line">         |--------------------------------------------------------------------------</span><br><span class="line">         */</span><br><span class="line">         &apos;default_language&apos; =&gt; &quot;zh_CN&quot;,  </span><br><span class="line">          </span><br><span class="line">     &apos;MaxSizeUpload&apos; =&gt; 50, //50M </span><br><span class="line"></span><br><span class="line">6 配轩nginx 进行转发  php文件全转发给php服务处理，其他的全交Node服务器处理。    </span><br><span class="line">7 有时上传成功，但是目录里没有文件，需要给对应的目录有写入权限。  同时php.ini里文件上传限制要比前面设置的大。 </span><br><span class="line">8，TinyMCE的初始化代码      </span><br><span class="line"> &lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">tinymce.init(&#123;</span><br><span class="line">    selector: &quot;textarea&quot;,</span><br><span class="line">    plugins: [</span><br><span class="line">        &quot;responsivefilemanager advlist autolink lists link image charmap print preview anchor&quot;,</span><br><span class="line">        &quot;searchreplace visualblocks code fullscreen&quot;, &quot;emoticons&quot;</span><br><span class="line">    ],</span><br><span class="line">    toolbar: &quot;insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | emoticons | link image | code&quot;,</span><br><span class="line">    autosave_ask_before_unload: false,</span><br><span class="line">    external_filemanager_path:&quot;/filemanager/&quot;,</span><br><span class="line">    filemanager_title:&quot;Responsive Filemanager&quot; ,</span><br><span class="line">    external_plugins: &#123; &quot;filemanager&quot; : &quot;/filemanager/plugin.min.js&quot;&#125;,</span><br><span class="line">    relative_urls : false</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 
         
         
@@ -152,7 +212,7 @@
 </header>
     <div class="article-content">
         
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">为了模拟一个 pc 对外提供代理，通过该pc上的vpn访问网络的一个环境。</div><div class="line">因此在一台外网linux 建立vpn环境。</div><div class="line">操作系统：centos 7</div><div class="line">1,安装 pptpd ，直接yum pptpd就可以</div><div class="line">配置IP,用户等信息， 这一步网上资料都很多。</div><div class="line">2.如果没有开防火墙，这时都能连上此vpn了，但是是无法通过vpn ，经过vpn这台主机</div><div class="line">访问网络的。</div><div class="line">3 需要用到防火墙伪装转发功能，所以需要开防火墙。</div><div class="line">centos7标配是 firewalld ,所以</div><div class="line">开放这个两个端口</div><div class="line">firewall-cmd --permanent --add-port=1723/tcp</div><div class="line">firewall-cmd --permanent --add-port=53/udp </div><div class="line">开放这个协议</div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p gre -j ACCEPT</div><div class="line"></div><div class="line">伪装  eth1是该主机的外网接口</div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter POSTROUTING 0 -t nat -o  eth1 -j MASQUERADE </div><div class="line"></div><div class="line">允许通过  ppp+表示这个开头的联结，当有联接时是这个开头的，比如 ppp0   eth1是该主机的外网接口</div><div class="line"></div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i ppp+ -o  eth1 -j ACCEPT</div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i  eth1  -o ppp+ -j ACCEPT</div><div class="line"></div><div class="line">OK，可以了</div></pre></td></tr></table></figure>
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">为了模拟一个 pc 对外提供代理，通过该pc上的vpn访问网络的一个环境。</span><br><span class="line">因此在一台外网linux 建立vpn环境。</span><br><span class="line">操作系统：centos 7</span><br><span class="line">1,安装 pptpd ，直接yum pptpd就可以</span><br><span class="line">配置IP,用户等信息， 这一步网上资料都很多。</span><br><span class="line">2.如果没有开防火墙，这时都能连上此vpn了，但是是无法通过vpn ，经过vpn这台主机</span><br><span class="line">访问网络的。</span><br><span class="line">3 需要用到防火墙伪装转发功能，所以需要开防火墙。</span><br><span class="line">centos7标配是 firewalld ,所以</span><br><span class="line">开放这个两个端口</span><br><span class="line">firewall-cmd --permanent --add-port=1723/tcp</span><br><span class="line">firewall-cmd --permanent --add-port=53/udp </span><br><span class="line">开放这个协议</span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p gre -j ACCEPT</span><br><span class="line"></span><br><span class="line">伪装  eth1是该主机的外网接口</span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter POSTROUTING 0 -t nat -o  eth1 -j MASQUERADE </span><br><span class="line"></span><br><span class="line">允许通过  ppp+表示这个开头的联结，当有联接时是这个开头的，比如 ppp0   eth1是该主机的外网接口</span><br><span class="line"></span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i ppp+ -o  eth1 -j ACCEPT</span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i  eth1  -o ppp+ -j ACCEPT</span><br><span class="line"></span><br><span class="line">OK，可以了</span><br></pre></td></tr></table></figure>
 
         
         
@@ -261,9 +321,9 @@
 </header>
     <div class="article-content">
         
-        <p>网上找资料好久，搞不明白，难道都是使用单接口模式，提供N多端口调用，想想都可怕，如果集群，负载匀衡怎么做呢？<br>现在说说多接口支持的node代码实现<br>再定义一个idl  TwoService.idl 内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">namespace java com.bofide.thrift</div><div class="line">service TwoService&#123;</div><div class="line">  i32 sum(1:i32 one,2:i32 two)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>生成对应的node接口文件 TwoService.js  TwoService_types.js<br>还是先上服务器端代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">var thrift=require(&quot;thrift&quot;);</div><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line">var  twoServiceInterface =require(&apos;../thriftIDL/gen-nodejs/TwoService.js&apos;);</div><div class="line"></div><div class="line">var mProcessor =  new  thrift.MultiplexedProcessor();</div><div class="line">//注册第一个服务，服务名， HelloWorldService，这个值在调用的时候会用到</div><div class="line">mProcessor.registerProcessor(&quot;HelloWorldService&quot;, new helloService.Processor(&#123;</div><div class="line">            sayHello: function (name, callBack) &#123;</div><div class="line">                console.log(port + &quot;sayHello:&quot; + name);</div><div class="line">                callBack();</div><div class="line">            &#125;,</div><div class="line">            nextStatus: function (name, callBack) &#123;</div><div class="line">                console.log(port + &quot;next ......&quot;);</div><div class="line">                callBack(null, &quot;下一步是.....&quot;)</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    )</div><div class="line">);</div><div class="line">//注册第一个服务，服务名，TwoService，这个值在调用的时候会用到</div><div class="line">mProcessor.registerProcessor(&quot;TwoService&quot;,new twoServiceInterface.Processor(</div><div class="line">        &#123;</div><div class="line">            sum:function (a,b,callBack) &#123;</div><div class="line">                console.log(&quot;ffsdfasdfsd&quot;);</div><div class="line">                callBack(null,a+b);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    )</div><div class="line">);</div><div class="line">//这个和单接口不一样</div><div class="line">var server =  thrift.createMultiplexServer(mProcessor);</div><div class="line">server.listen(9000);</div><div class="line">console.log(&quot;server start&quot;);</div><div class="line">server.on(&quot;error&quot;,function(e)&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>现在上客户端代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">var thrift=require(&quot;thrift&quot;);</div><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line">var  twoService =require(&apos;../thriftIDL/gen-nodejs/TwoService.js&apos;);</div><div class="line">var connection = thrift.createConnection(&apos;127.0.0.1&apos;, 9000);</div><div class="line">//第一个参数即上面提到的服务名 ，第二个接口定义，第三个联结</div><div class="line">var two  =  new  thrift.Multiplexer().createClient(&quot;TwoService&quot;,twoService,connection);</div><div class="line">connection.on(&quot;error&quot;,function(e)</div><div class="line">&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"></div><div class="line">two.sum(12,23,function (err,res) &#123;</div><div class="line">    console.log( &quot;----&quot; + res );</div><div class="line">    //调用完了之后再调用别的服务里的方法  服务名也得需要对应起来的 </div><div class="line">    var hello =  new  thrift.Multiplexer().createClient(&quot;HelloWorldService&quot;,helloService,connection);</div><div class="line">    hello.sayHello(&quot;什么么玩意儿啊&quot;,function (err,res) &#123;</div><div class="line">        console.log(&quot;----无返回值&quot;)</div><div class="line">    &#125;);</div><div class="line">    hello.nextStatus(&quot;fdfasdf&quot; ,function (err,res) &#123;</div><div class="line">        console.log(&quot;----无返回值&quot; + res)</div><div class="line">    &#125;);</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+        <p>网上找资料好久，搞不明白，难道都是使用单接口模式，提供N多端口调用，想想都可怕，如果集群，负载匀衡怎么做呢？<br>现在说说多接口支持的node代码实现<br>再定义一个idl  TwoService.idl 内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">namespace java com.bofide.thrift</span><br><span class="line">service TwoService&#123;</span><br><span class="line">  i32 sum(1:i32 one,2:i32 two)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>生成对应的node接口文件 TwoService.js  TwoService_types.js<br>还是先上服务器端代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">var thrift=require(&quot;thrift&quot;);</span><br><span class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</span><br><span class="line">var  twoServiceInterface =require(&apos;../thriftIDL/gen-nodejs/TwoService.js&apos;);</span><br><span class="line"></span><br><span class="line">var mProcessor =  new  thrift.MultiplexedProcessor();</span><br><span class="line">//注册第一个服务，服务名， HelloWorldService，这个值在调用的时候会用到</span><br><span class="line">mProcessor.registerProcessor(&quot;HelloWorldService&quot;, new helloService.Processor(&#123;</span><br><span class="line">            sayHello: function (name, callBack) &#123;</span><br><span class="line">                console.log(port + &quot;sayHello:&quot; + name);</span><br><span class="line">                callBack();</span><br><span class="line">            &#125;,</span><br><span class="line">            nextStatus: function (name, callBack) &#123;</span><br><span class="line">                console.log(port + &quot;next ......&quot;);</span><br><span class="line">                callBack(null, &quot;下一步是.....&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line">);</span><br><span class="line">//注册第一个服务，服务名，TwoService，这个值在调用的时候会用到</span><br><span class="line">mProcessor.registerProcessor(&quot;TwoService&quot;,new twoServiceInterface.Processor(</span><br><span class="line">        &#123;</span><br><span class="line">            sum:function (a,b,callBack) &#123;</span><br><span class="line">                console.log(&quot;ffsdfasdfsd&quot;);</span><br><span class="line">                callBack(null,a+b);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line">);</span><br><span class="line">//这个和单接口不一样</span><br><span class="line">var server =  thrift.createMultiplexServer(mProcessor);</span><br><span class="line">server.listen(9000);</span><br><span class="line">console.log(&quot;server start&quot;);</span><br><span class="line">server.on(&quot;error&quot;,function(e)&#123;</span><br><span class="line">    console.log(e);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>现在上客户端代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">var thrift=require(&quot;thrift&quot;);</span><br><span class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</span><br><span class="line">var  twoService =require(&apos;../thriftIDL/gen-nodejs/TwoService.js&apos;);</span><br><span class="line">var connection = thrift.createConnection(&apos;127.0.0.1&apos;, 9000);</span><br><span class="line">//第一个参数即上面提到的服务名 ，第二个接口定义，第三个联结</span><br><span class="line">var two  =  new  thrift.Multiplexer().createClient(&quot;TwoService&quot;,twoService,connection);</span><br><span class="line">connection.on(&quot;error&quot;,function(e)</span><br><span class="line">&#123;</span><br><span class="line">    console.log(e);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">two.sum(12,23,function (err,res) &#123;</span><br><span class="line">    console.log( &quot;----&quot; + res );</span><br><span class="line">    //调用完了之后再调用别的服务里的方法  服务名也得需要对应起来的 </span><br><span class="line">    var hello =  new  thrift.Multiplexer().createClient(&quot;HelloWorldService&quot;,helloService,connection);</span><br><span class="line">    hello.sayHello(&quot;什么么玩意儿啊&quot;,function (err,res) &#123;</span><br><span class="line">        console.log(&quot;----无返回值&quot;)</span><br><span class="line">    &#125;);</span><br><span class="line">    hello.nextStatus(&quot;fdfasdf&quot; ,function (err,res) &#123;</span><br><span class="line">        console.log(&quot;----无返回值&quot; + res)</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
 <p>这样才能一个端口提供N多服务，用服务名区分，感觉这样才是比较科学的。 </p>
 
         
@@ -325,8 +385,8 @@
     <div class="article-content">
         
         <p>按上一遍文章定义的idl生成node的接口文件<br>生成文件名为两个: HelloWord_types.js  HelloWorldService.js</p>
-<p>第一步  npm install thrift<br>第二步  服务器端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">var thrift = require(&quot;thrift&quot;);</div><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line">var ttypes = require(&apos;../thriftIDL/gen-nodejs/HelloWord_types&apos;);</div><div class="line"></div><div class="line">var server = thrift.createServer(helloService,</div><div class="line">    &#123;</div><div class="line">        sayHello:function (name ,callBack) &#123;</div><div class="line">            console.log(port+&quot;sayHello:&quot; + name);</div><div class="line">            callBack();</div><div class="line">        &#125;,</div><div class="line">        nextStatus:function (name ,callBack) &#123;</div><div class="line">            console.log(port +  &quot;next ......&quot;);</div><div class="line">            callBack(null,&quot;下一步是.....&quot;)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">);</div><div class="line">server.listen(9000);</div><div class="line">console.log(&quot;server start&quot;);</div><div class="line">server.on(&quot;error&quot;,function(e)&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>第三步 客服端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line"></div><div class="line">var connection = thrift.createConnection(&apos;127.0.0.1&apos;, 9000);</div><div class="line">var client = thrift.createClient(helloService, connection);</div><div class="line">connection.on(&quot;error&quot;,function(e)</div><div class="line">&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div><div class="line">client.sayHello(&quot;什么么玩意儿啊&quot;,function (err,res) &#123;</div><div class="line">     console.log(&quot;----无返回值&quot;)</div><div class="line">&#125;);</div><div class="line"></div><div class="line">client.nextStatus(&quot;有遥遥摇摇&quot;,function (err,res) &#123;</div><div class="line">    console.log(&quot;----&quot; + res)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>第一步  npm install thrift<br>第二步  服务器端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">var thrift = require(&quot;thrift&quot;);</span><br><span class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</span><br><span class="line">var ttypes = require(&apos;../thriftIDL/gen-nodejs/HelloWord_types&apos;);</span><br><span class="line"></span><br><span class="line">var server = thrift.createServer(helloService,</span><br><span class="line">    &#123;</span><br><span class="line">        sayHello:function (name ,callBack) &#123;</span><br><span class="line">            console.log(port+&quot;sayHello:&quot; + name);</span><br><span class="line">            callBack();</span><br><span class="line">        &#125;,</span><br><span class="line">        nextStatus:function (name ,callBack) &#123;</span><br><span class="line">            console.log(port +  &quot;next ......&quot;);</span><br><span class="line">            callBack(null,&quot;下一步是.....&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">);</span><br><span class="line">server.listen(9000);</span><br><span class="line">console.log(&quot;server start&quot;);</span><br><span class="line">server.on(&quot;error&quot;,function(e)&#123;</span><br><span class="line">    console.log(e);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>第三步 客服端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</span><br><span class="line"></span><br><span class="line">var connection = thrift.createConnection(&apos;127.0.0.1&apos;, 9000);</span><br><span class="line">var client = thrift.createClient(helloService, connection);</span><br><span class="line">connection.on(&quot;error&quot;,function(e)</span><br><span class="line">&#123;</span><br><span class="line">    console.log(e);</span><br><span class="line">&#125;);</span><br><span class="line">client.sayHello(&quot;什么么玩意儿啊&quot;,function (err,res) &#123;</span><br><span class="line">     console.log(&quot;----无返回值&quot;)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">client.nextStatus(&quot;有遥遥摇摇&quot;,function (err,res) &#123;</span><br><span class="line">    console.log(&quot;----&quot; + res)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
 <p>先运行服务器端，再运行客户端，应该就可行了。<br>单接口还是很简单的，一个端口绑定着一个服务，一个服务对应着一个接口文件，<br>如果要提供N多个服务就得N多个接口，是不有点怪异？  接下来讲多接口的支持 。</p>
 
         
@@ -387,8 +447,8 @@
 </header>
     <div class="article-content">
         
-        <p>thrift开发中，第一步就是IDL文件定义<br>常见数据类型什么的，就不说了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">namespace java com.bofide.thrift</div><div class="line">service HelloWorldService&#123;</div><div class="line">  string sayHello(1:string name),</div><div class="line">  string nextStatus(1:string currStatus)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>namespace 不是必须的，如果生成node基本没什么用的<br>上面定义是按java的格式生成包名<br>参数前面一定要用编号，不然就等着错吧<br>一般步骤，先安装thrift<br><a href="http://thrift.apache.org/download" target="_blank" rel="external">http://thrift.apache.org/download</a><br>现在不搞Java和Node，先记录这个两个常用命令<br>thrift –gen js:node  idl文件<br>thrift –gen java  idl文件  </p>
+        <p>thrift开发中，第一步就是IDL文件定义<br>常见数据类型什么的，就不说了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">namespace java com.bofide.thrift</span><br><span class="line">service HelloWorldService&#123;</span><br><span class="line">  string sayHello(1:string name),</span><br><span class="line">  string nextStatus(1:string currStatus)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>namespace 不是必须的，如果生成node基本没什么用的<br>上面定义是按java的格式生成包名<br>参数前面一定要用编号，不然就等着错吧<br>一般步骤，先安装thrift<br><a href="http://thrift.apache.org/download" target="_blank" rel="noopener">http://thrift.apache.org/download</a><br>现在不搞Java和Node，先记录这个两个常用命令<br>thrift –gen js:node  idl文件<br>thrift –gen java  idl文件  </p>
 
         
         
@@ -449,8 +509,8 @@
     <div class="article-content">
         
         <p>最近想搞thrift,因为多台服务器，所以得有负载均衡，因为网站使用nginx，首先想到的就是nginx<br>好在1.90，添加了支持TCP协议的负载均衡,所以就用先nginx试试。<br>nginx1.90对TCP协议的代理并不是默认开启的，需要在编译的时候配置 –with-stream 参数  </p>
-<p>然后，就是修改配置文件 nginx.conf<br>添加 根节点，也就是和http {  }并列的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">stream &#123;</div><div class="line">    upstream backend &#123;</div><div class="line">      ##  hash $remote_addr consistent;  ##有这个，同一IP一直锁定在一台机器</div><div class="line">        server 127.0.0.1:9000 max_fails=3 weight=2  fail_timeout=30s;</div><div class="line">       server 127.0.0.1:9001 max_fails=3  weight=1 fail_timeout=30s;</div><div class="line">    &#125;</div><div class="line">    server &#123;</div><div class="line">        listen  8999;</div><div class="line">        proxy_connect_timeout 1s;</div><div class="line">        proxy_timeout 3s;</div><div class="line">        proxy_pass backend;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>max_fails  尝试失败次数<br>weight  权重，越大分配越多<br>更多参照  <a href="http://nginx.org/en/docs/stream/ngx_stream_core_module.html" target="_blank" rel="external">http://nginx.org/en/docs/stream/ngx_stream_core_module.html</a><br>好像还有 阿里 nginx_tcp_proxy_module 更历害的样子，有时间也一起试试</p>
+<p>然后，就是修改配置文件 nginx.conf<br>添加 根节点，也就是和http {  }并列的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">stream &#123;</span><br><span class="line">    upstream backend &#123;</span><br><span class="line">      ##  hash $remote_addr consistent;  ##有这个，同一IP一直锁定在一台机器</span><br><span class="line">        server 127.0.0.1:9000 max_fails=3 weight=2  fail_timeout=30s;</span><br><span class="line">       server 127.0.0.1:9001 max_fails=3  weight=1 fail_timeout=30s;</span><br><span class="line">    &#125;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen  8999;</span><br><span class="line">        proxy_connect_timeout 1s;</span><br><span class="line">        proxy_timeout 3s;</span><br><span class="line">        proxy_pass backend;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>max_fails  尝试失败次数<br>weight  权重，越大分配越多<br>更多参照  <a href="http://nginx.org/en/docs/stream/ngx_stream_core_module.html" target="_blank" rel="noopener">http://nginx.org/en/docs/stream/ngx_stream_core_module.html</a><br>好像还有 阿里 nginx_tcp_proxy_module 更历害的样子，有时间也一起试试</p>
 <p>最后，联结8999端口，就会轮流分配到后端的 9000 ,9001<br>接下来尝试 Haproxy  使用</p>
 
         
@@ -511,7 +571,7 @@
 </header>
     <div class="article-content">
         
-        <p>在<a href="https://cheapsslsecurity.com/申请了通配符的证书，" target="_blank" rel="external">https://cheapsslsecurity.com/申请了通配符的证书，</a><br>也就是Wildcard，如查DV验证，比较容易，可以不用知道域名持有者的邮箱，<br>在网站上下载一个文件放在根目录即可。<br>申请之后，发给一个私钥文件，还可以在网站上下载一个压缩包，<br>有四个文件<br>1,AddTrustExternalCARoot.crt<br>2,COMODORSAAddTrustCA.crt<br>3,COMODORSADomainValidationSecureServerCA.crt<br>4,STAR_bofide_cn.crt<br>最后一个文件是自己申请网站的证书书。<br>把四个证书按<br>4、3，2，1顺序合在一起，就是自己网站的证书，加上收到的key(或是自己保留的key)<br>这两个文件就是所需要的。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">       # listen       80;</div><div class="line">        listen 80 default;</div><div class="line">        listen 443 ssl;</div><div class="line">       # ssl_certificate  /usr/local/nginx/conf/cert/bofide_ov.crt;</div><div class="line">       # ssl_certificate_key /usr/local/nginx/conf/cert/ov.key;</div><div class="line">         ssl_certificate  /usr/local/nginx/conf/cert/bofide2year.cn;</div><div class="line">        ssl_certificate_key /usr/local/nginx/conf/cert/private2year.key;</div><div class="line"></div><div class="line">        ssl_session_cache    shared:SSL:50m;</div><div class="line">        ssl_session_timeout  5m;</div><div class="line">        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</div><div class="line"> .....</div></pre></td></tr></table></figure></p>
+        <p>在<a href="https://cheapsslsecurity.com/申请了通配符的证书，" target="_blank" rel="noopener">https://cheapsslsecurity.com/申请了通配符的证书，</a><br>也就是Wildcard，如查DV验证，比较容易，可以不用知道域名持有者的邮箱，<br>在网站上下载一个文件放在根目录即可。<br>申请之后，发给一个私钥文件，还可以在网站上下载一个压缩包，<br>有四个文件<br>1,AddTrustExternalCARoot.crt<br>2,COMODORSAAddTrustCA.crt<br>3,COMODORSADomainValidationSecureServerCA.crt<br>4,STAR_bofide_cn.crt<br>最后一个文件是自己申请网站的证书书。<br>把四个证书按<br>4、3，2，1顺序合在一起，就是自己网站的证书，加上收到的key(或是自己保留的key)<br>这两个文件就是所需要的。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">       # listen       80;</span><br><span class="line">        listen 80 default;</span><br><span class="line">        listen 443 ssl;</span><br><span class="line">       # ssl_certificate  /usr/local/nginx/conf/cert/bofide_ov.crt;</span><br><span class="line">       # ssl_certificate_key /usr/local/nginx/conf/cert/ov.key;</span><br><span class="line">         ssl_certificate  /usr/local/nginx/conf/cert/bofide2year.cn;</span><br><span class="line">        ssl_certificate_key /usr/local/nginx/conf/cert/private2year.key;</span><br><span class="line"></span><br><span class="line">        ssl_session_cache    shared:SSL:50m;</span><br><span class="line">        ssl_session_timeout  5m;</span><br><span class="line">        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</span><br><span class="line"> .....</span><br></pre></td></tr></table></figure></p>
 <p> 今天看了一文说1是可以不要的，因为如果信任的不用发送，不信任的，发送了同样不信任，没意义，这样还可以减小传输量。我原来安装别的证书就没合并，理论上说其实就自己证书就可以了。<br> 没试，以后试下</p>
 
         
@@ -572,69 +632,8 @@
 </header>
     <div class="article-content">
         
-        <p>1，首先需要安装支持格式ntfs-3g<br>2，vi /etc/udev/rules.d/10-usbstorage.rules<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">KERNEL!=&quot;sd*&quot;, GOTO=&quot;media_by_label_auto_mount_end&quot;  </div><div class="line">SUBSYSTEM!=&quot;block&quot;,GOTO=&quot;media_by_label_auto_mount_end&quot;  </div><div class="line">IMPORT&#123;program&#125;=&quot;/sbin/blkid -o udev -p %N&quot;  </div><div class="line">ENV&#123;ID_FS_TYPE&#125;==&quot;&quot;, GOTO=&quot;media_by_label_auto_mount_end&quot;  </div><div class="line">ENV&#123;ID_FS_LABEL&#125;!=&quot;&quot;, ENV&#123;dir_name&#125;=&quot;%E&#123;ID_FS_LABEL&#125;&quot;  </div><div class="line">ENV&#123;ID_FS_LABEL&#125;==&quot;&quot;, ENV&#123;dir_name&#125;=&quot;Untitled-%k&quot;  </div><div class="line">ACTION==&quot;add&quot;, ENV&#123;mount_options&#125;=&quot;relatime,sync&quot;  </div><div class="line">ACTION==&quot;add&quot;, ENV&#123;ID_FS_TYPE&#125;==&quot;vfat&quot;, ENV&#123;mount_options&#125;=&quot;iocharset=utf8,umask=000&quot;  </div><div class="line">ACTION==&quot;add&quot;, ENV&#123;ID_FS_TYPE&#125;==&quot;ntfs&quot;, ENV&#123;mount_options&#125;=&quot;iocharset=utf8,umask=000&quot;  </div><div class="line">ACTION==&quot;add&quot;, RUN+=&quot;/bin/mkdir -p /media/%E&#123;dir_name&#125;&quot;, RUN+=&quot;/bin/mount -o $env&#123;mount_options&#125; /dev/%k /media/%E&#123;dir_name&#125;&quot;  </div><div class="line">   </div><div class="line">ACTION==&quot;remove&quot;, ENV&#123;dir_name&#125;!=&quot;&quot;, RUN+=&quot;/bin/umount -l /media/%E&#123;dir_name&#125;&quot;, RUN+=&quot;/bin/rmdir /media/%E&#123;dir_name&#125;&quot;  </div><div class="line">LABEL=&quot;media_by_label_auto_mount_end&quot;</div></pre></td></tr></table></figure></p>
+        <p>1，首先需要安装支持格式ntfs-3g<br>2，vi /etc/udev/rules.d/10-usbstorage.rules<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">KERNEL!=&quot;sd*&quot;, GOTO=&quot;media_by_label_auto_mount_end&quot;  </span><br><span class="line">SUBSYSTEM!=&quot;block&quot;,GOTO=&quot;media_by_label_auto_mount_end&quot;  </span><br><span class="line">IMPORT&#123;program&#125;=&quot;/sbin/blkid -o udev -p %N&quot;  </span><br><span class="line">ENV&#123;ID_FS_TYPE&#125;==&quot;&quot;, GOTO=&quot;media_by_label_auto_mount_end&quot;  </span><br><span class="line">ENV&#123;ID_FS_LABEL&#125;!=&quot;&quot;, ENV&#123;dir_name&#125;=&quot;%E&#123;ID_FS_LABEL&#125;&quot;  </span><br><span class="line">ENV&#123;ID_FS_LABEL&#125;==&quot;&quot;, ENV&#123;dir_name&#125;=&quot;Untitled-%k&quot;  </span><br><span class="line">ACTION==&quot;add&quot;, ENV&#123;mount_options&#125;=&quot;relatime,sync&quot;  </span><br><span class="line">ACTION==&quot;add&quot;, ENV&#123;ID_FS_TYPE&#125;==&quot;vfat&quot;, ENV&#123;mount_options&#125;=&quot;iocharset=utf8,umask=000&quot;  </span><br><span class="line">ACTION==&quot;add&quot;, ENV&#123;ID_FS_TYPE&#125;==&quot;ntfs&quot;, ENV&#123;mount_options&#125;=&quot;iocharset=utf8,umask=000&quot;  </span><br><span class="line">ACTION==&quot;add&quot;, RUN+=&quot;/bin/mkdir -p /media/%E&#123;dir_name&#125;&quot;, RUN+=&quot;/bin/mount -o $env&#123;mount_options&#125; /dev/%k /media/%E&#123;dir_name&#125;&quot;  </span><br><span class="line">   </span><br><span class="line">ACTION==&quot;remove&quot;, ENV&#123;dir_name&#125;!=&quot;&quot;, RUN+=&quot;/bin/umount -l /media/%E&#123;dir_name&#125;&quot;, RUN+=&quot;/bin/rmdir /media/%E&#123;dir_name&#125;&quot;  </span><br><span class="line">LABEL=&quot;media_by_label_auto_mount_end&quot;</span><br></pre></td></tr></table></figure></p>
 <p>如果有卷标名，会按卷标名挂载在/media下面</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/linux/">linux</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/02/18/centos-samba匿名共享/" title="centos samba匿名共享" itemprop="url">centos samba匿名共享</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-02-18T12:46:56.000Z" itemprop="datePublished"> 发表于 2017-02-18</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>家里 centos做共享，为了方便都是匿名，以下配置即可实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">[global]  </div><div class="line"># 与主机名有关的设定信息  </div><div class="line">workgroup     = home     </div><div class="line"># 与登录文件有关的设定项目，注意变量 (%m)  </div><div class="line">log file = /var/log/samba/log.%m  </div><div class="line">max log size = 50  </div><div class="line"># 这里才是与密码有关的设定项目！  </div><div class="line">security = share  </div><div class="line">  </div><div class="line"># 分享的资源设定方面：  </div><div class="line">[temp]                           </div><div class="line">  #分享资源名称  </div><div class="line">comment    = Temporary file space </div><div class="line"> #简单的解释此资源  </div><div class="line">path       = /tmp                 </div><div class="line"> #实际 Linux 分享的目录  </div><div class="line">writable   = yes                  </div><div class="line"> #是否可写入？在此例为是的  </div><div class="line">browseable = yes                 </div><div class="line">  #能不能被浏览到资源名称  </div><div class="line">guest ok   = yes</div></pre></td></tr></table></figure></p>
-<p>其中security = share  是关键，注意原配置中多个地方出现，<br>可能生效值不是这个，需要注意<br>同时需要关闭selinux和防水墙。</p>
 
         
         
@@ -728,15 +727,15 @@
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>8</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -764,11 +763,7 @@
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -776,15 +771,19 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>18</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -809,6 +808,10 @@
 			
 		
 			
+				<li><a href="/tags/开发/" title="开发">开发<sup>4</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/nginx/" title="nginx">nginx<sup>4</sup></a></li>
 			
 		
@@ -817,7 +820,7 @@
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -825,23 +828,7 @@
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
 			
 		
 			
@@ -849,7 +836,23 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -857,7 +860,7 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -865,15 +868,11 @@
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			

@@ -102,7 +102,7 @@
 		
 		</div>
 		
-		<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">为了模拟一个 pc 对外提供代理，通过该pc上的vpn访问网络的一个环境。</div><div class="line">因此在一台外网linux 建立vpn环境。</div><div class="line">操作系统：centos 7</div><div class="line">1,安装 pptpd ，直接yum pptpd就可以</div><div class="line">配置IP,用户等信息， 这一步网上资料都很多。</div><div class="line">2.如果没有开防火墙，这时都能连上此vpn了，但是是无法通过vpn ，经过vpn这台主机</div><div class="line">访问网络的。</div><div class="line">3 需要用到防火墙伪装转发功能，所以需要开防火墙。</div><div class="line">centos7标配是 firewalld ,所以</div><div class="line">开放这个两个端口</div><div class="line">firewall-cmd --permanent --add-port=1723/tcp</div><div class="line">firewall-cmd --permanent --add-port=53/udp </div><div class="line">开放这个协议</div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p gre -j ACCEPT</div><div class="line"></div><div class="line">伪装  eth1是该主机的外网接口</div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter POSTROUTING 0 -t nat -o  eth1 -j MASQUERADE </div><div class="line"></div><div class="line">允许通过  ppp+表示这个开头的联结，当有联接时是这个开头的，比如 ppp0   eth1是该主机的外网接口</div><div class="line"></div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i ppp+ -o  eth1 -j ACCEPT</div><div class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i  eth1  -o ppp+ -j ACCEPT</div><div class="line"></div><div class="line">OK，可以了</div></pre></td></tr></table></figure>
+		<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">为了模拟一个 pc 对外提供代理，通过该pc上的vpn访问网络的一个环境。</span><br><span class="line">因此在一台外网linux 建立vpn环境。</span><br><span class="line">操作系统：centos 7</span><br><span class="line">1,安装 pptpd ，直接yum pptpd就可以</span><br><span class="line">配置IP,用户等信息， 这一步网上资料都很多。</span><br><span class="line">2.如果没有开防火墙，这时都能连上此vpn了，但是是无法通过vpn ，经过vpn这台主机</span><br><span class="line">访问网络的。</span><br><span class="line">3 需要用到防火墙伪装转发功能，所以需要开防火墙。</span><br><span class="line">centos7标配是 firewalld ,所以</span><br><span class="line">开放这个两个端口</span><br><span class="line">firewall-cmd --permanent --add-port=1723/tcp</span><br><span class="line">firewall-cmd --permanent --add-port=53/udp </span><br><span class="line">开放这个协议</span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p gre -j ACCEPT</span><br><span class="line"></span><br><span class="line">伪装  eth1是该主机的外网接口</span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter POSTROUTING 0 -t nat -o  eth1 -j MASQUERADE </span><br><span class="line"></span><br><span class="line">允许通过  ppp+表示这个开头的联结，当有联接时是这个开头的，比如 ppp0   eth1是该主机的外网接口</span><br><span class="line"></span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i ppp+ -o  eth1 -j ACCEPT</span><br><span class="line">firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -i  eth1  -o ppp+ -j ACCEPT</span><br><span class="line"></span><br><span class="line">OK，可以了</span><br></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -214,15 +214,15 @@
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>8</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -250,11 +250,7 @@
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -262,15 +258,19 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>18</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -295,6 +295,10 @@
 			
 		
 			
+				<li><a href="/tags/开发/" title="开发">开发<sup>4</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/nginx/" title="nginx">nginx<sup>4</sup></a></li>
 			
 		
@@ -303,7 +307,7 @@
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -311,23 +315,7 @@
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
 			
 		
 			
@@ -335,7 +323,23 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -343,7 +347,7 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -351,15 +355,11 @@
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			

@@ -102,9 +102,9 @@
 		
 		</div>
 		
-		<p>网上找资料好久，搞不明白，难道都是使用单接口模式，提供N多端口调用，想想都可怕，如果集群，负载匀衡怎么做呢？<br>现在说说多接口支持的node代码实现<br>再定义一个idl  TwoService.idl 内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">namespace java com.bofide.thrift</div><div class="line">service TwoService&#123;</div><div class="line">  i32 sum(1:i32 one,2:i32 two)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>生成对应的node接口文件 TwoService.js  TwoService_types.js<br>还是先上服务器端代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">var thrift=require(&quot;thrift&quot;);</div><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line">var  twoServiceInterface =require(&apos;../thriftIDL/gen-nodejs/TwoService.js&apos;);</div><div class="line"></div><div class="line">var mProcessor =  new  thrift.MultiplexedProcessor();</div><div class="line">//注册第一个服务，服务名， HelloWorldService，这个值在调用的时候会用到</div><div class="line">mProcessor.registerProcessor(&quot;HelloWorldService&quot;, new helloService.Processor(&#123;</div><div class="line">            sayHello: function (name, callBack) &#123;</div><div class="line">                console.log(port + &quot;sayHello:&quot; + name);</div><div class="line">                callBack();</div><div class="line">            &#125;,</div><div class="line">            nextStatus: function (name, callBack) &#123;</div><div class="line">                console.log(port + &quot;next ......&quot;);</div><div class="line">                callBack(null, &quot;下一步是.....&quot;)</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    )</div><div class="line">);</div><div class="line">//注册第一个服务，服务名，TwoService，这个值在调用的时候会用到</div><div class="line">mProcessor.registerProcessor(&quot;TwoService&quot;,new twoServiceInterface.Processor(</div><div class="line">        &#123;</div><div class="line">            sum:function (a,b,callBack) &#123;</div><div class="line">                console.log(&quot;ffsdfasdfsd&quot;);</div><div class="line">                callBack(null,a+b);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    )</div><div class="line">);</div><div class="line">//这个和单接口不一样</div><div class="line">var server =  thrift.createMultiplexServer(mProcessor);</div><div class="line">server.listen(9000);</div><div class="line">console.log(&quot;server start&quot;);</div><div class="line">server.on(&quot;error&quot;,function(e)&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>现在上客户端代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">var thrift=require(&quot;thrift&quot;);</div><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line">var  twoService =require(&apos;../thriftIDL/gen-nodejs/TwoService.js&apos;);</div><div class="line">var connection = thrift.createConnection(&apos;127.0.0.1&apos;, 9000);</div><div class="line">//第一个参数即上面提到的服务名 ，第二个接口定义，第三个联结</div><div class="line">var two  =  new  thrift.Multiplexer().createClient(&quot;TwoService&quot;,twoService,connection);</div><div class="line">connection.on(&quot;error&quot;,function(e)</div><div class="line">&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"></div><div class="line">two.sum(12,23,function (err,res) &#123;</div><div class="line">    console.log( &quot;----&quot; + res );</div><div class="line">    //调用完了之后再调用别的服务里的方法  服务名也得需要对应起来的 </div><div class="line">    var hello =  new  thrift.Multiplexer().createClient(&quot;HelloWorldService&quot;,helloService,connection);</div><div class="line">    hello.sayHello(&quot;什么么玩意儿啊&quot;,function (err,res) &#123;</div><div class="line">        console.log(&quot;----无返回值&quot;)</div><div class="line">    &#125;);</div><div class="line">    hello.nextStatus(&quot;fdfasdf&quot; ,function (err,res) &#123;</div><div class="line">        console.log(&quot;----无返回值&quot; + res)</div><div class="line">    &#125;);</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+		<p>网上找资料好久，搞不明白，难道都是使用单接口模式，提供N多端口调用，想想都可怕，如果集群，负载匀衡怎么做呢？<br>现在说说多接口支持的node代码实现<br>再定义一个idl  TwoService.idl 内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">namespace java com.bofide.thrift</span><br><span class="line">service TwoService&#123;</span><br><span class="line">  i32 sum(1:i32 one,2:i32 two)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>生成对应的node接口文件 TwoService.js  TwoService_types.js<br>还是先上服务器端代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">var thrift=require(&quot;thrift&quot;);</span><br><span class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</span><br><span class="line">var  twoServiceInterface =require(&apos;../thriftIDL/gen-nodejs/TwoService.js&apos;);</span><br><span class="line"></span><br><span class="line">var mProcessor =  new  thrift.MultiplexedProcessor();</span><br><span class="line">//注册第一个服务，服务名， HelloWorldService，这个值在调用的时候会用到</span><br><span class="line">mProcessor.registerProcessor(&quot;HelloWorldService&quot;, new helloService.Processor(&#123;</span><br><span class="line">            sayHello: function (name, callBack) &#123;</span><br><span class="line">                console.log(port + &quot;sayHello:&quot; + name);</span><br><span class="line">                callBack();</span><br><span class="line">            &#125;,</span><br><span class="line">            nextStatus: function (name, callBack) &#123;</span><br><span class="line">                console.log(port + &quot;next ......&quot;);</span><br><span class="line">                callBack(null, &quot;下一步是.....&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line">);</span><br><span class="line">//注册第一个服务，服务名，TwoService，这个值在调用的时候会用到</span><br><span class="line">mProcessor.registerProcessor(&quot;TwoService&quot;,new twoServiceInterface.Processor(</span><br><span class="line">        &#123;</span><br><span class="line">            sum:function (a,b,callBack) &#123;</span><br><span class="line">                console.log(&quot;ffsdfasdfsd&quot;);</span><br><span class="line">                callBack(null,a+b);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line">);</span><br><span class="line">//这个和单接口不一样</span><br><span class="line">var server =  thrift.createMultiplexServer(mProcessor);</span><br><span class="line">server.listen(9000);</span><br><span class="line">console.log(&quot;server start&quot;);</span><br><span class="line">server.on(&quot;error&quot;,function(e)&#123;</span><br><span class="line">    console.log(e);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>现在上客户端代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">var thrift=require(&quot;thrift&quot;);</span><br><span class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</span><br><span class="line">var  twoService =require(&apos;../thriftIDL/gen-nodejs/TwoService.js&apos;);</span><br><span class="line">var connection = thrift.createConnection(&apos;127.0.0.1&apos;, 9000);</span><br><span class="line">//第一个参数即上面提到的服务名 ，第二个接口定义，第三个联结</span><br><span class="line">var two  =  new  thrift.Multiplexer().createClient(&quot;TwoService&quot;,twoService,connection);</span><br><span class="line">connection.on(&quot;error&quot;,function(e)</span><br><span class="line">&#123;</span><br><span class="line">    console.log(e);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">two.sum(12,23,function (err,res) &#123;</span><br><span class="line">    console.log( &quot;----&quot; + res );</span><br><span class="line">    //调用完了之后再调用别的服务里的方法  服务名也得需要对应起来的 </span><br><span class="line">    var hello =  new  thrift.Multiplexer().createClient(&quot;HelloWorldService&quot;,helloService,connection);</span><br><span class="line">    hello.sayHello(&quot;什么么玩意儿啊&quot;,function (err,res) &#123;</span><br><span class="line">        console.log(&quot;----无返回值&quot;)</span><br><span class="line">    &#125;);</span><br><span class="line">    hello.nextStatus(&quot;fdfasdf&quot; ,function (err,res) &#123;</span><br><span class="line">        console.log(&quot;----无返回值&quot; + res)</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
 <p>这样才能一个端口提供N多服务，用服务名区分，感觉这样才是比较科学的。 </p>
   
 	</div>
@@ -217,15 +217,15 @@
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>8</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -253,11 +253,7 @@
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -265,15 +261,19 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>18</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -298,6 +298,10 @@
 			
 		
 			
+				<li><a href="/tags/开发/" title="开发">开发<sup>4</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/nginx/" title="nginx">nginx<sup>4</sup></a></li>
 			
 		
@@ -306,7 +310,7 @@
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -314,23 +318,7 @@
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
 			
 		
 			
@@ -338,7 +326,23 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -346,7 +350,7 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -354,15 +358,11 @@
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			

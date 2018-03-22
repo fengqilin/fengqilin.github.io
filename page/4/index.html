@@ -79,6 +79,67 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/02/18/centos-samba匿名共享/" title="centos samba匿名共享" itemprop="url">centos samba匿名共享</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-18T12:46:56.000Z" itemprop="datePublished"> 发表于 2017-02-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>家里 centos做共享，为了方便都是匿名，以下配置即可实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[global]  </span><br><span class="line"># 与主机名有关的设定信息  </span><br><span class="line">workgroup     = home     </span><br><span class="line"># 与登录文件有关的设定项目，注意变量 (%m)  </span><br><span class="line">log file = /var/log/samba/log.%m  </span><br><span class="line">max log size = 50  </span><br><span class="line"># 这里才是与密码有关的设定项目！  </span><br><span class="line">security = share  </span><br><span class="line">  </span><br><span class="line"># 分享的资源设定方面：  </span><br><span class="line">[temp]                           </span><br><span class="line">  #分享资源名称  </span><br><span class="line">comment    = Temporary file space </span><br><span class="line"> #简单的解释此资源  </span><br><span class="line">path       = /tmp                 </span><br><span class="line"> #实际 Linux 分享的目录  </span><br><span class="line">writable   = yes                  </span><br><span class="line"> #是否可写入？在此例为是的  </span><br><span class="line">browseable = yes                 </span><br><span class="line">  #能不能被浏览到资源名称  </span><br><span class="line">guest ok   = yes</span><br></pre></td></tr></table></figure></p>
+<p>其中security = share  是关键，注意原配置中多个地方出现，<br>可能生效值不是这个，需要注意<br>同时需要关闭selinux和防水墙。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/linux/">linux</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/02/18/CentOS-命令行下连接加密模式为-WPA-WPA2-PSK-的无线网络/" title="CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络" itemprop="url">CentOS 命令行下连接加密模式为 WPA/WPA2-PSK 的无线网络</a>
   </h1>
   <p class="article-author">By
@@ -94,11 +155,11 @@
         
         <p>CentOS 最小化安装后 需要使用命令行配置无线，<br>记录如下：</p>
 <p>首先我们要安装一个帮我们生成加密密码并配置网卡的工具包 wpa_supplicant<br>yum install -y wpa_supplicant</p>
-<p>1 编辑 /etc/sysconfig/network-scripts/ifcfg-wlan0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ONBOOT=yes</div></pre></td></tr></table></figure></p>
-<p>确保随机网卡就启动起来<br>2 iwlist wlan0 scan<br>查看有没有自己想加入的网络，比如我的rinawale<br>3  把生成的加密信息加入到ifcfg-wlan0中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wpa_passphrase  rinawale &apos;59122801&apos;  | grep -v &apos;&#123;\|&#125;&apos; &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-wlan0 ;</div><div class="line">echo &apos;WPA=yes&apos; &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-wlan0</div></pre></td></tr></table></figure></p>
-<p>4  试试 可能执行完了这个还执行ifup wlan0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wpa_supplicant -iwlan0 -B -c /etc/wpa_supplicant/wpa_supplicant.conf</div></pre></td></tr></table></figure></p>
-<p>5 随机启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cat &gt;&gt; /etc/rc.local&lt;&lt;EOF</div><div class="line">wpa_supplicant -iwlan0 -B -c /etc/wpa_supplicant/wpa_supplicant.conf</div><div class="line">ifup  wlan0</div><div class="line">EOF</div></pre></td></tr></table></figure></p>
-<p>附最后我的ifcfg-wlan0文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">DEVICE=wlan0</div><div class="line">HWADDR=74:2F:68:9B:1F:40</div><div class="line">TYPE=Ethernet</div><div class="line">UUID=861d2178-b235-45c9-be99-b0fd3085d9d0</div><div class="line">ONBOOT=yes</div><div class="line">NM_CONTROLLED=yes</div><div class="line">#BOOTPROTO=dhcp</div><div class="line">BOOTPROTO=static</div><div class="line">IPADDR=192.168.0.50</div><div class="line">NETMASK=255.255.255.0</div><div class="line">GATEWAY=192.168.0.1</div><div class="line">ssid=&quot;rinawale&quot;</div><div class="line">#psk=&quot;59122801&quot;</div><div class="line">psk=0985fbaacaa8d060da9bfebacc752bb8f92364969370a6e01974fa521114741d</div><div class="line">WPA=yes</div></pre></td></tr></table></figure></p>
+<p>1 编辑 /etc/sysconfig/network-scripts/ifcfg-wlan0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ONBOOT=yes</span><br></pre></td></tr></table></figure></p>
+<p>确保随机网卡就启动起来<br>2 iwlist wlan0 scan<br>查看有没有自己想加入的网络，比如我的rinawale<br>3  把生成的加密信息加入到ifcfg-wlan0中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wpa_passphrase  rinawale &apos;59122801&apos;  | grep -v &apos;&#123;\|&#125;&apos; &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-wlan0 ;</span><br><span class="line">echo &apos;WPA=yes&apos; &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-wlan0</span><br></pre></td></tr></table></figure></p>
+<p>4  试试 可能执行完了这个还执行ifup wlan0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpa_supplicant -iwlan0 -B -c /etc/wpa_supplicant/wpa_supplicant.conf</span><br></pre></td></tr></table></figure></p>
+<p>5 随机启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;&gt; /etc/rc.local&lt;&lt;EOF</span><br><span class="line">wpa_supplicant -iwlan0 -B -c /etc/wpa_supplicant/wpa_supplicant.conf</span><br><span class="line">ifup  wlan0</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></p>
+<p>附最后我的ifcfg-wlan0文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">DEVICE=wlan0</span><br><span class="line">HWADDR=74:2F:68:9B:1F:40</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">UUID=861d2178-b235-45c9-be99-b0fd3085d9d0</span><br><span class="line">ONBOOT=yes</span><br><span class="line">NM_CONTROLLED=yes</span><br><span class="line">#BOOTPROTO=dhcp</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">IPADDR=192.168.0.50</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.168.0.1</span><br><span class="line">ssid=&quot;rinawale&quot;</span><br><span class="line">#psk=&quot;59122801&quot;</span><br><span class="line">psk=0985fbaacaa8d060da9bfebacc752bb8f92364969370a6e01974fa521114741d</span><br><span class="line">WPA=yes</span><br></pre></td></tr></table></figure></p>
 
         
         
@@ -158,11 +219,11 @@
 </header>
     <div class="article-content">
         
-        <p>go-sql-driver<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db, err := sql.Open(&quot;mysql&quot;, &quot;bofide:123456@10.10.1.201:4006/authority_platform&quot;)</div></pre></td></tr></table></figure></p>
-<p>受别的语言的影响，以为联结就该是上面那样<br>但是这样一定会报错的，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">panic: default addr for network &apos;10.10.1.201:4006&apos; unknown</div></pre></td></tr></table></figure></p>
-<p>真实的应该是这样子的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db, err := sql.Open(&quot;mysql&quot;, &quot;bofide:123456@tcp(10.10.1.201:4006)/authority_platform&quot;)</div></pre></td></tr></table></figure></p>
-<p>官方例子是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">user@unix(/path/to/socket)/dbname</div><div class="line">root:pw@unix(/tmp/mysql.sock)/myDatabase?loc=Local</div><div class="line">user:password@tcp(localhost:5555)/dbname?tls=skip-verify&amp;autocommit=true</div></pre></td></tr></table></figure></p>
-<p>具体实例参照：<br><a href="https://github.com/go-sql-driver/mysql/wiki/Examples" target="_blank" rel="external">https://github.com/go-sql-driver/mysql/wiki/Examples</a></p>
+        <p>go-sql-driver<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db, err := sql.Open(&quot;mysql&quot;, &quot;bofide:123456@10.10.1.201:4006/authority_platform&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>受别的语言的影响，以为联结就该是上面那样<br>但是这样一定会报错的，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">panic: default addr for network &apos;10.10.1.201:4006&apos; unknown</span><br></pre></td></tr></table></figure></p>
+<p>真实的应该是这样子的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db, err := sql.Open(&quot;mysql&quot;, &quot;bofide:123456@tcp(10.10.1.201:4006)/authority_platform&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>官方例子是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">user@unix(/path/to/socket)/dbname</span><br><span class="line">root:pw@unix(/tmp/mysql.sock)/myDatabase?loc=Local</span><br><span class="line">user:password@tcp(localhost:5555)/dbname?tls=skip-verify&amp;autocommit=true</span><br></pre></td></tr></table></figure></p>
+<p>具体实例参照：<br><a href="https://github.com/go-sql-driver/mysql/wiki/Examples" target="_blank" rel="noopener">https://github.com/go-sql-driver/mysql/wiki/Examples</a></p>
 
         
         
@@ -222,8 +283,8 @@
 </header>
     <div class="article-content">
         
-        <p>Mac 平台:<br>必须用 brew 安装,<br>不要直接使用 go get 安装, 会出现签名, 权限问题, 导致 无法使用 dlv 调试工具.<br>请严格参考 delve 项目官方安装文档.这一步最容易出问题.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 安装 delev 工具:</div><div class="line">brew install go-delve/delve/delve</div></pre></td></tr></table></figure></p>
-<p>注意，安装的时候会去用brew安装go,如果原来是自己手动安装go,得注意路径变化引发的情况，参照另<br>一个坑<br>查看安装成果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">which dlv</div><div class="line">/usr/local/bin/dlv</div><div class="line"># 查看 dlv 版本:</div><div class="line">-&gt; % dlv version</div><div class="line">Delve Debugger</div><div class="line">Version: 0.11.0-alpha</div><div class="line">Build: v0.11.0</div><div class="line"># 查看安装情况:</div><div class="line">-&gt; % brew info delve</div></pre></td></tr></table></figure></p>
+        <p>Mac 平台:<br>必须用 brew 安装,<br>不要直接使用 go get 安装, 会出现签名, 权限问题, 导致 无法使用 dlv 调试工具.<br>请严格参考 delve 项目官方安装文档.这一步最容易出问题.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 安装 delev 工具:</span><br><span class="line">brew install go-delve/delve/delve</span><br></pre></td></tr></table></figure></p>
+<p>注意，安装的时候会去用brew安装go,如果原来是自己手动安装go,得注意路径变化引发的情况，参照另<br>一个坑<br>查看安装成果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">which dlv</span><br><span class="line">/usr/local/bin/dlv</span><br><span class="line"># 查看 dlv 版本:</span><br><span class="line">-&gt; % dlv version</span><br><span class="line">Delve Debugger</span><br><span class="line">Version: 0.11.0-alpha</span><br><span class="line">Build: v0.11.0</span><br><span class="line"># 查看安装情况:</span><br><span class="line">-&gt; % brew info delve</span><br></pre></td></tr></table></figure></p>
 
         
         
@@ -283,8 +344,8 @@
 </header>
     <div class="article-content">
         
-        <p>开发环境，Mac<br>前期用手动方式下载go SDK放在/usr/local/go目录<br>sublime 装好gosublime 各种配置，提示什么的能正常运行。<br>后期因为各种依赖，改用brew安装go,go自动加入环境路径，<br>把原来go移动到别路径，<br>但是sublime自动提示不好用了<br>经仔细检查，查看提示，<br>需要<br>Preferences -&gt; package settings -&gt; GoSublime -&gt; Settings - Uesrs需要重新配置下GOPATH，GOROOT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &#123;</div><div class="line">   &quot;env&quot;: &#123;</div><div class="line">       &quot;GOPATH&quot;: &quot;/Users/feng/Documents/workspace/code/go&quot;, </div><div class="line">       &quot;GOROOT&quot;: &quot;/usr/local/Cellar/go/1.7.4_2/libexec/&quot; //新的go目录，</div><div class="line">       该目录下有src目录，引入系统包时，会到该目录查找。</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这样才能正常运行，<br>同时，如果要使Command + B就能运行，tools –&gt;build System – &gt; new Systen<br>添加内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;shell_cmd&quot;: &quot;go run $file&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        <p>开发环境，Mac<br>前期用手动方式下载go SDK放在/usr/local/go目录<br>sublime 装好gosublime 各种配置，提示什么的能正常运行。<br>后期因为各种依赖，改用brew安装go,go自动加入环境路径，<br>把原来go移动到别路径，<br>但是sublime自动提示不好用了<br>经仔细检查，查看提示，<br>需要<br>Preferences -&gt; package settings -&gt; GoSublime -&gt; Settings - Uesrs需要重新配置下GOPATH，GOROOT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &#123;</span><br><span class="line">   &quot;env&quot;: &#123;</span><br><span class="line">       &quot;GOPATH&quot;: &quot;/Users/feng/Documents/workspace/code/go&quot;, </span><br><span class="line">       &quot;GOROOT&quot;: &quot;/usr/local/Cellar/go/1.7.4_2/libexec/&quot; //新的go目录，</span><br><span class="line">       该目录下有src目录，引入系统包时，会到该目录查找。</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样才能正常运行，<br>同时，如果要使Command + B就能运行，tools –&gt;build System – &gt; new Systen<br>添加内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;shell_cmd&quot;: &quot;go run $file&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>如果go没有在环境变量中，则需要全路径。</p>
 <p>同时，如果一些别的开发工具（如vscode），无法提示系统的包方法等，需要检查GOROOT环境变量是下是否有src目录，因为提示会从该路径查找。</p>
 
@@ -346,7 +407,7 @@
 </header>
     <div class="article-content">
         
-        <p>项目中，封装一个js供各子应用调用，各子应用访问是通过二级域名，<br>此时出现跨域，并且需要把cookie等一些值提交到服务器作会话等验证<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">$.ajax(&#123;</div><div class="line">                <span class="attr">url</span>:  ucs.config.restServer + ucs.rest[url],</div><div class="line">                <span class="attr">data</span>: data,</div><div class="line">                <span class="attr">xhrFields</span>: &#123;  <span class="comment">//这是关键</span></div><div class="line">                    withCredentials: <span class="literal">true</span></div><div class="line">                &#125;,</div><div class="line">                <span class="attr">crossDomain</span>: <span class="literal">true</span>, <span class="comment">//这是关键</span></div><div class="line">                type: <span class="string">"GET"</span>,</div><div class="line">                <span class="attr">success</span>: <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</div><div class="line">                    fn &amp;&amp; fn(res);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div></pre></td></tr></table></figure></p>
+        <p>项目中，封装一个js供各子应用调用，各子应用访问是通过二级域名，<br>此时出现跨域，并且需要把cookie等一些值提交到服务器作会话等验证<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">                url:  ucs.config.restServer + ucs.rest[url],</span><br><span class="line">                data: data,</span><br><span class="line">                xhrFields: &#123;  <span class="comment">//这是关键</span></span><br><span class="line">                    withCredentials: <span class="literal">true</span></span><br><span class="line">                &#125;,</span><br><span class="line">                crossDomain: <span class="literal">true</span>, <span class="comment">//这是关键</span></span><br><span class="line">                type: <span class="string">"GET"</span>,</span><br><span class="line">                success: <span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</span><br><span class="line">                    fn &amp;&amp; fn(res);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure></p>
 <p> 这样会把cookie等信息提交。服务可以根据信息做一些事情。</p>
 
         
@@ -407,7 +468,7 @@
 </header>
     <div class="article-content">
         
-        <p>Ngnix 反向代理 错误：<br>ERR_CONTENT_LENGTH_MISMATCH<br>环境ngnix 代理多台tomcat<br>查文档，因为tomca动态输出的内空和缓存内容不一致<br>处理方法，关闭代理缓存<br>参考文档<br><a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering" target="_blank" rel="external">http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering</a></p>
+        <p>Ngnix 反向代理 错误：<br>ERR_CONTENT_LENGTH_MISMATCH<br>环境ngnix 代理多台tomcat<br>查文档，因为tomca动态输出的内空和缓存内容不一致<br>处理方法，关闭代理缓存<br>参考文档<br><a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering" target="_blank" rel="noopener">http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering</a></p>
 <p>或是确保内容一致。</p>
 
         
@@ -468,7 +529,7 @@
 </header>
     <div class="article-content">
         
-        <p>看例就明白<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 根据环境变量选择数据库文件 --&gt;</div><div class="line">	&lt;context:property-placeholder location=&quot;classpath:db_$&#123;mode&#125;.properties&quot;</div><div class="line">		ignore-unresolvable=&quot;true&quot; /&gt;</div><div class="line">		</div><div class="line">	&lt;!-- 根据环境变量选择javaToNode的配置文件--&gt;</div><div class="line">	&lt;context:property-placeholder location=&quot;classpath:/javaToNode/javaToNode_$&#123;mode&#125;.properties&quot;</div><div class="line">		ignore-unresolvable=&quot;true&quot; /&gt;</div></pre></td></tr></table></figure></p>
+        <p>看例就明白<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 根据环境变量选择数据库文件 --&gt;</span><br><span class="line">	&lt;context:property-placeholder location=&quot;classpath:db_$&#123;mode&#125;.properties&quot;</span><br><span class="line">		ignore-unresolvable=&quot;true&quot; /&gt;</span><br><span class="line">		</span><br><span class="line">	&lt;!-- 根据环境变量选择javaToNode的配置文件--&gt;</span><br><span class="line">	&lt;context:property-placeholder location=&quot;classpath:/javaToNode/javaToNode_$&#123;mode&#125;.properties&quot;</span><br><span class="line">		ignore-unresolvable=&quot;true&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
 <p>ignore-unresolvable  为<code>true</code>,<br>mode 就是环境变量，linux可以是在 /etc/profile等文件设置 win可以在系里设置<br>也可以在运行程序时指定这些环境变量</p>
 
         
@@ -655,68 +716,6 @@ private Date birthday;
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/03/30/hexo源文件备份/" title="hexo源文件备份" itemprop="url">hexo源文件备份</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-29T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-30</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>hexo发布的文件都是以.md文件格式放在source目录，<br>每次生成时，需要读取文件分析 分类，目录等信息<br>所以需要备份，才可以在不同的电脑上操作。<br>最简单的就是直接备份到git.把文件目录复制到 public 目录一起发布即可备份了。<br> 一条命令搞定。</p>
-<pre><code>cp -rf source public &amp;&amp; hexo g &amp;&amp;  hexo d
-</code></pre><p> 同理，想备样式也可以搞定到这这个目录。    </p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/blog/">blog</a>►<a class="article-category-link" href="/categories/blog/软件/">软件</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/hexo/">hexo</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/3/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">Next<span></span></a>
@@ -770,15 +769,15 @@ private Date birthday;
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>8</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -806,11 +805,7 @@ private Date birthday;
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -818,15 +813,19 @@ private Date birthday;
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>18</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -851,6 +850,10 @@ private Date birthday;
 			
 		
 			
+				<li><a href="/tags/开发/" title="开发">开发<sup>4</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/nginx/" title="nginx">nginx<sup>4</sup></a></li>
 			
 		
@@ -859,7 +862,7 @@ private Date birthday;
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -867,23 +870,7 @@ private Date birthday;
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
 			
 		
 			
@@ -891,7 +878,23 @@ private Date birthday;
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -899,7 +902,7 @@ private Date birthday;
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -907,15 +910,11 @@ private Date birthday;
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			

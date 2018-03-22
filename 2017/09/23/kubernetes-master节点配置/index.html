@@ -103,9 +103,9 @@
 		</div>
 		
 		<p>环境接上etcd集群<br>10.10.1.241  vm-manager<br>系统 centos7<br>master 节点需要启动<br> apiserver<br> controller-manager<br> scheduler  三个服务</p>
-<p>A 安装  yum install kubernetes 会把所有文件都装上，<br>但我作为master节点只启动相应的服务，只作相应的配置<br>B 修改通用配置文件<br>vi /etc/kubernetes/config<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"> ###</div><div class="line"># kubernetes system config</div><div class="line">#</div><div class="line"># The following values are used to configure various aspects of all</div><div class="line"># kubernetes services, including</div><div class="line">#</div><div class="line">#   kube-apiserver.service</div><div class="line">#   kube-controller-manager.service</div><div class="line">#   kube-scheduler.service</div><div class="line">#   kubelet.service</div><div class="line">#   kube-proxy.service</div><div class="line"># logging to stderr means we get it in the systemd journal</div><div class="line">KUBE_LOGTOSTDERR=&quot;--logtostderr=true&quot;</div><div class="line"></div><div class="line"># journal message level, 0 is debug</div><div class="line">KUBE_LOG_LEVEL=&quot;--v=2&quot;</div><div class="line"></div><div class="line"># Should this cluster be allowed to run privileged docker containers</div><div class="line">KUBE_ALLOW_PRIV=&quot;--allow-privileged=false&quot;</div><div class="line"></div><div class="line"># How the controller-manager, scheduler, and proxy find the apiserver</div><div class="line">KUBE_MASTER=&quot;--master=http://127.0.0.1:8080&quot;</div></pre></td></tr></table></figure></p>
-<p>查看对应的 server 启动脚本，会加载这个配置文件<br>如vi /usr/lib/systemd/system/kube-apiserver.service<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">EnvironmentFile=-/etc/kubernetes/config</div><div class="line">EnvironmentFile=-/etc/kubernetes/apiserver</div></pre></td></tr></table></figure></p>
-<p>C 修改apiserver配置件 vi /etc/kubernetes/apiserver<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#指定etcd集群，默认是127.0.0.1，现指定成上一篇所建etcd集群</div><div class="line">KUBE_ETCD_SERVERS=&quot;--etcd-servers=http://10.10.1.231:2379,http://10.10.1.232:2379,http://10.10.1.233:2379&quot;</div><div class="line">##如果要远程访问，修改下面这句，默认是127.0.0.1</div><div class="line">KUBE_SERVICE_ADDRESSES=&quot;--service-cluster-ip-range=10.254.0.0/16&quot;</div></pre></td></tr></table></figure></p>
+<p>A 安装  yum install kubernetes 会把所有文件都装上，<br>但我作为master节点只启动相应的服务，只作相应的配置<br>B 修改通用配置文件<br>vi /etc/kubernetes/config<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"> ###</span><br><span class="line"># kubernetes system config</span><br><span class="line">#</span><br><span class="line"># The following values are used to configure various aspects of all</span><br><span class="line"># kubernetes services, including</span><br><span class="line">#</span><br><span class="line">#   kube-apiserver.service</span><br><span class="line">#   kube-controller-manager.service</span><br><span class="line">#   kube-scheduler.service</span><br><span class="line">#   kubelet.service</span><br><span class="line">#   kube-proxy.service</span><br><span class="line"># logging to stderr means we get it in the systemd journal</span><br><span class="line">KUBE_LOGTOSTDERR=&quot;--logtostderr=true&quot;</span><br><span class="line"></span><br><span class="line"># journal message level, 0 is debug</span><br><span class="line">KUBE_LOG_LEVEL=&quot;--v=2&quot;</span><br><span class="line"></span><br><span class="line"># Should this cluster be allowed to run privileged docker containers</span><br><span class="line">KUBE_ALLOW_PRIV=&quot;--allow-privileged=false&quot;</span><br><span class="line"></span><br><span class="line"># How the controller-manager, scheduler, and proxy find the apiserver</span><br><span class="line">KUBE_MASTER=&quot;--master=http://127.0.0.1:8080&quot;</span><br></pre></td></tr></table></figure></p>
+<p>查看对应的 server 启动脚本，会加载这个配置文件<br>如vi /usr/lib/systemd/system/kube-apiserver.service<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EnvironmentFile=-/etc/kubernetes/config</span><br><span class="line">EnvironmentFile=-/etc/kubernetes/apiserver</span><br></pre></td></tr></table></figure></p>
+<p>C 修改apiserver配置件 vi /etc/kubernetes/apiserver<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#指定etcd集群，默认是127.0.0.1，现指定成上一篇所建etcd集群</span><br><span class="line">KUBE_ETCD_SERVERS=&quot;--etcd-servers=http://10.10.1.231:2379,http://10.10.1.232:2379,http://10.10.1.233:2379&quot;</span><br><span class="line">##如果要远程访问，修改下面这句，默认是127.0.0.1</span><br><span class="line">KUBE_SERVICE_ADDRESSES=&quot;--service-cluster-ip-range=10.254.0.0/16&quot;</span><br></pre></td></tr></table></figure></p>
 <p>D controller-manager 配置，因为有公有配置文件，无须特别配置<br> vi /etc/kubernetes/controller-manager<br>E scheduler配置，因为有公有配置文件，无须特别配置<br> vi /etc/kubernetes/scheduler<br> F 启动，查看状态<br>  systemctl restart kube-apiserver kube-controller-manager kube-scheduler<br>    systemctl status kube-apiserver kube-controller-manager kube-scheduler<br>  随机启动<br>  systemctl enable kube-apiserver kube-controller-manager kube-scheduler<br>  查看是否在监听8080端口</p>
   
 	</div>
@@ -218,15 +218,15 @@
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>8</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -254,11 +254,7 @@
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -266,15 +262,19 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>18</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -299,6 +299,10 @@
 			
 		
 			
+				<li><a href="/tags/开发/" title="开发">开发<sup>4</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/nginx/" title="nginx">nginx<sup>4</sup></a></li>
 			
 		
@@ -307,7 +311,7 @@
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -315,23 +319,7 @@
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
 			
 		
 			
@@ -339,7 +327,23 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -347,7 +351,7 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -355,15 +359,11 @@
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			

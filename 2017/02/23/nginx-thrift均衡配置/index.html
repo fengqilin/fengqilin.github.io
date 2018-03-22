@@ -103,8 +103,8 @@
 		</div>
 		
 		<p>最近想搞thrift,因为多台服务器，所以得有负载均衡，因为网站使用nginx，首先想到的就是nginx<br>好在1.90，添加了支持TCP协议的负载均衡,所以就用先nginx试试。<br>nginx1.90对TCP协议的代理并不是默认开启的，需要在编译的时候配置 –with-stream 参数  </p>
-<p>然后，就是修改配置文件 nginx.conf<br>添加 根节点，也就是和http {  }并列的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">stream &#123;</div><div class="line">    upstream backend &#123;</div><div class="line">      ##  hash $remote_addr consistent;  ##有这个，同一IP一直锁定在一台机器</div><div class="line">        server 127.0.0.1:9000 max_fails=3 weight=2  fail_timeout=30s;</div><div class="line">       server 127.0.0.1:9001 max_fails=3  weight=1 fail_timeout=30s;</div><div class="line">    &#125;</div><div class="line">    server &#123;</div><div class="line">        listen  8999;</div><div class="line">        proxy_connect_timeout 1s;</div><div class="line">        proxy_timeout 3s;</div><div class="line">        proxy_pass backend;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>max_fails  尝试失败次数<br>weight  权重，越大分配越多<br>更多参照  <a href="http://nginx.org/en/docs/stream/ngx_stream_core_module.html" target="_blank" rel="external">http://nginx.org/en/docs/stream/ngx_stream_core_module.html</a><br>好像还有 阿里 nginx_tcp_proxy_module 更历害的样子，有时间也一起试试</p>
+<p>然后，就是修改配置文件 nginx.conf<br>添加 根节点，也就是和http {  }并列的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">stream &#123;</span><br><span class="line">    upstream backend &#123;</span><br><span class="line">      ##  hash $remote_addr consistent;  ##有这个，同一IP一直锁定在一台机器</span><br><span class="line">        server 127.0.0.1:9000 max_fails=3 weight=2  fail_timeout=30s;</span><br><span class="line">       server 127.0.0.1:9001 max_fails=3  weight=1 fail_timeout=30s;</span><br><span class="line">    &#125;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen  8999;</span><br><span class="line">        proxy_connect_timeout 1s;</span><br><span class="line">        proxy_timeout 3s;</span><br><span class="line">        proxy_pass backend;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>max_fails  尝试失败次数<br>weight  权重，越大分配越多<br>更多参照  <a href="http://nginx.org/en/docs/stream/ngx_stream_core_module.html" target="_blank" rel="noopener">http://nginx.org/en/docs/stream/ngx_stream_core_module.html</a><br>好像还有 阿里 nginx_tcp_proxy_module 更历害的样子，有时间也一起试试</p>
 <p>最后，联结8999端口，就会轮流分配到后端的 9000 ,9001<br>接下来尝试 Haproxy  使用</p>
   
 	</div>
@@ -217,15 +217,15 @@
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>8</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -253,11 +253,7 @@
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -265,15 +261,19 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>18</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -298,6 +298,10 @@
 			
 		
 			
+				<li><a href="/tags/开发/" title="开发">开发<sup>4</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/nginx/" title="nginx">nginx<sup>4</sup></a></li>
 			
 		
@@ -306,7 +310,7 @@
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -314,23 +318,7 @@
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
 			
 		
 			
@@ -338,7 +326,23 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -346,7 +350,7 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -354,15 +358,11 @@
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			

@@ -103,8 +103,8 @@
 		</div>
 		
 		<p>按上一遍文章定义的idl生成node的接口文件<br>生成文件名为两个: HelloWord_types.js  HelloWorldService.js</p>
-<p>第一步  npm install thrift<br>第二步  服务器端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">var thrift = require(&quot;thrift&quot;);</div><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line">var ttypes = require(&apos;../thriftIDL/gen-nodejs/HelloWord_types&apos;);</div><div class="line"></div><div class="line">var server = thrift.createServer(helloService,</div><div class="line">    &#123;</div><div class="line">        sayHello:function (name ,callBack) &#123;</div><div class="line">            console.log(port+&quot;sayHello:&quot; + name);</div><div class="line">            callBack();</div><div class="line">        &#125;,</div><div class="line">        nextStatus:function (name ,callBack) &#123;</div><div class="line">            console.log(port +  &quot;next ......&quot;);</div><div class="line">            callBack(null,&quot;下一步是.....&quot;)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">);</div><div class="line">server.listen(9000);</div><div class="line">console.log(&quot;server start&quot;);</div><div class="line">server.on(&quot;error&quot;,function(e)&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>第三步 客服端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</div><div class="line"></div><div class="line">var connection = thrift.createConnection(&apos;127.0.0.1&apos;, 9000);</div><div class="line">var client = thrift.createClient(helloService, connection);</div><div class="line">connection.on(&quot;error&quot;,function(e)</div><div class="line">&#123;</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div><div class="line">client.sayHello(&quot;什么么玩意儿啊&quot;,function (err,res) &#123;</div><div class="line">     console.log(&quot;----无返回值&quot;)</div><div class="line">&#125;);</div><div class="line"></div><div class="line">client.nextStatus(&quot;有遥遥摇摇&quot;,function (err,res) &#123;</div><div class="line">    console.log(&quot;----&quot; + res)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>第一步  npm install thrift<br>第二步  服务器端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">var thrift = require(&quot;thrift&quot;);</span><br><span class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</span><br><span class="line">var ttypes = require(&apos;../thriftIDL/gen-nodejs/HelloWord_types&apos;);</span><br><span class="line"></span><br><span class="line">var server = thrift.createServer(helloService,</span><br><span class="line">    &#123;</span><br><span class="line">        sayHello:function (name ,callBack) &#123;</span><br><span class="line">            console.log(port+&quot;sayHello:&quot; + name);</span><br><span class="line">            callBack();</span><br><span class="line">        &#125;,</span><br><span class="line">        nextStatus:function (name ,callBack) &#123;</span><br><span class="line">            console.log(port +  &quot;next ......&quot;);</span><br><span class="line">            callBack(null,&quot;下一步是.....&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">);</span><br><span class="line">server.listen(9000);</span><br><span class="line">console.log(&quot;server start&quot;);</span><br><span class="line">server.on(&quot;error&quot;,function(e)&#123;</span><br><span class="line">    console.log(e);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>第三步 客服端代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var  helloService =require(&apos;../thriftIDL/gen-nodejs/HelloWorldService.js&apos;);</span><br><span class="line"></span><br><span class="line">var connection = thrift.createConnection(&apos;127.0.0.1&apos;, 9000);</span><br><span class="line">var client = thrift.createClient(helloService, connection);</span><br><span class="line">connection.on(&quot;error&quot;,function(e)</span><br><span class="line">&#123;</span><br><span class="line">    console.log(e);</span><br><span class="line">&#125;);</span><br><span class="line">client.sayHello(&quot;什么么玩意儿啊&quot;,function (err,res) &#123;</span><br><span class="line">     console.log(&quot;----无返回值&quot;)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">client.nextStatus(&quot;有遥遥摇摇&quot;,function (err,res) &#123;</span><br><span class="line">    console.log(&quot;----&quot; + res)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
 <p>先运行服务器端，再运行客户端，应该就可行了。<br>单接口还是很简单的，一个端口绑定着一个服务，一个服务对应着一个接口文件，<br>如果要提供N多个服务就得N多个接口，是不有点怪异？  接下来讲多接口的支持 。</p>
   
 	</div>
@@ -217,15 +217,15 @@
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>8</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -253,11 +253,7 @@
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -265,15 +261,19 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>18</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -298,6 +298,10 @@
 			
 		
 			
+				<li><a href="/tags/开发/" title="开发">开发<sup>4</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/nginx/" title="nginx">nginx<sup>4</sup></a></li>
 			
 		
@@ -306,7 +310,7 @@
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -314,23 +318,7 @@
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
 			
 		
 			
@@ -338,7 +326,23 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -346,7 +350,7 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -354,15 +358,11 @@
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			

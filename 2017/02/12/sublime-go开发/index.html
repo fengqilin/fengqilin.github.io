@@ -102,8 +102,8 @@
 		
 		</div>
 		
-		<p>开发环境，Mac<br>前期用手动方式下载go SDK放在/usr/local/go目录<br>sublime 装好gosublime 各种配置，提示什么的能正常运行。<br>后期因为各种依赖，改用brew安装go,go自动加入环境路径，<br>把原来go移动到别路径，<br>但是sublime自动提示不好用了<br>经仔细检查，查看提示，<br>需要<br>Preferences -&gt; package settings -&gt; GoSublime -&gt; Settings - Uesrs需要重新配置下GOPATH，GOROOT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &#123;</div><div class="line">   &quot;env&quot;: &#123;</div><div class="line">       &quot;GOPATH&quot;: &quot;/Users/feng/Documents/workspace/code/go&quot;, </div><div class="line">       &quot;GOROOT&quot;: &quot;/usr/local/Cellar/go/1.7.4_2/libexec/&quot; //新的go目录，</div><div class="line">       该目录下有src目录，引入系统包时，会到该目录查找。</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这样才能正常运行，<br>同时，如果要使Command + B就能运行，tools –&gt;build System – &gt; new Systen<br>添加内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;shell_cmd&quot;: &quot;go run $file&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+		<p>开发环境，Mac<br>前期用手动方式下载go SDK放在/usr/local/go目录<br>sublime 装好gosublime 各种配置，提示什么的能正常运行。<br>后期因为各种依赖，改用brew安装go,go自动加入环境路径，<br>把原来go移动到别路径，<br>但是sublime自动提示不好用了<br>经仔细检查，查看提示，<br>需要<br>Preferences -&gt; package settings -&gt; GoSublime -&gt; Settings - Uesrs需要重新配置下GOPATH，GOROOT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &#123;</span><br><span class="line">   &quot;env&quot;: &#123;</span><br><span class="line">       &quot;GOPATH&quot;: &quot;/Users/feng/Documents/workspace/code/go&quot;, </span><br><span class="line">       &quot;GOROOT&quot;: &quot;/usr/local/Cellar/go/1.7.4_2/libexec/&quot; //新的go目录，</span><br><span class="line">       该目录下有src目录，引入系统包时，会到该目录查找。</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样才能正常运行，<br>同时，如果要使Command + B就能运行，tools –&gt;build System – &gt; new Systen<br>添加内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;shell_cmd&quot;: &quot;go run $file&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>如果go没有在环境变量中，则需要全路径。</p>
 <p>同时，如果一些别的开发工具（如vscode），无法提示系统的包方法等，需要检查GOROOT环境变量是下是否有src目录，因为提示会从该路径查找。</p>
   
@@ -217,15 +217,15 @@
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>8</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -253,11 +253,7 @@
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -265,15 +261,19 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>18</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -298,6 +298,10 @@
 			
 		
 			
+				<li><a href="/tags/开发/" title="开发">开发<sup>4</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/nginx/" title="nginx">nginx<sup>4</sup></a></li>
 			
 		
@@ -306,7 +310,7 @@
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -314,23 +318,7 @@
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
 			
 		
 			
@@ -338,7 +326,23 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -346,7 +350,7 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -354,15 +358,11 @@
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			

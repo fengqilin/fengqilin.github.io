@@ -102,8 +102,8 @@
 		
 		</div>
 		
-		<p>目标在 10.10.1.201单机上部署jenkins,采用挂载本机目方式，<br>先创建目录 /share/jenkins/ 为了避免读写权限问题，先搞成777,<br>原相修改 web服务端口，搞出一大堆问题，先不修改。<br>下面是rc,service 文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">kind: ReplicationController</div><div class="line">apiVersion: v1</div><div class="line">metadata:</div><div class="line">  name: jenkins</div><div class="line">spec:</div><div class="line">  replicas: 1</div><div class="line">  selector:</div><div class="line">    name: jenkins</div><div class="line">  template:</div><div class="line">    metadata:</div><div class="line">      labels:</div><div class="line">        name: jenkins</div><div class="line">    spec:</div><div class="line">      containers:</div><div class="line">      - name: jenkins</div><div class="line">        image: docker.io/jenkins/jenkins</div><div class="line">        ports:</div><div class="line">        - containerPort: 8080</div><div class="line">          protocol: TCP</div><div class="line">          name: web</div><div class="line">        - containerPort: 50000</div><div class="line">          name: agent</div><div class="line">          protocol: TCP</div><div class="line">        volumeMounts:</div><div class="line">          - name: jenkinshome</div><div class="line">            mountPath: /var/jenkins_home</div><div class="line">        env:</div><div class="line">          - name: JAVA_OPTS</div><div class="line">            value: &quot;-Duser.timezone=Asia/Shanghai&quot;    </div><div class="line">      volumes:</div><div class="line">      - name: jenkinshome</div><div class="line">        hostPath:</div><div class="line">         path: /share/jenkins/</div></pre></td></tr></table></figure></p>
-<p>jenkinshome 就是需要挂载的目录。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">kind: Service</div><div class="line">apiVersion: v1</div><div class="line">metadata:</div><div class="line">  name: jenkins</div><div class="line">spec:</div><div class="line">  type: NodePort </div><div class="line">  ports:</div><div class="line">  - port: 9080</div><div class="line">    targetPort: 8080</div><div class="line">    nodePort: 30080</div><div class="line">    name: web</div><div class="line">  - port: 50000</div><div class="line">    targetPort: 50000</div><div class="line">    nodePort: 30081</div><div class="line">    name: agent</div><div class="line">  selector:</div><div class="line">    name: jenkins</div></pre></td></tr></table></figure></p>
+		<p>目标在 10.10.1.201单机上部署jenkins,采用挂载本机目方式，<br>先创建目录 /share/jenkins/ 为了避免读写权限问题，先搞成777,<br>原相修改 web服务端口，搞出一大堆问题，先不修改。<br>下面是rc,service 文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">kind: ReplicationController</span><br><span class="line">apiVersion: v1</span><br><span class="line">metadata:</span><br><span class="line">  name: jenkins</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  selector:</span><br><span class="line">    name: jenkins</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        name: jenkins</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: jenkins</span><br><span class="line">        image: docker.io/jenkins/jenkins</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 8080</span><br><span class="line">          protocol: TCP</span><br><span class="line">          name: web</span><br><span class="line">        - containerPort: 50000</span><br><span class="line">          name: agent</span><br><span class="line">          protocol: TCP</span><br><span class="line">        volumeMounts:</span><br><span class="line">          - name: jenkinshome</span><br><span class="line">            mountPath: /var/jenkins_home</span><br><span class="line">        env:</span><br><span class="line">          - name: JAVA_OPTS</span><br><span class="line">            value: &quot;-Duser.timezone=Asia/Shanghai&quot;    </span><br><span class="line">      volumes:</span><br><span class="line">      - name: jenkinshome</span><br><span class="line">        hostPath:</span><br><span class="line">         path: /share/jenkins/</span><br></pre></td></tr></table></figure></p>
+<p>jenkinshome 就是需要挂载的目录。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">kind: Service</span><br><span class="line">apiVersion: v1</span><br><span class="line">metadata:</span><br><span class="line">  name: jenkins</span><br><span class="line">spec:</span><br><span class="line">  type: NodePort </span><br><span class="line">  ports:</span><br><span class="line">  - port: 9080</span><br><span class="line">    targetPort: 8080</span><br><span class="line">    nodePort: 30080</span><br><span class="line">    name: web</span><br><span class="line">  - port: 50000</span><br><span class="line">    targetPort: 50000</span><br><span class="line">    nodePort: 30081</span><br><span class="line">    name: agent</span><br><span class="line">  selector:</span><br><span class="line">    name: jenkins</span><br></pre></td></tr></table></figure></p>
 <p>使用nodePort ，使在外网能访问。<br>后期安装的各种插件，都会保存在 {jenkinshome} 目录<br>关于 jenkins密码，第一次的时候，用户名为admin<br>{jenkins_home}/secrets/initialAdminPassword,<br>很长一串,及时修改，<br>在  {jenkins_home}/users/admin/config.xml  有hash后的密码，具体算法没有研究</p>
   
 	</div>
@@ -216,15 +216,15 @@
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>8</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -252,11 +252,7 @@
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -264,15 +260,19 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>18</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -297,6 +297,10 @@
 			
 		
 			
+				<li><a href="/tags/开发/" title="开发">开发<sup>4</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/nginx/" title="nginx">nginx<sup>4</sup></a></li>
 			
 		
@@ -305,7 +309,7 @@
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -313,23 +317,7 @@
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
 			
 		
 			
@@ -337,7 +325,23 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -345,7 +349,7 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -353,15 +357,11 @@
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			

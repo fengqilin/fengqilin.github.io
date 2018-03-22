@@ -102,11 +102,11 @@
 		
 		</div>
 		
-		<p>某日，在kubernetes准备创建一个应用，起不来，查日志<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Failed to create docker container &quot;gitlab-ce&quot; of pod &quot;gitlab-ce-j0q9c_default(d98296e6-b7a6-11e7-a9c9-000c29a8dbfc)&quot; with error: Error response from daemon: &#123;&quot;message&quot;:&quot;devmapper: Thin Pool has 548 free data blocks which is less than minimum required 1324 free data blocks. Create more free space in thin pool or use dm.min_free_space option to change behavior&quot;&#125;</div></pre></td></tr></table></figure></p>
-<p>大意是空间不够了，网上查查资料， docker默认为10G, 扩容，记录如下<br>环境 centos 7 lvm<br>查看信息如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@vm-dbs ~]#  pvs -o+pv_used</div><div class="line">  PV         VG     Fmt  Attr PSize   PFree  Used   </div><div class="line">  /dev/sda2  centos lvm2 a--   49.51g     0   49.51g</div><div class="line">  /dev/sdb1  centos lvm2 a--  150.00g     0  150.00g</div></pre></td></tr></table></figure></p>
+		<p>某日，在kubernetes准备创建一个应用，起不来，查日志<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to create docker container &quot;gitlab-ce&quot; of pod &quot;gitlab-ce-j0q9c_default(d98296e6-b7a6-11e7-a9c9-000c29a8dbfc)&quot; with error: Error response from daemon: &#123;&quot;message&quot;:&quot;devmapper: Thin Pool has 548 free data blocks which is less than minimum required 1324 free data blocks. Create more free space in thin pool or use dm.min_free_space option to change behavior&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>大意是空间不够了，网上查查资料， docker默认为10G, 扩容，记录如下<br>环境 centos 7 lvm<br>查看信息如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@vm-dbs ~]#  pvs -o+pv_used</span><br><span class="line">  PV         VG     Fmt  Attr PSize   PFree  Used   </span><br><span class="line">  /dev/sda2  centos lvm2 a--   49.51g     0   49.51g</span><br><span class="line">  /dev/sdb1  centos lvm2 a--  150.00g     0  150.00g</span><br></pre></td></tr></table></figure></p>
 <p>已无可用空间</p>
-<p>查看卷组信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">[root@vm-dbs ~]# vgdisplay</div><div class="line">  --- Volume group ---</div><div class="line">  VG Name               centos</div><div class="line">  System ID             </div><div class="line">  Format                lvm2</div><div class="line">  Metadata Areas        3</div><div class="line">  Metadata Sequence No  41</div><div class="line">  VG Access             read/write</div><div class="line">  VG Status             resizable</div><div class="line">  MAX LV                0</div><div class="line">  Cur LV                3</div><div class="line">  Open LV               3</div><div class="line">  Max PV                0</div><div class="line">  Cur PV                3</div><div class="line">  Act PV                3</div><div class="line">  VG Size               249.50 GiB</div><div class="line">  PE Size               4.00 MiB</div><div class="line">  Total PE              63872</div><div class="line">  Alloc PE / Size       61151 / 238.87 GiB</div><div class="line">  Free  PE / Size       2721 / 10.63 GiB</div><div class="line">  VG UUID               2j27R3-pIms-CB8S-kfvI-HiZM-Hfj9-s6knTE</div></pre></td></tr></table></figure></p>
-<p>系统中存在一下叫centos的卷。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">[root@vm-dbs ~]# lvdisplay</div><div class="line">  --- Logical volume ---</div><div class="line">  LV Path                /dev/centos/swap</div><div class="line">  LV Name                swap</div><div class="line">  VG Name                centos</div><div class="line">  LV UUID                s2edjL-aaJi-rber-GQiQ-DCXs-CTYW-5Y0OhV</div><div class="line">  LV Write Access        read/write</div><div class="line">  LV Creation host, time localhost, 2016-10-10 09:31:59 +0800</div><div class="line">  LV Status              available</div><div class="line">  # open                 2</div><div class="line">  LV Size                2.00 GiB</div><div class="line">  Current LE             512</div><div class="line">  Segments               1</div><div class="line">  Allocation             inherit</div><div class="line">  Read ahead sectors     auto</div><div class="line">  - currently set to     8192</div><div class="line">  Block device           253:1</div><div class="line">   </div><div class="line">  --- Logical volume ---</div><div class="line">  LV Path                /dev/centos/root</div><div class="line">  LV Name                root</div><div class="line">  VG Name                centos</div><div class="line">  LV UUID                a4itXN-t1Xl-2Rnc-Wb3X-v6GA-3qNb-Vnlwxz</div><div class="line">  LV Write Access        read/write</div><div class="line">  LV Creation host, time localhost, 2016-10-10 09:31:59 +0800</div><div class="line">  LV Status              available</div><div class="line">  # open                 1</div><div class="line">  LV Size                190.00 GiB</div><div class="line">  Current LE             48640</div><div class="line">  Segments               2</div><div class="line">  Allocation             inherit</div><div class="line">  Read ahead sectors     auto</div><div class="line">  - currently set to     8192</div><div class="line">  Block device           253:0</div><div class="line">   </div><div class="line">  --- Logical volume ---</div><div class="line">  LV Name                docker-pool</div><div class="line">  VG Name                centos</div><div class="line">  LV UUID                nakG1M-XrgD-snIJ-c3FH-P9Zp-DYQi-0gADOt</div><div class="line">  LV Write Access        read/write</div><div class="line">  LV Creation host, time vm-dbs, 2017-08-07 17:32:13 +0800</div><div class="line">  LV Pool metadata       docker-pool_tmeta</div><div class="line">  LV Pool data           docker-pool_tdata</div><div class="line">  LV Status              available</div><div class="line">  # open                 10</div><div class="line">  LV Size                46.46 GiB</div><div class="line">  Allocated pool data    19.99%</div><div class="line">  Allocated metadata     1.34%</div><div class="line">  Current LE             11895</div><div class="line">  Segments               1</div><div class="line">  Allocation             inherit</div><div class="line">  Read ahead sectors     auto</div><div class="line">  - currently set to     8192</div><div class="line">  Block device           253:4</div></pre></td></tr></table></figure></p>
+<p>查看卷组信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@vm-dbs ~]# vgdisplay</span><br><span class="line">  --- Volume group ---</span><br><span class="line">  VG Name               centos</span><br><span class="line">  System ID             </span><br><span class="line">  Format                lvm2</span><br><span class="line">  Metadata Areas        3</span><br><span class="line">  Metadata Sequence No  41</span><br><span class="line">  VG Access             read/write</span><br><span class="line">  VG Status             resizable</span><br><span class="line">  MAX LV                0</span><br><span class="line">  Cur LV                3</span><br><span class="line">  Open LV               3</span><br><span class="line">  Max PV                0</span><br><span class="line">  Cur PV                3</span><br><span class="line">  Act PV                3</span><br><span class="line">  VG Size               249.50 GiB</span><br><span class="line">  PE Size               4.00 MiB</span><br><span class="line">  Total PE              63872</span><br><span class="line">  Alloc PE / Size       61151 / 238.87 GiB</span><br><span class="line">  Free  PE / Size       2721 / 10.63 GiB</span><br><span class="line">  VG UUID               2j27R3-pIms-CB8S-kfvI-HiZM-Hfj9-s6knTE</span><br></pre></td></tr></table></figure></p>
+<p>系统中存在一下叫centos的卷。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[root@vm-dbs ~]# lvdisplay</span><br><span class="line">  --- Logical volume ---</span><br><span class="line">  LV Path                /dev/centos/swap</span><br><span class="line">  LV Name                swap</span><br><span class="line">  VG Name                centos</span><br><span class="line">  LV UUID                s2edjL-aaJi-rber-GQiQ-DCXs-CTYW-5Y0OhV</span><br><span class="line">  LV Write Access        read/write</span><br><span class="line">  LV Creation host, time localhost, 2016-10-10 09:31:59 +0800</span><br><span class="line">  LV Status              available</span><br><span class="line">  # open                 2</span><br><span class="line">  LV Size                2.00 GiB</span><br><span class="line">  Current LE             512</span><br><span class="line">  Segments               1</span><br><span class="line">  Allocation             inherit</span><br><span class="line">  Read ahead sectors     auto</span><br><span class="line">  - currently set to     8192</span><br><span class="line">  Block device           253:1</span><br><span class="line">   </span><br><span class="line">  --- Logical volume ---</span><br><span class="line">  LV Path                /dev/centos/root</span><br><span class="line">  LV Name                root</span><br><span class="line">  VG Name                centos</span><br><span class="line">  LV UUID                a4itXN-t1Xl-2Rnc-Wb3X-v6GA-3qNb-Vnlwxz</span><br><span class="line">  LV Write Access        read/write</span><br><span class="line">  LV Creation host, time localhost, 2016-10-10 09:31:59 +0800</span><br><span class="line">  LV Status              available</span><br><span class="line">  # open                 1</span><br><span class="line">  LV Size                190.00 GiB</span><br><span class="line">  Current LE             48640</span><br><span class="line">  Segments               2</span><br><span class="line">  Allocation             inherit</span><br><span class="line">  Read ahead sectors     auto</span><br><span class="line">  - currently set to     8192</span><br><span class="line">  Block device           253:0</span><br><span class="line">   </span><br><span class="line">  --- Logical volume ---</span><br><span class="line">  LV Name                docker-pool</span><br><span class="line">  VG Name                centos</span><br><span class="line">  LV UUID                nakG1M-XrgD-snIJ-c3FH-P9Zp-DYQi-0gADOt</span><br><span class="line">  LV Write Access        read/write</span><br><span class="line">  LV Creation host, time vm-dbs, 2017-08-07 17:32:13 +0800</span><br><span class="line">  LV Pool metadata       docker-pool_tmeta</span><br><span class="line">  LV Pool data           docker-pool_tdata</span><br><span class="line">  LV Status              available</span><br><span class="line">  # open                 10</span><br><span class="line">  LV Size                46.46 GiB</span><br><span class="line">  Allocated pool data    19.99%</span><br><span class="line">  Allocated metadata     1.34%</span><br><span class="line">  Current LE             11895</span><br><span class="line">  Segments               1</span><br><span class="line">  Allocation             inherit</span><br><span class="line">  Read ahead sectors     auto</span><br><span class="line">  - currently set to     8192</span><br><span class="line">  Block device           253:4</span><br></pre></td></tr></table></figure></p>
 <p>docker 的Lv name  docker-pool ,也是存在于卷 centos，这是我扩容后的空间。<br>所以我们第一步加入新分区到  centos 卷中，然后给  docker-pool 分配空间</p>
 <p>1，添加一块新盘。<br>2，添加后，在我的秕统里出现 /dev/sdc<br>用fdisk格式化 主分区，扩展分区都可以<br>格式化后，系统出现 /dev/sdc1<br>3 创建物理卷<br>pvcreate /dev/sdc1<br>4，扩展  centos 卷<br>vgextend centos /dev/sdc1<br>5,为docker-pool增加空间<br> lvextend -L +40G   /dev/centos/docker-pool<br>6，正常扩展分区是<br> resize2fs  /dev/centos/docker-pool<br> 但是会报错，直拉重启docker 或电脑即可。   </p>
 <p>7， 查看   lvdisplay  是否增加<br>8，又可以玩 kubernetes 了  </p>
@@ -221,15 +221,15 @@
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
-		  
-		
-		  
 			<li><a href="/categories/kubernetes/linux/" title="linux">linux<sup>8</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -257,11 +257,7 @@
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -269,15 +265,19 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>18</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ectd/kubernetes/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/linux/收集/" title="收集">收集<sup>7</sup></a></li>
 		  
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>19</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -302,6 +302,10 @@
 			
 		
 			
+				<li><a href="/tags/开发/" title="开发">开发<sup>4</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/nginx/" title="nginx">nginx<sup>4</sup></a></li>
 			
 		
@@ -310,7 +314,7 @@
 			
 		
 			
-				<li><a href="/tags/开发/" title="开发">开发<sup>3</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
 			
 		
 			
@@ -318,23 +322,7 @@
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
 			
 		
 			
@@ -342,7 +330,23 @@
 			
 		
 			
-				<li><a href="/tags/selenium/" title="selenium">selenium<sup>1</sup></a></li>
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
 			
 		
 			
@@ -350,7 +354,7 @@
 			
 		
 			
-				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
 			
 		
 			
@@ -358,15 +362,11 @@
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/测试/" title="测试">测试<sup>1</sup></a></li>
 			
 		
 			
