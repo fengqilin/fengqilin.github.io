@@ -79,6 +79,67 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/05/23/ant-多个源文件/" title="ant 多个源文件" itemprop="url">ant 多个源文件</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
+		
+  <p class="article-time">
+    <time datetime="2018-05-23T05:46:55.000Z" itemprop="datePublished"> 发表于 2018-05-23</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;target name=&quot;compile&quot; &gt;</span><br><span class="line">		&lt;javac   destdir=&quot;$&#123;dest&#125;&quot; includeantruntime=&quot;false&quot; source=&quot;1.7&quot; target=&quot;1.7&quot; encoding=&quot;utf-8&quot;&gt;</span><br><span class="line">			&lt;classpath refid=&quot;compile.classpath&quot; /&gt;</span><br><span class="line">		</span><br><span class="line">			</span><br><span class="line">			&lt;src path=&quot;com.sysware.p2m.configuration.p132.appendix&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;com.sysware.adapter&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;com.sysware.eap.framework&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;utils/main/java&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;task/main/java&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;configuration/src/resources&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;com.sysware.eap.system&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;com.sysware.eap.auth&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;com.sysware.eap.webapp&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;com.sysware.eap.communication&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;com.sysware.eap.integration&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;kernel/main/java&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;fileserver/main/java&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;dm/main/java&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;coredata/main/java&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;com.sysware.p2m.core&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;com.sysware.p2m.patch&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;com.sysware.p2m.modeling&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;com.sysware.p2m.task&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;com.sysware.p2m.data&quot;/&gt;</span><br><span class="line">	        &lt;src path=&quot;com.sysware.p2m.configuration.default&quot;/&gt; </span><br><span class="line">			</span><br><span class="line">			</span><br><span class="line">			 &lt;!--       </span><br><span class="line">			&lt;classpathentry kind=&quot;con&quot; path=&quot;org.eclipse.jst.j2ee.internal.web.container&quot;/&gt;</span><br><span class="line">			        &lt;classpathentry kind=&quot;con&quot; path=&quot;org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0&quot;/&gt;</span><br><span class="line">			        &lt;classpathentry kind=&quot;con&quot; path=&quot;org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java1.7&quot;/&gt;</span><br><span class="line">			        --&gt;</span><br><span class="line">		&lt;/javac&gt;</span><br><span class="line">	&lt;/target&gt;</span><br></pre></td></tr></table></figure>
+<p>指定多个src即可，不过顺序很重要，如果有同包同名的类，生效的将是最前面的。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/收集/">收集</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/03/22/python学习利器-jupyter配置/" title="python学习利器-jupyter配置" itemprop="url">python学习利器-jupyter配置</a>
   </h1>
   <p class="article-author">By
@@ -670,70 +731,6 @@ KUBELET_ARGS=&quot;&quot;
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/09/23/kubernetes-master节点配置/" title="kubernetes master节点配置" itemprop="url">kubernetes master节点配置</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="feng" target="_blank" itemprop="author">feng</a>
-		
-  <p class="article-time">
-    <time datetime="2017-09-23T08:56:01.000Z" itemprop="datePublished"> 发表于 2017-09-23</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>环境接上etcd集群<br>10.10.1.241  vm-manager<br>系统 centos7<br>master 节点需要启动<br> apiserver<br> controller-manager<br> scheduler  三个服务</p>
-<p>A 安装  yum install kubernetes 会把所有文件都装上，<br>但我作为master节点只启动相应的服务，只作相应的配置<br>B 修改通用配置文件<br>vi /etc/kubernetes/config<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"> ###</span><br><span class="line"># kubernetes system config</span><br><span class="line">#</span><br><span class="line"># The following values are used to configure various aspects of all</span><br><span class="line"># kubernetes services, including</span><br><span class="line">#</span><br><span class="line">#   kube-apiserver.service</span><br><span class="line">#   kube-controller-manager.service</span><br><span class="line">#   kube-scheduler.service</span><br><span class="line">#   kubelet.service</span><br><span class="line">#   kube-proxy.service</span><br><span class="line"># logging to stderr means we get it in the systemd journal</span><br><span class="line">KUBE_LOGTOSTDERR=&quot;--logtostderr=true&quot;</span><br><span class="line"></span><br><span class="line"># journal message level, 0 is debug</span><br><span class="line">KUBE_LOG_LEVEL=&quot;--v=2&quot;</span><br><span class="line"></span><br><span class="line"># Should this cluster be allowed to run privileged docker containers</span><br><span class="line">KUBE_ALLOW_PRIV=&quot;--allow-privileged=false&quot;</span><br><span class="line"></span><br><span class="line"># How the controller-manager, scheduler, and proxy find the apiserver</span><br><span class="line">KUBE_MASTER=&quot;--master=http://127.0.0.1:8080&quot;</span><br></pre></td></tr></table></figure></p>
-<p>查看对应的 server 启动脚本，会加载这个配置文件<br>如vi /usr/lib/systemd/system/kube-apiserver.service<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EnvironmentFile=-/etc/kubernetes/config</span><br><span class="line">EnvironmentFile=-/etc/kubernetes/apiserver</span><br></pre></td></tr></table></figure></p>
-<p>C 修改apiserver配置件 vi /etc/kubernetes/apiserver<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#指定etcd集群，默认是127.0.0.1，现指定成上一篇所建etcd集群</span><br><span class="line">KUBE_ETCD_SERVERS=&quot;--etcd-servers=http://10.10.1.231:2379,http://10.10.1.232:2379,http://10.10.1.233:2379&quot;</span><br><span class="line">##如果要远程访问，修改下面这句，默认是127.0.0.1</span><br><span class="line">KUBE_SERVICE_ADDRESSES=&quot;--service-cluster-ip-range=10.254.0.0/16&quot;</span><br></pre></td></tr></table></figure></p>
-<p>D controller-manager 配置，因为有公有配置文件，无须特别配置<br> vi /etc/kubernetes/controller-manager<br>E scheduler配置，因为有公有配置文件，无须特别配置<br> vi /etc/kubernetes/scheduler<br> F 启动，查看状态<br>  systemctl restart kube-apiserver kube-controller-manager kube-scheduler<br>    systemctl status kube-apiserver kube-controller-manager kube-scheduler<br>  随机启动<br>  systemctl enable kube-apiserver kube-controller-manager kube-scheduler<br>  查看是否在监听8080端口</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/kubernetes/">kubernetes</a>►<a class="article-category-link" href="/categories/kubernetes/linux/">linux</a>►<a class="article-category-link" href="/categories/kubernetes/linux/收集/">收集</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/kubernetes/">kubernetes</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -827,7 +824,15 @@ KUBELET_ARGS=&quot;&quot;
 		  
 		
 		  
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/kubernetes/linux/jenkins/收集/" title="收集">收集<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/收集/" title="收集">收集<sup>20</sup></a></li>
 		  
 		
 		  
@@ -836,14 +841,6 @@ KUBELET_ARGS=&quot;&quot;
 		
 		  
 			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>19</sup></a></li>
-		  
-		
-		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -876,7 +873,7 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/thrift/" title="thrift">thrift<sup>3</sup></a></li>
+				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
 			
 		
 			
@@ -884,7 +881,7 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
+				<li><a href="/tags/thrift/" title="thrift">thrift<sup>3</sup></a></li>
 			
 		
 			
@@ -892,7 +889,7 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/vpn/" title="vpn">vpn<sup>2</sup></a></li>
+				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
 			
 		
 			
@@ -900,7 +897,7 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+				<li><a href="/tags/vpn/" title="vpn">vpn<sup>2</sup></a></li>
 			
 		
 			
@@ -908,11 +905,15 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+				<li><a href="/tags/cas/" title="cas">cas<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
 			
 		
 			
@@ -920,23 +921,19 @@ KUBELET_ARGS=&quot;&quot;
 			
 		
 			
-				<li><a href="/tags/jquery/" title="jquery">jquery<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/etcd/" title="etcd">etcd<sup>1</sup></a></li>
 			
 		
 			
+				<li><a href="/tags/mongo/" title="mongo">mongo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/收集/" title="收集">收集<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 			
 		
 		</ul>
