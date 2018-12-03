@@ -20,7 +20,7 @@
 <meta property="og:site_name" content="有药就给你">
 <meta property="og:description" content="最近和公司另外项目对接webService,对方返因的wsdl文件里最后返回的入口地址是本机的一个私有IP,就是这样子123&amp;lt;wsdl:port name=&amp;quot;ERPServiceHttpSoap11Endpoint&amp;quot; binding=&amp;quot;ns:ERPServiceSoap11Binding&amp;quot;&amp;gt;&amp;lt;soap:address location=&amp;q">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-03T08:36:34.862Z">
+<meta property="og:updated_time" content="2018-12-03T08:39:43.625Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HttpClient调用webservice所遇到的坑">
 <meta name="twitter:description" content="最近和公司另外项目对接webService,对方返因的wsdl文件里最后返回的入口地址是本机的一个私有IP,就是这样子123&amp;lt;wsdl:port name=&amp;quot;ERPServiceHttpSoap11Endpoint&amp;quot; binding=&amp;quot;ns:ERPServiceSoap11Binding&amp;quot;&amp;gt;&amp;lt;soap:address location=&amp;q">
@@ -103,7 +103,7 @@
 		</div>
 		
 		<p>最近和公司另外项目对接webService,对方返因的wsdl文件里<br>最后返回的入口地址是本机的一个私有IP,就是这样子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;wsdl:port name=&quot;ERPServiceHttpSoap11Endpoint&quot; binding=&quot;ns:ERPServiceSoap11Binding&quot;&gt;</span><br><span class="line">&lt;soap:address location=&quot;http://192.168.0.122:8080/sysware/services/ERPService.ERPServiceHttpSoap11Endpoint/&quot;/&gt;</span><br><span class="line">&lt;/wsdl:port&gt;</span><br></pre></td></tr></table></figure></p>
-<p>我方采用的是axis的 RPCServiceClient，根所指定的wsdl文件自动构建访问地址等，所以我方client最后发直访问的地址是 <a href="http://192.168.0.122:8080/sysware/services/ERPService" target="_blank" rel="noopener">http://192.168.0.122:8080/sysware/services/ERPService</a><br>这显然是不行的，然后就想用httpclient调用吧，网上找了几个例子，都不通，报错，不匹配，最后双方改成http调用，能调用好了，但httpclient调webservic不通，心里不爽啊，然后就翻代码，总算找到原因了。总结如下：1，如果header Content-Type =     text/xml ,则是走soap 1.1,协议，这也是<span style="color:#f00"> 默认 </span>的协议 ，此是要求提交的xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xmlns:soap=http://schemas.xmlsoap.org/soap/envelope/</span><br></pre></td></tr></table></figure></p>
+<p>我方采用的是axis的 RPCServiceClient，根所指定的wsdl文件自动构建访问地址等，所以我方client最后发直访问的地址是 <a href="http://192.168.0.122:8080/sysware/services/ERPService" target="_blank" rel="noopener">http://192.168.0.122:8080/sysware/services/ERPService</a><br>这显然是不行的，然后就想用httpclient调用吧，网上找了几个例子，都不通，报错，不匹配，最后双方改成http调用，能调用好了，但httpclient调webservic不通，心里不爽啊，然后就翻代码，总算找到原因了。  总结如下:<br>1，如果header Content-Type =     text/xml ,则是走soap 1.1,协议，这也是<span style="color:#f00"> 默认 </span>的协议 ，此是要求提交的xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xmlns:soap=http://schemas.xmlsoap.org/soap/envelope/</span><br></pre></td></tr></table></figure></p>
 <p>2,如果 header  Content-Type =    application/soap+xml 则走协议 1.2，此时要求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot;</span><br></pre></td></tr></table></figure></p>
 <p>3,header必须是上面两个之一，获为空。走不同协议时，xml 头部定义是有差别的。参照源码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public static String getEnvelopeNamespace(String contentType) &#123;         </span><br><span class="line">         String soapNS = &quot;http://schemas.xmlsoap.org/soap/envelope/&quot;;    </span><br><span class="line">         if (contentType != null) &#123;                                      </span><br><span class="line">            if (contentType.indexOf(&quot;application/soap+xml&quot;) &gt; -1) &#123;     </span><br><span class="line">                 soapNS = &quot;http://www.w3.org/2003/05/soap-envelope&quot;;     </span><br><span class="line">             &#125; else if (contentType.indexOf(&quot;text/xml&quot;) &gt; -1) &#123;          </span><br><span class="line">               soapNS = &quot;http://schemas.xmlsoap.org/soap/envelope/&quot;;   </span><br><span class="line">             &#125;                                                           </span><br><span class="line">         &#125;                                                               </span><br><span class="line">                                                                         </span><br><span class="line">         return soapNS;                                                  </span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure></p>
 <p>4,SOAPAction 不是必须的。</p>
@@ -204,11 +204,11 @@
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>1</sup></a></li>
+			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>8</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/kubernetes/" title="kubernetes">kubernetes<sup>8</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/" title="kubernetes">kubernetes<sup>1</sup></a></li>
 		  
 		
 		  
@@ -216,11 +216,11 @@
 		  
 		
 		  
-			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/categories/ectd/kubernetes/linux/" title="linux">linux<sup>1</sup></a></li>
 		  
 		
 		  
@@ -232,11 +232,11 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
+			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>4</sup></a></li>
 		  
 		
 		  
-			<li><a href="/categories/各种坑/" title="各种坑">各种坑<sup>4</sup></a></li>
+			<li><a href="/categories/收集/各种坑/" title="各种坑">各种坑<sup>1</sup></a></li>
 		  
 		
 		  
@@ -252,7 +252,7 @@
 		  
 		
 		  
-			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
+			<li><a href="/categories/收集/" title="收集">收集<sup>21</sup></a></li>
 		  
 		
 		  
@@ -260,7 +260,7 @@
 		  
 		
 		  
-			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
+			<li><a href="/categories/ice/收集/" title="收集">收集<sup>3</sup></a></li>
 		  
 		
 		  
@@ -268,7 +268,7 @@
 		  
 		
 		  
-			<li><a href="/categories/收集/" title="收集">收集<sup>21</sup></a></li>
+			<li><a href="/categories/vpn/linux/收集/" title="收集">收集<sup>1</sup></a></li>
 		  
 		
 		  
@@ -301,7 +301,7 @@
 			
 		
 			
-				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
+				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
 			
 		
 			
@@ -309,11 +309,15 @@
 			
 		
 			
-				<li><a href="/tags/ice/" title="ice">ice<sup>3</sup></a></li>
+				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/go/" title="go">go<sup>3</sup></a></li>
+				<li><a href="/tags/node/" title="node">node<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
 			
 		
 			
@@ -325,19 +329,11 @@
 			
 		
 			
-				<li><a href="/tags/hexo/" title="hexo">hexo<sup>2</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/https/" title="https">https<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/cas/" title="cas">cas<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/HttpClient/" title="HttpClient">HttpClient<sup>1</sup></a></li>
+				<li><a href="/tags/java/" title="java">java<sup>1</sup></a></li>
 			
 		
 			
@@ -345,7 +341,7 @@
 			
 		
 			
-				<li><a href="/tags/webservice/" title="webservice">webservice<sup>1</sup></a></li>
+				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
 			
 		
 			
@@ -353,7 +349,11 @@
 			
 		
 			
-				<li><a href="/tags/tess4j/" title="tess4j">tess4j<sup>1</sup></a></li>
+				<li><a href="/tags/HttpClient/" title="HttpClient">HttpClient<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/cas/" title="cas">cas<sup>1</sup></a></li>
 			
 		
 			
